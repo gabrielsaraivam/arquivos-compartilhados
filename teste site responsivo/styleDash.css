@@ -6,3 +6,40 @@
     position: absolute;
     z-index: 9999;
 }
+
+:root{
+    --body-fundo: #ffff;
+    --color-text: #2B2F42;
+    --general-divs: #F7F6FC;
+}
+
+.dark-mode:root{
+    --body-fundo: #1A1C28;
+    --color-text: #ffff;
+    --general-divs: #2B2F42;
+}
+
+body{
+    background-color: var(--body-fundo);
+    color: var(--color-text);
+}
+
+#sidebar, .divs-graphcs-big, .divs-graphcs-small,   #sidebar .custom-menu .btn.btn-primary:after{
+    background-color: var(--general-divs);
+}
+
+#sidebar ul li a, .btn-primary{
+    color: var(--color-text);
+}
+
+.divs-graphcs-big{
+    height: 100%;
+}
+
+.divs-graphcs-small{
+    height: 75%;
+}
+
+.color-text{
+    color: var(--color-text);
+}
