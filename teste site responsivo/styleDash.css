@@ -11,7 +11,8 @@
     --body-fundo: #ffff;
     --color-text: #2B2F42;
     --general-divs: #F7F6FC;
-    --background-gradient: #2B2F4209;
+    --background-gradient: #2B2F4230;
+    --background-gradient-hover: #16181f35;
     --color-icons:#2B2F42;
 }
 
@@ -19,7 +20,8 @@
     --body-fundo: #1A1C28;
     --color-text: #ffff;
     --general-divs: #2B2F42;
-    --background-gradient: #4472C409;
+    --background-gradient: #4472C430;
+    --background-gradient-hover: #4472C435;
     --color-icons:#4472C4;
 }
 
@@ -40,9 +42,6 @@ body{
     color: var(--color-icons);
 }
 
-#sidebar ul li a span, #sidebar ul li a {
-    color: var(--color-icons);
-}
 
 .divs-graphcs-big{
     height: 100%;
@@ -58,42 +57,59 @@ body{
 
 .li-active{
     background-color: var(--background-gradient);
-    border-right: 1px solid var(--color-text);
+    border-right: 1px solid var(--color-icons);
 }
 
 #imgLogo img{
     width: 50%;
 }
 
+#sidebar ul li a:hover {
+    color: var(--general-divs); 
+}
+    
+#sidebar ul li a:hover > span {
+      color: var(--general-divs); 
+}
+
+#sidebar ul li:hover{
+    background-color: var(--background-gradient-hover);
+}
+
 
 /* botao dark-mode */
+
+.buttonDark{
+    position: relative;
+}
 
 .check{
     /* position: relative;
     top: 5%;
     left: 7%; */
-
     background: #1986ff;
     cursor: pointer;
-    border-radius: 20px;
-    overflow: hidden;
+    /* border-radius: 20px; */
+    /* overflow: hidden; */
     transition: ease-in-out 0.5s;
+    height: 4vh;
+    border-radius: 20px;
 }
 
 .check:before{
     content: '';
     position: absolute;
     top: 0;
-    left: -2px;
+    left: -1px;
     background: #fffffff1;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+    width: 50%;
+    height: 100%;
+    border-radius: 20px;
     transition: 0.5s;
 }
 
 #switch:checked ~ .check:before{
-    transform: translateX(25px);
+    transform: translateX(27px);
     background: #070c08ef;
 }
 
