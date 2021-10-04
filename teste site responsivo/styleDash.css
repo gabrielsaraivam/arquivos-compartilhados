@@ -87,7 +87,8 @@ body{
     /* position: relative;
     top: 5%;
     left: 7%; */
-    background: #1986ff;
+    position: relative;
+    background: var(--general-divs);
     cursor: pointer;
     /* border-radius: 20px; */
     /* overflow: hidden; */
@@ -99,18 +100,17 @@ body{
 .check:before{
     content: '';
     position: absolute;
-    top: 0;
-    left: -1px;
-    background: #fffffff1;
-    width: 50%;
-    height: 100%;
+    top: 10%;
+    left: 2px;
+    background: var(--body-fundo);
+    width: 45%;
+    height: 80%;
     border-radius: 20px;
     transition: 0.5s;
 }
 
 #switch:checked ~ .check:before{
-    transform: translateX(27px);
-    background: #070c08ef;
+    transform: translateX(22px);
 }
 
 #switch{
