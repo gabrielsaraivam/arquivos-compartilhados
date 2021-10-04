@@ -11,12 +11,16 @@
     --body-fundo: #ffff;
     --color-text: #2B2F42;
     --general-divs: #F7F6FC;
+    --background-gradient: #2B2F4209;
+    --color-icons:#2B2F42;
 }
 
 .dark-mode:root{
     --body-fundo: #1A1C28;
     --color-text: #ffff;
     --general-divs: #2B2F42;
+    --background-gradient: #4472C409;
+    --color-icons:#4472C4;
 }
 
 body{
@@ -28,8 +32,16 @@ body{
     background-color: var(--general-divs);
 }
 
-#sidebar ul li a, .btn-primary{
+.btn-primary{
     color: var(--color-text);
+}
+
+#sidebar ul li a span, #sidebar ul li a {
+    color: var(--color-icons);
+}
+
+#sidebar ul li a span, #sidebar ul li a {
+    color: var(--color-icons);
 }
 
 .divs-graphcs-big{
@@ -42,4 +54,13 @@ body{
 
 .color-text{
     color: var(--color-text);
+}
+
+.li-active{
+    background-color: var(--background-gradient);
+    border-right: 1px solid var(--color-text);
+}
+
+#imgLogo img{
+    width: 50%;
 }
