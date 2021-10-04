@@ -64,3 +64,41 @@ body{
 #imgLogo img{
     width: 50%;
 }
+
+
+/* botao dark-mode */
+
+.check{
+    /* position: relative;
+    top: 5%;
+    left: 7%; */
+
+    background: #1986ff;
+    cursor: pointer;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: ease-in-out 0.5s;
+}
+
+.check:before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -2px;
+    background: #fffffff1;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    transition: 0.5s;
+}
+
+#switch:checked ~ .check:before{
+    transform: translateX(25px);
+    background: #070c08ef;
+}
+
+#switch{
+    -webkit-appearance: none;
+    visibility: hidden;
+    display: none;
+}
