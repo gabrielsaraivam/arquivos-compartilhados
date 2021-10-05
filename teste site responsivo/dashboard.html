@@ -75,9 +75,9 @@
 
           <div class="row mt-2 container col-12">
             <h2 class="color-text">Estatística</h2>
-            <div class="col-8  col-sm-4 col-md-5 col-lg-2 ml-auto p-0 pt-2" >
+            <div class="col-7  col-sm-4 col-md-4 col-lg-3 ml-auto p-0 pt-2" >
               <div class="col-12 p-0">
-                <label class="col-7 p-0 row ml-auto">
+                <label class="col-5 col-sm-7 col-lg-5 p-0 row ml-auto">
                   <input type="checkbox" id="switch"> 
                   <div style="height: 3vh;">
                     <span class="fa fa-sun-o"></span>
@@ -90,23 +90,31 @@
               </div>
             </div>
           </div>
-          <div class="row container col-12 h-50 p-0">
+          <div class="row container col-12 p-0 mb-2">
             <div class=" mt-2 col-md-6 col-lg-6 col-sm-6 col-xl-6 mr-auto rounded">
-              <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded  divs-graphcs-big"></div>
+              <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded  divs-graphcs-big">
+                  <canvas id="myChart"></canvas>
+              </div>
             </div>
             <!-- <div class="col-md-1 col-lg-1" style="background-color: red; height: 1%;"></div> -->
             <div class=" mt-2 col-md-6 col-lg-6 col-sm-6 col-xl-6" >
-              <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded divs-graphcs-big" ></div>
+              <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded divs-graphcs-big" >
+                <canvas id="myChart2"></canvas>
+              </div>
             </div>   
           </div>
       
-          <div class="row container col-12 h-50 p-0">
+          <div class="row container col-12 p-0">
             <div class="mt-3 mb-0 col-md-6 col-lg-6 col-sm-6 col-xl-6 mr-auto rounded">
-              <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded divs-graphcs-small" ></div>
+              <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded divs-graphcs-small" >
+
+              </div>
             </div>
             <!-- <div class="col-md-1 col-lg-1" style="background-color: red; height: 1%;"></div> -->
             <div class="mt-3 col-md-6 col-lg-6 col-sm-6 col-xl-6" >
-              <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded divs-graphcs-small"></div>
+              <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded divs-graphcs-small" style="position: relative; height: 100%;">
+                <canvas id="myChart3"></canvas>
+              </div>
             </div>   
           </div>
         </div>
@@ -135,7 +143,7 @@
 
     if (largura < 1258) 
         // document.getElementsByClassName('menu')[0].className = 'responsivemenu';
-        sidebar.style = "position: absolute; z-index: 9999; height: 100%;"
+        sidebar.style = "position: fixed; z-index: 9999; height: 100%;"
 
     else sidebar.style = ""
 });
@@ -145,7 +153,7 @@ $(document).ready(function() {
 
   if (largura < 1258) 
         // document.getElementsByClassName('menu')[0].className = 'responsivemenu';
-        sidebar.style = "position: absolute; z-index: 9999; height: 100%;"
+        sidebar.style = "position: fixed; z-index: 9999; height: 100%;"
 
     else sidebar.style = ""
 });
@@ -157,6 +165,7 @@ const $html = document.querySelector('html')
         $html.classList.toggle('dark-mode')
     })
 </script>
+
 
 <script>
   var otherCheckbox = document.querySelector ('#switch');
@@ -179,3 +188,115 @@ const $html = document.querySelector('html')
 
     else sidebar.style = ""
 }); -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+var ctx = document.getElementById('myChart').getContext("2d");
+
+var gradientFill = ctx.createLinearGradient(0, 0, 0, 200);
+gradientFill.addColorStop(1, "#1c84e900");
+gradientFill.addColorStop(0, "#1c84e9");
+
+
+  const data = {
+labels: [
+  'Pablo',
+  'Luciano',
+  'Sara',
+  'Rigoni'
+],
+datasets: [{
+  label: 'My First Dataset',
+  data: [2.75, 2, 3.6, 2],
+  fill: true,
+  borderColor: '#1c84e9',
+  backgroundColor: gradientFill,
+  tension: 0.3
+}]
+};
+
+const config = {
+type: 'line',
+data: data,
+options: {
+  indexAxis: 'x',
+  scales: {
+    y: {
+      beginAtZero: true
+    }
+  }
+}
+};
+
+
+var myChart = new Chart(
+  document.getElementById('myChart'),
+  config
+);
+
+// ----------------
+
+const data2 = {
+  labels: [
+    'Igor V.',
+    'Reinaldo',
+    'Dani Alves'
+  ],
+  datasets: [{
+    label: 'My First Dataset',
+    data: [6, 4, 4],
+    backgroundColor: [
+      '#1c84e9',
+      '#0876ee99',
+      '#1c84e950'
+    ],
+    hoverOffset: 4,
+    borderColor: '#ffffff00'
+  }]
+};
+
+const config2 = {
+  type: 'bar',
+  data: data2,
+};
+
+
+var myChart2 = new Chart(
+    document.getElementById('myChart2'),
+    config2
+);
+
+// ----
+
+const data3 = {
+  labels: [
+    'Igor V.',
+    'Reinaldo',
+    'Sara'
+  ],
+  datasets: [{
+    label: 'My First Dataset',
+    data: [6, 4, 3],
+    backgroundColor: [
+      '#1c84e9',
+      '#0876ee99',
+      '#1c84e950'
+    ],
+
+    borderColor: '#ffffff00'
+  }]
+};
+
+const config3 = {
+  type: 'polarArea',
+  data: data3,
+};
+
+
+var myChart3 = new Chart(
+    document.getElementById('myChart3'),
+    config3
+);
+</script>

@@ -101,7 +101,7 @@ body{
     content: '';
     position: absolute;
     top: 10%;
-    left: 2px;
+    left: 5%;
     background: var(--body-fundo);
     width: 45%;
     height: 80%;
@@ -110,7 +110,7 @@ body{
 }
 
 #switch:checked ~ .check:before{
-    transform: translateX(22px);
+    transform: translateX(98%);
 }
 
 #switch{
