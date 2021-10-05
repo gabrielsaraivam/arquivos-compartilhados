@@ -13,14 +13,15 @@
     background-size: cover;
 }
 
-.btn{
+.btn-entrar{
     background: transparent;
     border: 2px solid white;
     color: white;
-    border-radius: 30px;
-    font-size: 20px;
+    border-radius: 35px;
+    font-size: 23px;
     padding-left: 20%;
     padding-right: 20%;
+    height: 45px;
 }
 
 .div-txt1{
@@ -41,4 +42,22 @@
 
 .form{
     margin-left: 25%;
+}
+
+.input-padrao{
+    border: solid 2px #7166F9;
+    border-radius: 3px;
+    background-color: rgb(240, 228, 240);
+    height: 30px;
+}
+
+.btn-cadastrar{
+    background-image: url(./img/fundo.png);
+    border: 2px solid white;
+    color: white;
+    border-radius: 35px;
+    font-size: 23px;
+    padding-left: 20%;
+    padding-right: 20%;
+    height: 45px;
 }
