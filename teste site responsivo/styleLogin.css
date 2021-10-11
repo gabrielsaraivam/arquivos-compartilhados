@@ -60,3 +60,19 @@
     padding-right: 20%;
     height: 45px;
 }
+
+
+.extra {
+    margin: 10px;
+}
+
+.extra img {
+  height: 50px;
+   visibility: hidden;
+}
+
+.extra .msg_erro {
+    background-color: sandybrown; 
+    color: black; 
+    visibility: hidden;
+}

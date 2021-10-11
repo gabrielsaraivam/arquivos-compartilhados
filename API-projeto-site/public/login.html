@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overall</title>
+
+    <script src="./js/bootstrap.js"></script>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <link rel="stylesheet" href="./styleLogin.css">
+</head>
+<body>
+    
+<div class="row col-md-12 col-lg-12 m-0 p-0">
+    
+    <div id="cadastro" class="col-md-6 col-lg-7 pt-4" style="height: 100vh;">
+        <div class="row">
+            
+            <div class="col-md-12 pt-5" style="color: #7166F9; text-align: center;">
+            
+                <h1 class="h1-cadastro col-md-12 pt-5 pb-4">Faça login aqui!</h1>
+            
+            </div> 
+            
+            <div class="form col-md-6 mt-4 mx-auto" style="color: #7166F9; text-align: left;">
+
+                <form id="form_login" method="post" onsubmit="return entrar()">
+                    <div class="col-12 mb-4 mx-auto">
+
+                        <h3 class="col-md-12 mr-auto">E-mail:</h3>
+                        <input name="email" class="col-12 input-padrao" type="text">
+                    </div>
+
+                    <div class="col-12 mb-4 mx-auto">
+                        <h3 class="col-md-5 mr-auto">Senha:</h3>
+                        <input name="senha" class="col-12 input-padrao" type="password">
+                    </div>
+                    
+                    <div class="col-md-12" style="font-weight: 400; font-size: 17px; color:black">
+                    <center>  Esqueceu sua senha?</center>
+                    </div>
+                
+                    <div class="col-lg-8 col-md-12 mx-auto pt-3" style="color: white; text-align: center;">
+
+                    <button id="btn_entrar" class="mx-auto btn-entrar">Entrar</button>
+                
+                </div>
+                </form>   
+
+                <center>
+                <div class="msg_erro" id="div_erro">
+                   
+                </div>
+            
+                </center>
+            
+            
+            </div> 
+                
+        </div>
+
+    </div>
+
+
+    
+        <div id="inicio" class="col-md-6 col-lg-5" style="height: 100vh;">
+    
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 col-sm-12  div-image mx-auto">
+                        <a href="index.html"><img src="./img/logo-white1.png" width="" height="" alt=""></a>
+                        
+                    </div>
+                </div>
+    
+                <div class="row">
+                
+                    <div class="col-md-12 div-txt1" style="color: white; text-align: center;">
+                    
+                        <h1 class="col-md-12">Bem vindo de volta!</h2>
+                    
+                    </div> 
+                </div>
+    
+                <div class="row">
+                    
+                    <div class="col-md-12 div-txt2" style="color: white; text-align: center;">
+    
+                        <h4 class="col-md-12" style="font-weight: 350;">Efetue o login e continue<br>usufruindo do nosso serviço</h5>
+                
+                    </div>
+                
+                </div>
+    
+                <div class="row">
+    
+                    <div class="col-md-12 div-txt3" style="color: white; text-align: center;">
+    
+                        <span class="col-md-12" style="font-weight: 400; font-size: 17px;">Não possui um cadastro?</span>
+                
+                    </div>
+                
+                </div>
+    
+                <div class="row">
+    
+                    <div class="col-md-12 div-btn" style="color: white; text-align: center;">
+    
+                        <a href="cadastro.html"><input type="submit" id="btn_cadastrar" value="Cadastre-se" class="btn-cadastrar"></a>
+                
+                    </div>
+                
+                </div>
+                
+                
+            </div>
+        </div>
+
+
+</div>
+    
+</body>
+</html>
+
+<script>
+
+    function entrar() {
+        aguardar();
+        var formulario = new URLSearchParams(new FormData(form_login));
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            body: formulario
+        }).then(resposta => {
+
+            if (resposta.ok) {
+
+                resposta.json().then(json => {
+
+                    sessionStorage.login_usuario_meuapp = json.email;
+                    sessionStorage.senha_usuario_meuapp = json.senha;
+                    sessionStorage.nome_usuario_meuapp = json.nome;
+
+                    window.location.href = 'dashboard.html';
+                });
+
+            } else {
+
+                console.log('Erro de login!');
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    finalizar_aguardar(texto);
+                });
+            }
+        });
+
+        return false;
+    }
+
+    function aguardar() {
+        btn_entrar.disabled = false;
+        div_erro.style.visibility = 'hidden';
+    }
+
+    function finalizar_aguardar(resposta) {
+        btn_entrar.disabled = false;
+        div_erro.style.visibility = 'visible';
+        div_erro.innerHTML = resposta;
+    }
+
+</script>

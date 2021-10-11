@@ -82,35 +82,43 @@
         
             
             <div class="form col-md-6 mt-4 mx-auto" style="color: #7166F9; text-align: left;">
-            
-                <div class="col-12 mb-4 mx-auto">
-                    <h3 class="col-md-5 mr-auto">Empresa:</h3>
-                    <input class="col-12 input-padrao" type="text">
-                </div>
                 
-                <div class="col-12 mb-4 mx-auto">
-                    <h3 class="col-md-5 mr-auto">CNPJ:</h3>
-                    <input id="cnpj" class="col-12 input-padrao" type="text">
-                </div>
-
-                <script type="text/javascript">
-                    $("#cnpj").mask("000.000.000/0000-00");
-                    </script>
-
-                <div class="col-12 mb-4 mx-auto">
-                    <h3 class="col-md-12 mr-auto">E-mail:</h3>
-                    <input class="col-12 input-padrao" type="text">
-                </div>
-
-                <div class="col-12 mb-4 mx-auto">
-                    <h3 class="col-md-5 mr-auto">Senha:</h3>
-                    <input class="col-12 input-padrao" type="text">
-                </div>
                 
-                <div class="col-lg-8 col-md-12 mx-auto pt-3" style="color: white; text-align: center;">
-                    <center>
-                    <input type="submit" id="btn_cadastrar" value="Cadastre-se" class="modal-dialog-centered  btn-cadastrar">
-                     </center>
+                    <form id="form_cadastro" method="post" onsubmit="return cadastrar()">
+                        
+                        <div class="col-12 mb-4 mx-auto">
+                            <h3 class="col-md-5 mr-auto">Empresa:</h3>
+                            <input name="empresa" class="col-12 input-padrao" type="text" required minlength="1">
+                        </div>
+
+                        <div class="col-12 mb-4 mx-auto">
+                            <h3 class="col-md-5 mr-auto">CNPJ:</h3>
+                            <input name="cnpj" id="cnpj" class="col-12 input-padrao" type="text" required minlength="15">
+                        </div>
+
+                        <script type="text/javascript">
+                            $("#cnpj").mask("000.000.000/0000-00");
+                            </script>
+
+                        <div class="col-12 mb-4 mx-auto">
+                            <h3 class="col-md-12 mr-auto">E-mail:</h3>
+                            <input name="email" class="col-12 input-padrao" type="text" required minlength="5">
+                        </div>
+
+                        <div class="col-12 mb-4 mx-auto">
+                            <h3 class="col-md-5 mr-auto">Senha:</h3>
+                            <input name="senha" class="col-12 input-padrao" type="password" required minlength="5">
+                        </div>
+
+                        <div class="col-lg-8 col-md-12 mx-auto pt-3" style="color: white; text-align: center;">
+                            <center>
+                            <input type="submit" id="btn_cadastrar" value="Cadastre-se" class="modal-dialog-centered  btn-cadastrar">
+                             </center>
+                        </div>
+                </form>
+                
+                <div id="div_erro" style="background-color: #7166F9; color: white; display: none;">
+                    Erro no cadastro
                 </div>
             
             
@@ -122,3 +130,43 @@
 </div>
 </body>
 </html>
+<script>
+
+    function cadastrar() {
+        aguardar();
+        var formulario = new URLSearchParams(new FormData(form_cadastro));
+        fetch("/usuarios/cadastrar", {
+            method: "POST",
+            body: formulario
+        }).then(function (response) {
+            
+            if (response.ok) {
+
+                window.location.href='login.html';
+
+            } else {
+
+                console.log('Erro de cadastro!');
+                response.text().then(function (resposta) {
+                    div_erro.innerHTML = resposta;
+                });
+                finalizar_aguardar();
+            }
+        });
+
+        return false;
+    }
+
+    function aguardar() {
+        btn_entrar.disabled = true;
+        img_aguarde.style.display='block';
+        div_erro.style.display='none';
+    }
+
+    function finalizar_aguardar() {
+        btn_entrar.disabled = false;
+        img_aguarde.style.display='none';
+        div_erro.style.display='block';
+    }
+
+</script>

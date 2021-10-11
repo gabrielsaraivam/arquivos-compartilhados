@@ -1,0 +1,63 @@
+
+.div-image {
+    margin-top: 15%;
+    margin-bottom: 10%;
+}
+
+.div-image img{
+    width: 100%;
+}
+
+#inicio {
+    background-image: url(./img/fundo.png);
+    background-size: cover;
+}
+
+.btn-entrar{
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    border-radius: 35px;
+    font-size: 23px;
+    padding-left: 20%;
+    padding-right: 20%;
+    height: 45px;
+}
+
+.div-txt1{
+    margin-bottom: 2%;
+}
+
+.div-txt2{
+    margin-bottom: 7%;
+}
+
+.div-txt3{
+    margin-bottom: 1%;
+}
+
+.h1-cadastro{
+    font-weight: bold;
+}
+
+.form{
+    margin-left: 25%;
+}
+
+.input-padrao{
+    border: solid 2px #7166F9;
+    border-radius: 3px;
+    background-color: rgb(240, 228, 240);
+    height: 30px;
+}
+
+.btn-cadastrar{
+    background-image: url(./img/fundo.png);
+    border: 2px solid white;
+    color: white;
+    border-radius: 35px;
+    font-size: 23px;
+    padding-left: 20%;
+    padding-right: 20%;
+    height: 45px;
+}
