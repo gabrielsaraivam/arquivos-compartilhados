@@ -494,12 +494,12 @@ var myChart3 = new Chart(
                     // dados.datasets[1].data.shift();  // apagar o primeiro de umidade
                     dados.datasets[0].data.push(novoRegistro.temperatura); // incluir uma nova leitura de temperatura
                     dados.datasets[1].data.push(novoRegistro.umidade); // incluir uma nova leitura de umidade
-                    console.log("meu sensor é o " + idLocalizacao)
+                    console.log("meu sensor é o " + idcaminhao)
 
                     window.grafico_linha.update();
 
 
-                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idLocalizacao, dados), 5000);
+                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idcaminhao, dados), 5000);
               });
           } else {
               console.error('Nenhum dado encontrado ou erro na API');
