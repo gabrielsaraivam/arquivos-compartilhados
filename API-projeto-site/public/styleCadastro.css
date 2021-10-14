@@ -22,6 +22,7 @@
     padding-left: 20%;
     padding-right: 20%;
     height: 45px;
+    cursor: pointer;
 }
 
 .div-txt1{
@@ -60,4 +61,5 @@
     padding-left: 20%;
     padding-right: 20%;
     height: 45px;
+    cursor: pointer;
 }
