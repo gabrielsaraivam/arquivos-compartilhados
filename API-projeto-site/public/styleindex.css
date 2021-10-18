@@ -1,5 +1,6 @@
 body{
     background-color: rgb(240, 228, 240);
+    user-select: none;
 }
 
 
@@ -20,4 +21,8 @@ body{
 
 .icon{
     width: 60%;
+}
+
+.name-overall{
+    translate: no;
 }
