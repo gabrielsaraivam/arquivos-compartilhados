@@ -13,6 +13,8 @@
      <!-- scripts do Chart.js -->
      <script type="text/javascript" src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
 
+     <link rel="sortcut icon" href="./img/logo.png" type="image/x-icon"/>
+
     <script src="./js/bootstrap.js"></script>
     <link rel="stylesheet" href="./css/bootstrap.css">
     <link rel="stylesheet" href="./styleDash.css">
@@ -383,19 +385,19 @@ var myChart3 = new Chart(
           stacked: false,
           title: {
               display: true,
-              text: 'Histórico recente de temperatura e umidade'
+              text: 'Histórico recente de CPU e Memoria'
           },
           scales: {
               yAxes: [{
                   type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
                   display: true,
                   position: 'left',
-                  id: 'y-temperatura',
+                  id: 'y-cpu',
               }, {
                   type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
                   display: true,
                   position: 'right',
-                  id: 'y-umidade',
+                  id: 'y-memoria',
 
                   // grid line settings
                   gridLines: {
@@ -420,7 +422,7 @@ var myChart3 = new Chart(
       }
 
 
-      fetch(`/leituras/ultimas/${idcaminhao}`, { cache: 'no-store' }).then(function (response) {
+      fetch(`/tblDadosHardwares/ultimas/${idcaminhao}`, { cache: 'no-store' }).then(function (response) {
           if (response.ok) {
               response.json().then(function (resposta) {
                   console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
@@ -431,18 +433,18 @@ var myChart3 = new Chart(
                       labels: [],
                       datasets: [
                           {
-                              yAxisID: 'y-temperatura',
-                              label: 'Temperatura',
-                              borderColor: 'rgba(255,0,0,1)',
-                              backgroundColor: 'rgba(255,0,0,1)',
+                              yAxisID: 'y-cpu',
+                              label: 'CPU',
+                              borderColor: '#1c84e9',
+                              backgroundColor: '#1c84e9',
                               fill: false,
                               data: []
                           },
                           {
-                              yAxisID: 'y-umidade',
-                              label: 'Umidade',
-                              borderColor: 'rgba(255,0,255,1)',
-                              backgroundColor: 'rgba(255,0,255,1)',
+                              yAxisID: 'y-memoria',
+                              label: 'Memória',
+                              borderColor: '#0876ee99',
+                              backgroundColor: '#0876ee99',
                               fill: false,
                               data: []
                           }
@@ -450,9 +452,9 @@ var myChart3 = new Chart(
                   };
                   for (i = 0; i < resposta.length; i++) {
                       var registro = resposta[i];
-                      dados.labels.push(registro.momento_grafico);
-                      dados.datasets[0].data.push(registro.temperatura);
-                      dados.datasets[1].data.push(registro.umidade);
+                      dados.labels.push(registro.dataHora_grafico);
+                      dados.datasets[0].data.push(registro.cpu);
+                      dados.datasets[1].data.push(registro.memoria);
 
                   }
                   console.log(JSON.stringify(dados));
@@ -475,7 +477,7 @@ var myChart3 = new Chart(
   // só mexer se quiser alterar o tempo de atualização
   // ou se souber o que está fazendo!
   function atualizarGrafico(idcaminhao, dados) {
-      fetch(`/leituras/tempo-real/${idcaminhao}`, { cache: 'no-store' }).then(function (response) {
+      fetch(`/tblDadosHardwares/tempo-real/${idcaminhao}`, { cache: 'no-store' }).then(function (response) {
           console.log("Estou tentando pegar idcaminhao = ", idcaminhao)
           if (response.ok) {
               response.json().then(function (novoRegistro) {
@@ -489,11 +491,11 @@ var myChart3 = new Chart(
                     }
                     // tirando e colocando valores no gráfico
                     // dados.labels.shift(); // apagar o primeiro
-                    dados.labels.push(novoRegistro.momento_grafico); // incluir um novo momento
-                    // dados.datasets[0].data.shift();  // apagar o primeiro de temperatura
-                    // dados.datasets[1].data.shift();  // apagar o primeiro de umidade
-                    dados.datasets[0].data.push(novoRegistro.temperatura); // incluir uma nova leitura de temperatura
-                    dados.datasets[1].data.push(novoRegistro.umidade); // incluir uma nova leitura de umidade
+                    dados.labels.push(novoRegistro.dataHora_grafico); // incluir um novo dataHora
+                    // dados.datasets[0].data.shift();  // apagar o primeiro de cpu
+                    // dados.datasets[1].data.shift();  // apagar o primeiro de memoria
+                    dados.datasets[0].data.push(novoRegistro.cpu); // incluir uma nova tblDadosHardware de cpu
+                    dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
                     console.log("meu sensor é o " + idcaminhao)
 
                     window.grafico_linha.update();

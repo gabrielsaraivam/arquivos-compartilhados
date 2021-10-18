@@ -1,4 +1,4 @@
-1. Entre em /routes e altere o select em 'leituras.js' para que você consiga
+1. Entre em /routes e altere o select em 'tblDadosHardwares.js' para que você consiga
 inserir os dados em sua tabela.
 
 2. Entre na pasta /config e altere as credenciais de banco de dados em 'config.js', 

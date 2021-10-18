@@ -1,47 +1,47 @@
 var express = require('express');
 var router = express.Router();
 var sequelize = require('../models').sequelize;
-var Leitura = require('../models').Leitura;
+var tblDadosHardware = require('../models').tblDadosHardware;
 var env = process.env.NODE_ENV || 'development';
 
-/* Recuperar as últimas N leituras */
+/* Recuperar as últimas N tblDadosHardwares */
 router.get('/ultimas/:idcaminhao', function(req, res, next) {
 	
-	// quantas são as últimas leituras que quer? 7 está bom?
+	// quantas são as últimas tblDadosHardwares que quer? 7 está bom?
 	const limite_linhas = 4;
 
 	var idcaminhao = req.params.idcaminhao;
 
-	console.log(`Recuperando as ultimas ${limite_linhas} leituras`);
+	console.log(`Recuperando as ultimas ${limite_linhas} tblDadosHardwares`);
 	
 	let instrucaoSql = "";
 
 	if (env == 'dev') {
 		// abaixo, escreva o select de dados para o Workbench
 		instrucaoSql = `select 
-		temperatura, 
-		umidade, 
-		momento,
-		DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico
-		from leitura
-		where fkcaminhao = ${idcaminhao}
+		dataHora,
+		cpu, 
+		memoria, 
+		DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico
+		from tblDadosHardware
+		where fkEmpresa = ${idcaminhao}
 		order by id desc limit ${limite_linhas}`;
 	} else if (env == 'production') {
 		// abaixo, escreva o select de dados para o SQL Server
 		instrucaoSql = `select top ${limite_linhas} 
-		temperatura, 
-		umidade, 
-		momento,
-		FORMAT(momento,'HH:mm:ss') as momento_grafico
-		from leitura
-		where fkcaminhao = ${idcaminhao}
+		cpu, 
+		memoria, 
+		dataHora,
+		FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico
+		from tblDadosHardware
+		where fkEmpresa = ${idcaminhao}
 		order by id desc`;
 	} else {
 		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
 	}
 	
 	sequelize.query(instrucaoSql, {
-		model: Leitura,
+		model: tblDadosHardware,
 		mapToModel: true 
 	})
 	.then(resultado => {
@@ -64,10 +64,10 @@ router.get('/tempo-real/:idcaminhao', function(req, res, next) {
 	
 	if (env == 'dev') {
 		// abaixo, escreva o select de dados para o Workbench
-		instrucaoSql = `select temperatura, umidade, DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico, fkcaminhao from leitura where fkcaminhao = ${idcaminhao} order by id desc limit 1`;
+		instrucaoSql = `select DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico, cpu, memoria, fkEmpresa from tblDadosHardware where fkEmpresa = 1 order by id desc limit 4`;
 	} else if (env == 'production') {
 		// abaixo, escreva o select de dados para o SQL Server
-		instrucaoSql = `select top 1 temperatura, umidade, FORMAT(momento,'HH:mm:ss') as momento_grafico, fkcaminhao from leitura where fkcaminhao = ${idcaminhao} order by id desc`;
+		instrucaoSql = `select top 1 cpu, memoria, FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico, fkEmpresa from tblDadosHardware where fkEmpresa = ${idcaminhao} order by id desc`;
 	} else {
 		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
 	}
@@ -89,13 +89,13 @@ router.get('/estatisticas', function (req, res, next) {
 	console.log(`Recuperando as estatísticas atuais`);
 
 	const instrucaoSql = `select 
-							max(temperatura) as temp_maxima, 
-							min(temperatura) as temp_minima, 
-							avg(temperatura) as temp_media,
-							max(umidade) as umidade_maxima, 
-							min(umidade) as umidade_minima, 
-							avg(umidade) as umidade_media 
-						from leitura`;
+							max(cpu) as temp_maxima, 
+							min(cpu) as temp_minima, 
+							avg(cpu) as temp_media,
+							max(memoria) as memoria_maxima, 
+							min(memoria) as memoria_minima, 
+							avg(memoria) as memoria_media 
+						from tblDadosHardware`;
 					
 
 	sequelize.query(instrucaoSql, { type: sequelize.QueryTypes.SELECT })
