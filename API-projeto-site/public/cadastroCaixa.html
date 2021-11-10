@@ -103,7 +103,7 @@
           </div>
 
           <div class="row mt-2 container col-12">
-            <h2 class="color-text">Caixas eletrônicos</h2>
+            <h2 class="color-text">Meus caixas: <span id="myCashiers">0</span></h2>
             <div class="col-7  col-sm-4 col-md-4 col-lg-3 ml-auto p-0 pt-2" >
               <div class="col-12 p-0">
                 <label class="col-5 col-sm-7 col-lg-5 p-0 row ml-auto">
@@ -119,7 +119,19 @@
               </div>
             </div>
           </div>
-          <h4 class="color-text">Meus caixas: select COUNT(*) from tblCaixasEletrônicos where fkEmpresa = x</h4>
+          <div class="row container pt-3">
+            <h4 class="color-text">Cadastrar nova máquina</h4>
+          </div>
+
+          <div class="row container pt-3">
+            <h6 class="color-text mr-auto">Latitude:</h6>
+            <h6 class="color-text ml-auto">Longitude:</h6>
+          </div>
+
+          <div class="row container">
+            <input type="text" class="mr-auto">
+            <input type="text" class="ml-auto">
+          </div>
     </div>
   
 </body>
@@ -191,6 +203,7 @@ function quantidadeCaixas(){
                   console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                   alert(`Dados recebidos: ${JSON.stringify(resposta)}`);
                   resposta.reverse();
+                  myCashiers.innerHTML = `${resposta}`
               });
           } else {
               console.error('Nenhum dado encontrado ou erro na API');
