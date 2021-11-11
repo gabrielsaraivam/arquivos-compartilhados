@@ -49,10 +49,10 @@
               <a href="cadastroCaixa.html"><span class="fa fa-money mr-3"></span> Caixas Eletrônicos</a>
             </li>
             <li class="pl-4 pr-4">
-              <a href="#"><span class="fa fa-sticky-note mr-3"></span> Blog</a>
+              <a href="http://localhost:8080/"><span class="fa fa-sticky-note mr-3"></span> Blog</a>
             </li>
             <li class="pl-4 pr-4">
-              <a href="#"><span class="fa fa-suitcase mr-3"></span> Gallery</a>
+              <a href="https://google.com" target="_blank"><span class="fa fa-suitcase mr-3"></span> Gallery</a>
             </li>
             <li class="pl-4 pr-4">
               <a href="#"><span class="fa fa-cogs mr-3"></span> Services</a>
@@ -79,6 +79,10 @@
         </div> -->
 
         <script>
+
+localStorage.setItem('name', 'Treinaweb');
+localStorage['name'] = 'Treinaweb';
+          alert(localStorage['name']);
 
           function verificar_autenticacao() {
               nome_usuario = sessionStorage.nome_usuario_meuapp;
