@@ -182,13 +182,13 @@ a[data-toggle="collapse"] {
     position: relative;
 }
 
-.dropdown-toggle::after {
-  display: block;
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-}
+// .dropdown-toggle::after {
+//   display: block;
+//   position: absolute;
+//   top: 50%;
+//   right: 0;
+//   transform: translateY(-50%);
+// }
 
 #sidebarCollapse{
 	span{

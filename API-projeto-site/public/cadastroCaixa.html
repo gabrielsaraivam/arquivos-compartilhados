@@ -77,25 +77,6 @@
             <div class="col-lg-12 col-md-12" style="background-color: red;"></div>
           </div>
         </div> -->
-
-        <script>
-
-          function verificar_autenticacao() {
-              nome_usuario = sessionStorage.nome_usuario_meuapp;
-              id_usuario = sessionStorage.id_usuario_meuapp
-              senha_usuario = sessionStorage.senha_usuario_meuapp;
-
-              if (nome_usuario == undefined)  {
-                  redirecionar_login();
-              } else {
-                  usuario.innerHTML = nome_usuario;
-                  // validar_sessao();
-              }
-
-          }
-                   
-        </script>
-
         <div id="content" class="p-4 p-md-5 pt-5">
           <div class="row container col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xl-12 border-bottom">
             <h6 class="mr-auto">Empresa</h6>
@@ -123,19 +104,56 @@
             <h4 class="color-text">Cadastrar nova máquina</h4>
           </div>
 
-          <div class="row container pt-3">
-            <h6 class="color-text mr-auto">Latitude:</h6>
-            <h6 class="color-text ml-auto">Longitude:</h6>
+          
+          <div class="row container pt-5 mx-auto">
+            <h6 class="color-text mr-auto col-5">Latitude:</h6>
+            <h6 class="color-text mr-auto col-5">Longitude:</h6>
           </div>
 
-          <div class="row container">
-            <input type="text" class="mr-auto">
-            <input type="text" class="ml-auto">
+          <div class="row container mx-auto">
+            <input type="text" class="mr-auto col-5">
+            <input type="text" class="mr-auto col-5">
+          </div>
+
+          <div class="row container pt-5 mx-auto">
+            <h6 class="color-text mr-auto col-5">Número de série:</h6>
+            <h6 class="color-text mr-auto col-5">Usuário:</h6>
+          </div>
+
+          <div class="row container mx-auto">
+            <input type="text" class="mr-auto col-5">
+            <input type="text" class="mr-auto col-5">
+          </div>
+
+          <div class="row container pt-5 mx-auto">
+            <h6 class="color-text mr-auto col-5">Senha:</h6>
+          </div>
+
+          <div class="row container mx-auto">
+            <input type="text" class="mr-auto col-5">
+            <button class="btn btn-dark col-5 mr-auto" >Cadastrar</button>
           </div>
     </div>
   
 </body>
 </html>
+
+<script>
+  function verificar_autenticacao() {
+    nome_usuario = sessionStorage.nome_usuario_meuapp;
+    id_usuario = sessionStorage.id_usuario_meuapp
+    senha_usuario = sessionStorage.senha_usuario_meuapp;
+
+    if (nome_usuario == undefined)  {
+      redirecionar_login();
+    } else {
+      usuario.innerHTML = nome_usuario;
+      // validar_sessao();
+    }
+
+  }
+                   
+</script>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

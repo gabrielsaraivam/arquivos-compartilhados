@@ -2,6 +2,11 @@
     background-color: aliceblue;
 }
 
+input{
+    background-color: var(--general-divs);
+    border: solid 1px var(--border-input);
+}
+
 .responsivemenu{
     position: absolute;
     z-index: 9999;
@@ -14,6 +19,7 @@
     --background-gradient: #2B2F4230;
     --background-gradient-hover: #16181f35;
     --color-icons:#2B2F42;
+    --border-input:#2B2F42;
 }
 
 .dark-mode:root{
@@ -22,7 +28,8 @@
     --general-divs: #2B2F42;
     --background-gradient: #4472C430;
     --background-gradient-hover: #4472C435;
-    --color-icons:#4472C4;
+    --color-icons:#ffff;
+    --border-input:#232635;
 }
 
 body{

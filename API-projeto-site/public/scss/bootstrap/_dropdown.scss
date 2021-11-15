@@ -6,12 +6,12 @@
   position: relative;
 }
 
-.dropdown-toggle {
-  white-space: nowrap;
+// .dropdown-toggle {
+//   white-space: nowrap;
 
-  // Generate the caret automatically
-  @include caret;
-}
+//   // Generate the caret automatically
+//   @include caret;
+// }
 
 // The dropdown menu
 .dropdown-menu {
