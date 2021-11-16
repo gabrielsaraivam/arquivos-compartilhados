@@ -91,7 +91,9 @@
                   <div style="height: 3vh;">
                     <span class="fa fa-sun-o"></span>
                   </div>
-                  <div class="check col-6 ml-2 mr-2"></div> 
+                  <div class="check col-6 ml-2 mr-2">
+
+                  </div> 
                   <div style="height: 3vh;">
                     <span class="fa fa-moon-o"></span>
                   </div>
@@ -103,6 +105,7 @@
             <h4 class="color-text">Cadastrar novo usuário</h4>
           </div>
   
+          <form id="form_cadastro_usuario" method="post" onsubmit="return cadastrar()">
           
           <div class="row container pt-5 mx-auto">
             <h6 class="color-text mr-auto col-5">Nome:</h6>
@@ -110,8 +113,8 @@
           </div>
 
           <div class="row container mx-auto">
-            <input type="text" class="mr-auto col-5">
-            <input type="text" class="mr-auto col-5">
+            <input name="nome" type="text" class="mr-auto col-5">
+            <input name="cpf" type="text" class="mr-auto col-5">
           </div>
 
           <div class="row container pt-5 mx-auto">
@@ -120,8 +123,8 @@
           </div>
 
           <div class="row container mx-auto">
-            <input type="text" class="mr-auto col-5">
-            <input type="text" class="mr-auto col-5">
+            <input name="email" type="text" class="mr-auto col-5">
+            <input name="senha" type="text" class="mr-auto col-5">
           </div>
 
           <div class="row container pt-5 mx-auto">
@@ -129,38 +132,64 @@
           </div>
 
           <div class="row container mx-auto">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Dropdown button
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
+            <div class="dropdown mr-auto col-5">
+              <button class="btn btn-secondary dropdown-toggle col-12" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span id="mudarCargo">Cargo</span>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <option class="dropdown-item" onclick="chamarCargoAnalista()">Analista</option>
+                <option class="dropdown-item" onclick="chamarCargoGerente()">Gerente</option>
               </div>
-            <button class="btn btn-dark col-5 mr-auto" >Cadastrar</button>
+            </div>
+            <input class = "col-1" name="cargo" id="inCargo" style="opacity: 0;">
+            <input type="submit" value="Cadastrar" id="btn_cadastrar_usuario" class="btn btn-dark col-5 mr-auto">
           </div>
+          </form>
         </div>
+
     </div>
 </body>
 </html>
 
 <script>
-  function verificar_autenticacao() {
-    nome_usuario = sessionStorage.nome_usuario_meuapp;
-    id_usuario = sessionStorage.id_usuario_meuapp
-    senha_usuario = sessionStorage.senha_usuario_meuapp;
+  function chamarCargoAnalista(){
+    mudarCargo.innerHTML = `Analista`
+    inCargo.value = "Analista"
+  }
 
-    if (nome_usuario == undefined)  {
-      redirecionar_login();
-    } else {
-      usuario.innerHTML = nome_usuario;
-      // validar_sessao();
+  function chamarCargoGerente(){
+    mudarCargo.innerHTML = `Gerente`
+    inCargo.value = "Gerente"
+  }
+
+
+  function cadastrar() {
+        
+        var formulario = new URLSearchParams(new FormData(form_cadastro_usuario));
+        fetch(`/tblUsuarios/cadastrar/${id_usuario}`, {
+            method: "POST",
+            body: formulario
+        }).then(function (response) {
+            
+            if (response.ok) {
+
+                window.location.href='cadastroUsuario.html';
+
+            } else {
+
+                console.log('Erro de cadastro!');
+                response.text().then(function (resposta) {
+                    alert(resposta)
+                });
+                
+            }
+        });
+
+        return false;
     }
 
-  }
-                   
+
+
 </script>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -169,7 +198,7 @@
 
 <script src="./jsSb/jquery.min.js"></script>
 <script src="./jsSb/popper.js"></script>
-<script src="./jsSb/bootstrap.min.js"></script>
+<!-- <script src="./jsSb/bootstrap.min.js"></script> -->
 <script src="./jsSb/main.js"></script>
 
 <!-- max-width: 991.98px -->

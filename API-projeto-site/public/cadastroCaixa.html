@@ -104,6 +104,7 @@
             <h4 class="color-text">Cadastrar nova máquina</h4>
           </div>
 
+          <form id="form_cadastro_caixa" method="post" onsubmit="return cadastrar()">
           
           <div class="row container pt-5 mx-auto">
             <h6 class="color-text mr-auto col-5">Latitude:</h6>
@@ -111,8 +112,8 @@
           </div>
 
           <div class="row container mx-auto">
-            <input type="text" class="mr-auto col-5">
-            <input type="text" class="mr-auto col-5">
+            <input name="latitude" type="text" class="mr-auto col-5">
+            <input name="longitude"  type="text" class="mr-auto col-5">
           </div>
 
           <div class="row container pt-5 mx-auto">
@@ -121,8 +122,8 @@
           </div>
 
           <div class="row container mx-auto">
-            <input type="text" class="mr-auto col-5">
-            <input type="text" class="mr-auto col-5">
+            <input name="numeroSerie" type="text" class="mr-auto col-5">
+            <input name="usuario" type="text" class="mr-auto col-5">
           </div>
 
           <div class="row container pt-5 mx-auto">
@@ -130,28 +131,43 @@
           </div>
 
           <div class="row container mx-auto">
-            <input type="text" class="mr-auto col-5">
-            <button class="btn btn-dark col-5 mr-auto" >Cadastrar</button>
+            <input name="senha" type="password" class="mr-auto col-5">
+            <input type="submit" value="Cadastrar" id="btn_cadastrar_caixa" class="btn btn-dark col-5 mr-auto">
           </div>
+        
+        </form>
     </div>
   
 </body>
 </html>
 
 <script>
-  function verificar_autenticacao() {
-    nome_usuario = sessionStorage.nome_usuario_meuapp;
-    id_usuario = sessionStorage.id_usuario_meuapp
-    senha_usuario = sessionStorage.senha_usuario_meuapp;
 
-    if (nome_usuario == undefined)  {
-      redirecionar_login();
-    } else {
-      usuario.innerHTML = nome_usuario;
-      // validar_sessao();
+function cadastrar() {
+        
+        var formulario = new URLSearchParams(new FormData(form_cadastro_caixa));
+        fetch(`/tblCaixaEletronicos/cadastrar/${id_usuario}`, {
+            method: "POST",
+            body: formulario
+        }).then(function (response) {
+            
+            if (response.ok) {
+
+                window.location.href='cadastroCaixa.html';
+
+            } else {
+
+                console.log('Erro de cadastro!');
+                response.text().then(function (resposta) {
+                    alert(resposta)
+                });
+                
+            }
+        });
+
+        return false;
     }
 
-  }
                    
 </script>
 
@@ -215,13 +231,13 @@ id_usuario = sessionStorage.id_usuario_meuapp;
 window.onload = quantidadeCaixas();
 
 function quantidadeCaixas(){
-  fetch(`/tblCaixaEletronico/caixas/${id_usuario}`, { cache: 'no-store' }).then(function (response) {
+  fetch(`/tblCaixaEletronicos/caixas/${id_usuario}`, { cache: 'no-store' }).then(function (response) {
           if (response.ok) {
               response.json().then(function (resposta) {
                   console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                   alert(`Dados recebidos: ${JSON.stringify(resposta)}`);
                   resposta.reverse();
-                  myCashiers.innerHTML = `${resposta}`
+                  myCashiers.innerHTML = `${JSON.stringify(resposta[0].qtdCaixas)}`
               });
           } else {
               console.error('Nenhum dado encontrado ou erro na API');
