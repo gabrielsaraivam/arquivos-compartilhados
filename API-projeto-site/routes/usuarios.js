@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var sequelize = require('../models').sequelize;
 var tblEmpresa = require('../models').tblEmpresa;
+var tblUsuario = require('../models').tblUsuario;
 
 let sessoes = [];
 
@@ -25,7 +26,24 @@ router.post('/autenticar', function(req, res, next) {
 			console.log('sessoes: ',sessoes);
 			res.json(resultado[0]);
 		} else if (resultado.length == 0) {
-			res.status(403).send('email e/ou senha inválido(s)');
+			instrucaoSql = `select * from tblUsuario where email='${email}' and senha='${senha}'`;
+			console.log(instrucaoSql);
+
+			sequelize.query(instrucaoSql, {
+				model: tblUsuario
+			}).then(resposta => {
+				console.log(`Encontrados: ${resposta.length}`);
+			
+				if (resposta.length == 1) {
+					sessoes.push(resposta[0].dataValues.email);
+					console.log('sessoes: ',sessoes);
+					res.json(resposta[0]);
+				}
+			
+			}).catch(erro => {
+					console.error(erro);
+					res.status(500).send(erro.message);
+				  });
 		} else {
 			res.status(403).send('Mais de um usuário com o mesmo email e senha!');
 		}

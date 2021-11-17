@@ -128,7 +128,9 @@
 <script>
 
     function entrar() {
-        aguardar();
+
+        sessionStorage.clear();
+        
         var formulario = new URLSearchParams(new FormData(form_login));
         fetch("/usuarios/autenticar", {
             method: "POST",
@@ -144,6 +146,9 @@
                     sessionStorage.nome_usuario_meuapp = json.nome;
                     sessionStorage.id_usuario_meuapp = json.id;
 
+                    sessionStorage.cargo_usuario_meuapp = json.cargo;
+                    sessionStorage.fkEmpresa_usuario_meuapp = json.fkEmpresa;
+
                     window.location.href = 'dashboard.html';
                 });
 
@@ -153,7 +158,6 @@
 
                 resposta.text().then(texto => {
                     console.error(texto);
-                    finalizar_aguardar(texto);
                 });
             }
         });
@@ -161,15 +165,5 @@
         return false;
     }
 
-    function aguardar() {
-        btn_entrar.disabled = false;
-        div_erro.style.visibility = 'hidden';
-    }
-
-    function finalizar_aguardar(resposta) {
-        btn_entrar.disabled = false;
-        div_erro.style.visibility = 'visible';
-        div_erro.innerHTML = resposta;
-    }
 
 </script>

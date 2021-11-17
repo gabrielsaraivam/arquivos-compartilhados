@@ -14,7 +14,7 @@ router.get('/usuarios/:id_usuario', function(req, res, next) {
 
 	if (env == 'dev') {
 		// abaixo, escreva o select de dados para o Workbench
-		instrucaoSql = `select COUNT(*) from tblUsuario where fkEmpresa = ${id_usuario}`;
+		instrucaoSql = `select COUNT(*) as qtdUsers from tblUsuario where fkEmpresa = ${id_usuario}`;
 	} else if (env == 'production') {
 		// abaixo, escreva o select de dados para o SQL Server
 		instrucaoSql = `select COUNT(*) from tblUsuario where fkEmpresa = ${id_usuario}`;
@@ -39,7 +39,7 @@ router.get('/usuarios/:id_usuario', function(req, res, next) {
 router.post('/cadastrar/:id_usuario', function(req, res, next) {
 	console.log('Criando um usuário');
 	
-	tblCaixaEletronico.create({
+	tblUsuario.create({
 		email : req.body.email,
 		cpf: req.body.cpf,
 		nome : req.body.nome,

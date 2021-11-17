@@ -9,6 +9,8 @@
      <!-- script do google charts -->
      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
      <script type="text/javascript" src="./funcoes.js"></script>
+     <script type="text/javascript" src="./funcoesCargo.js"></script>
+     <script type="text/javascript" src="./funcoesLocalizacao.js"></script>
  
      <!-- scripts do Chart.js -->
      <script type="text/javascript" src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
@@ -43,10 +45,10 @@
               <a href="dashboard.html"><span class="fa fa-home mr-3"></span> Home</a>
             </li>
             <li class="pl-4 pr-4">
-                <a href="cadastroUsuario.html"><span class="fa fa-user mr-3"></span> Cadastrar Usuário</a>
+                <a href="cadastroUsuario.html" id="aUser"><span class="fa fa-user mr-3"></span> Cadastrar Usuário</a>
             </li>
             <li class="pl-4 pr-4">
-              <a href="cadastroCaixa.html"><span class="fa fa-money mr-3"></span> Caixas Eletrônicos</a>
+              <a href="cadastroCaixa.html" id="aCaixa"><span class="fa fa-money mr-3"></span> Caixas Eletrônicos</a>
             </li>
             <li class="pl-4 pr-4">
               <a href="http://localhost:8080/"><span class="fa fa-sticky-note mr-3"></span> Blog</a>
@@ -58,7 +60,7 @@
               <a href="#"><span class="fa fa-cogs mr-3"></span> Services</a>
             </li>
             <li class="pl-4 pr-4">
-              <a href="#"><span class="fa fa-paper-plane mr-3"></span> Contacts</a>
+              <a href="#" onclick="logoff()"><span class="fa fa-paper-plane mr-3"></span>Logoff</a>
             </li>
           </ul>
 
@@ -80,9 +82,9 @@
 
         <script>
 
-          localStorage.setItem('name', 'Treinaweb');
-          localStorage['name'] = 'Treinaweb';
-          alert(localStorage['name']);
+          // localStorage.setItem('name', 'Treinaweb');
+          // localStorage['name'] = 'Treinaweb';
+          // alert(localStorage['name']);
 
           function verificar_autenticacao() {
               nome_usuario = sessionStorage.nome_usuario_meuapp;
@@ -102,7 +104,7 @@
 
         <div id="content" class="p-4 p-md-5 pt-5">
           <div class="row container col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xl-12 border-bottom">
-            <h6 class="mr-auto">Analista</h6>
+            <h6 class="mr-auto" id="hCargo">Empresa</h6>
             <h6 id="usuario" class="ml-auto"></h6>
           </div>
 
@@ -159,8 +161,15 @@
 </html>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" crossorigin="anonymous"></script> -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 
 <script src="./jsSb/jquery.min.js"></script>
 <script src="./jsSb/popper.js"></script>
@@ -342,7 +351,13 @@ var myChart3 = new Chart(
 
   let proximaAtualizacao;
 
-  window.onload = obterDadosGraficoPrimeiraVez(1);
+  window.onload = inicializacao();
+
+  function inicializacao(){
+    verificarCargo();
+    getLocalizacao();
+    obterDadosGraficoPrimeiraVez(1);
+  }
   // chamargraficos(1);
 
   // function alterarCoresBotoes(idcaminhao) {
@@ -542,10 +557,14 @@ var myChart3 = new Chart(
       http.open('GET', 'http://localhost:9001/api/sendData', false);
       http.send(null);
   }
-  
+
+    
   // Descomente abaixo se quiser inserir dados a cada X segundos
   // setInterval(() => {
   //     sendData();
   // }, 2000);
+
+  // import Cookies from 'js-cookie'
+
 
 </script>

@@ -2,7 +2,7 @@ let login_usuario;
 let senha_usuario;
 
 function redirecionar_login() {
-    window.location.href = 'dashboard.html';
+    window.location.href = 'index.html';
 }
 
 function verificar_autenticacao() {
@@ -20,6 +20,8 @@ function verificar_autenticacao() {
 
 function logoff() {
     finalizar_sessao();
+    Cookies.remove('latitude');
+    Cookies.remove('longitude');
     sessionStorage.clear();
     redirecionar_login();
 }

@@ -231,11 +231,16 @@ id_usuario = sessionStorage.id_usuario_meuapp;
 window.onload = quantidadeCaixas();
 
 function quantidadeCaixas(){
+  var cargo = sessionStorage.cargo_usuario_meuapp;
+  var fkEmpresa = sessionStorage.fkEmpresa_usuario_meuapp;
+  if(cargo == "Gerente"){
+    id_usuario = fkEmpresa;
+  }
   fetch(`/tblCaixaEletronicos/caixas/${id_usuario}`, { cache: 'no-store' }).then(function (response) {
           if (response.ok) {
               response.json().then(function (resposta) {
                   console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                  alert(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                  
                   resposta.reverse();
                   myCashiers.innerHTML = `${JSON.stringify(resposta[0].qtdCaixas)}`
               });

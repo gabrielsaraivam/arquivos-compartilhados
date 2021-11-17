@@ -83,7 +83,7 @@
           </div>
 
           <div class="row mt-2 container col-12">
-            <h2 class="color-text">Meus usuários: <span id="myCashiers">0</span></h2>
+            <h2 class="color-text">Meus usuários: <span id="myUsers">0</span></h2>
             <div class="col-7  col-sm-4 col-md-4 col-lg-3 ml-auto p-0 pt-2" >
               <div class="col-12 p-0">
                 <label class="col-5 col-sm-7 col-lg-5 p-0 row ml-auto">
@@ -252,13 +252,17 @@ id_usuario = sessionStorage.id_usuario_meuapp;
 window.onload = quantidadeUsuarios();
 
 function quantidadeUsuarios(){
-  fetch(`/tblUsuario/usuarios/${id_usuario}`, { cache: 'no-store' }).then(function (response) {
+  var cargo = sessionStorage.cargo_usuario_meuapp;
+  var fkEmpresa = sessionStorage.fkEmpresa_usuario_meuapp;
+  if(cargo == "Gerente"){
+    id_usuario = fkEmpresa;
+  }
+  fetch(`/tblUsuarios/usuarios/${id_usuario}`, { cache: 'no-store' }).then(function (response) {
           if (response.ok) {
               response.json().then(function (resposta) {
                   console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                  alert(`Dados recebidos: ${JSON.stringify(resposta)}`);
                   resposta.reverse();
-                  myCashiers.innerHTML = `${resposta}`
+                  myUsers.innerHTML = `${JSON.stringify(resposta[0].qtdUsers)}`
               });
           } else {
               console.error('Nenhum dado encontrado ou erro na API');
