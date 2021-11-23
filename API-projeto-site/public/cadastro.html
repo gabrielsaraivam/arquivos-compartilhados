@@ -109,9 +109,14 @@
                             <input name="email" class="col-12 input-padrao" type="text" required minlength="5">
                         </div>
 
-                        <div class="col-12 mb-4 mx-auto">
+                        <div class="col-12 mx-auto">
                             <h3 class="col-md-5 mr-auto">Senha:</h3>
-                            <input name="senha" class="col-12 input-padrao" type="password" required minlength="4">
+                            <input id="senha" name="senha" class="col-12 input-padrao" type="password" required minlength="4">
+                        </div>
+
+                        <div style="font-weight: 500;" class="row container mb-2 mr-auto ml-1 col-6">
+                            <input type="checkbox" onclick="mostrarOcultarSenha()" class="my-auto mr-2"> 
+                            <span class="my-auto"> Exibir Senha</span>
                         </div>
 
                         <div class="col-lg-8 col-md-12 mx-auto pt-3" style="color: white; text-align: center;">
@@ -134,6 +139,23 @@
 </div>
 </body>
 </html>
+
+<script>
+    function mostrarOcultarSenha(){
+      
+      var senha=document.getElementById("senha");
+  
+      if(senha.type=="password"){
+        senha.type="text";
+      }else{
+        senha.type="password";
+      }
+  
+    }
+  
+  
+  </script>
+
 <script>
 
     function cadastrar() {

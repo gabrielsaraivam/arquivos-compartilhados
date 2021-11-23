@@ -20,6 +20,9 @@
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 		
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="./cssSB/style.css">
 
@@ -114,8 +117,12 @@
 
           <div class="row container mx-auto">
             <input name="nome" type="text" class="mr-auto col-5">
-            <input name="cpf" type="text" class="mr-auto col-5">
+            <input id="cpf" name="cpf" type="text" class="mr-auto col-5">
           </div>
+
+          <script type="text/javascript">
+            $("#cpf").mask("000.000.000-00");
+            </script>
 
           <div class="row container pt-5 mx-auto">
             <h6 class="color-text mr-auto col-5">E-mail:</h6>
@@ -124,7 +131,12 @@
 
           <div class="row container mx-auto">
             <input name="email" type="text" class="mr-auto col-5">
-            <input name="senha" type="text" class="mr-auto col-5">
+            <input id="senha" name="senha" type="password" class="mr-auto col-5">
+          </div>
+
+          <div class="row container ml-auto mr-1 col-6">
+            <input type="checkbox" onclick="mostrarOcultarSenha()" class="my-auto mr-2"> 
+            <span  class="my-auto"> Exibir Senha</span>
           </div>
 
           <div class="row container pt-5 mx-auto">
@@ -150,6 +162,22 @@
     </div>
 </body>
 </html>
+
+<script>
+  function mostrarOcultarSenha(){
+    
+    var senha=document.getElementById("senha");
+
+    if(senha.type=="password"){
+      senha.type="text";
+    }else{
+      senha.type="password";
+    }
+
+  }
+
+
+</script>
 
 <script>
   function chamarCargoAnalista(){
