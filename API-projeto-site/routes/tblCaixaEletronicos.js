@@ -69,7 +69,7 @@ router.get('/localizacao/:id_usuario', function(req, res, next) {
 
 	if (env == 'dev') {
 		// abaixo, escreva o select de dados para o Workbench
-		instrucaoSql = `select latitude, longitude from tblCaixaEletronico where fkEmpresa = ${id_usuario}`;
+		instrucaoSql = `select latitude, longitude, id from tblCaixaEletronico where fkEmpresa = ${id_usuario}`;
 	} else if (env == 'production') {
 		// abaixo, escreva o select de dados para o SQL Server
 		instrucaoSql = `select COUNT(*) from tblCaixaEletronico where fkEmpresa = ${id_usuario}`;
