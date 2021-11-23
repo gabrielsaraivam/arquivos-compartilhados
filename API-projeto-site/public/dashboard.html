@@ -109,7 +109,7 @@
           </div>
 
           <div class="row mt-2 container col-12">
-            <h2 class="color-text">Estatística</h2>
+            <h2 class="color-text">Analytics</h2>
             <div class="col-7  col-sm-4 col-md-4 col-lg-3 ml-auto p-0 pt-2" >
               <div class="col-12 p-0">
                 <label class="col-5 col-sm-7 col-lg-5 p-0 row ml-auto">
@@ -125,6 +125,32 @@
               </div>
             </div>
           </div>
+
+          <div class="row container col-6">
+            <div class="dropdown mr-auto col-5">
+              <button class="btn btn-secondary dropdown-toggle col-12" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span id="mudarMaquina">Máquina</span>
+              </button>
+              <div class="dropdown-menu" id="dropdownMaquina" aria-labelledby="dropdownMenuButton">
+
+              </div>
+            </div>
+          </div>
+
+          <script>
+            function consultarMaquina(){
+              
+              for(var i = 1;i<=Cookies.get('qtdLocalizacao');i++){
+                dropdownMaquina.innerHTML+=`<option class="dropdown-item" onclick="chamarMaquina(${i})">Máquina ${i}</option>`
+              }
+            }
+
+            function chamarMaquina(valor){
+              mudarMaquina.innerHTML = `Máquina ${valor}`
+              obterDadosGraficoPrimeiraVez(valor)
+            }
+          </script>
+
           <div class="row container col-12 p-0 mb-2">
             
             <div class=" mt-2 col-md-6 col-lg-6 col-sm-6 col-xl-6 mr-auto rounded">
@@ -135,7 +161,7 @@
             <!-- <div class="col-md-1 col-lg-1" style="background-color: red; height: 1%;"></div> -->
             <div class=" mt-2 col-md-6 col-lg-6 col-sm-6 col-xl-6" >
               <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded divs-graphcs-big" >
-                <canvas id="myChart2"></canvas>
+                <canvas id="canvas_grafico_memoria"></canvas>
               </div>
             </div>   
           </div>
@@ -143,7 +169,7 @@
           <div class="row container col-12 p-0">
             <div class="mt-3 mb-0 col-md-6 col-lg-6 col-sm-6 col-xl-6 mr-auto rounded">
               <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded divs-graphcs-small" >
-                <canvas id="canvas_grafico"></canvas>
+                <canvas id="canvas_grafico_cpu"></canvas>
               </div>
             </div>
             <!-- <div class="col-md-1 col-lg-1" style="background-color: red; height: 1%;"></div> -->
@@ -173,10 +199,12 @@
 
 <script src="./jsSb/jquery.min.js"></script>
 <script src="./jsSb/popper.js"></script>
-<script src="./jsSb/bootstrap.min.js"></script>
+<!-- <script src="./jsSb/bootstrap.min.js"></script> -->
 <script src="./jsSb/main.js"></script>
 
 <!-- max-width: 991.98px -->
+
+
 
 <script>
 
@@ -281,35 +309,35 @@ var myChart = new Chart(
 
 // ----------------
 
-const data2 = {
-  labels: [
-    'Igor V.',
-    'Reinaldo',
-    'Dani Alves'
-  ],
-  datasets: [{
-    label: 'My First Dataset',
-    data: [6, 4, 4],
-    backgroundColor: [
-      '#1c84e9',
-      '#0876ee99',
-      '#1c84e950'
-    ],
-    hoverOffset: 4,
-    borderColor: '#ffffff00'
-  }]
-};
+// const data2 = {
+//   labels: [
+//     'Igor V.',
+//     'Reinaldo',
+//     'Dani Alves'
+//   ],
+//   datasets: [{
+//     label: 'My First Dataset',
+//     data: [6, 4, 4],
+//     backgroundColor: [
+//       '#1c84e9',
+//       '#0876ee99',
+//       '#1c84e950'
+//     ],
+//     hoverOffset: 4,
+//     borderColor: '#ffffff00'
+//   }]
+// };
 
-const config2 = {
-  type: 'bar',
-  data: data2,
-};
+// const config2 = {
+//   type: 'bar',
+//   data: data2,
+// };
 
 
-var myChart2 = new Chart(
-    document.getElementById('myChart2'),
-    config2
-);
+// var myChart2 = new Chart(
+//     document.getElementById('myChart2'),
+//     config2
+// );
 
 // ----
 
@@ -354,101 +382,139 @@ var myChart3 = new Chart(
   window.onload = inicializacao();
 
   function inicializacao(){
+    consultarMaquina();
     verificarCargo();
     getLocalizacao();
     obterDadosGraficoPrimeiraVez(1);
   }
   // chamargraficos(1);
 
-  // function alterarCoresBotoes(idcaminhao) {
+  // function alterarCoresBotoes(idCaixaEletronico) {
   //     console.log("executei alterarCoresBotoes")
   //     botaoCaminhao1.className = "btn"
   //     botaoCaminhao2.className = "btn"
   //     botaoCaminhao3.className = "btn"
   //     botaoCaminhao4.className = "btn"
 
-  //     if (idcaminhao == "1") {
+  //     if (idCaixaEletronico == "1") {
   //         botaoCaminhao1.className += " btn-now"
-  //     } else if (idcaminhao == "2") {
+  //     } else if (idCaixaEletronico == "2") {
   //         botaoCaminhao2.className += " btn-now"
-  //     } else if (idcaminhao == "3") {
+  //     } else if (idCaixaEletronico == "3") {
   //         botaoCaminhao3.className += " btn-now"
-  //     } else if (idcaminhao == "4") {
+  //     } else if (idCaixaEletronico == "4") {
   //         botaoCaminhao4.className += " btn-now"
   //     }
   // }
 
 
-  function chamargraficos(idcaminhao) {
+  function chamargraficos(idCaixaEletronico) {
       console.log("executei chamargraficos")
-      obterDadosGraficoPrimeiraVez(idcaminhao)
-      // atualizarGrafico(idcaminhao)
+      obterDadosGraficoPrimeiraVez(idCaixaEletronico)
+      // atualizarGraficoCPU(idCaixaEletronico)
 
-      // alterarCoresBotoes(idcaminhao);
+      // alterarCoresBotoes(idCaixaEletronico);
 
   }
 
   verificar_autenticacao();
 
-  // neste JSON tem que ser 'labels', 'datasets' etc, 
-  // porque é o padrão do Chart.js
-
-
-
-  // altere aqui as configurações do gráfico
-  // (tamanhos, cores, textos, etc)
-  function configurarGrafico() {
+  function configurarGraficoCPU() {
       console.log('chegaste no configurar')
-      var configuracoes = {
+      var configuracoesCPU = {
           responsive: true,
           animation: { duration: 500 },
           hoverMode: 'index',
           stacked: false,
           title: {
               display: true,
-              text: 'Histórico recente de CPU e Memoria'
+              text: 'Percentual de uso de CPU'
           },
           scales: {
               yAxes: [{
-                  type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                  type: 'linear', 
                   display: true,
                   position: 'left',
                   id: 'y-cpu',
-              }, {
-                  type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                  display: true,
-                  position: 'right',
-                  id: 'y-memoria',
 
-                  // grid line settings
-                  gridLines: {
-                      drawOnChartArea: false, // only want the grid lines for one axis to show up
-                  },
-              }],
+                  // gridLines: {
+                  //     drawOnChartArea: false, // only want the grid lines for one axis to show up
+                  // },
+
+              } 
+              // {
+              //     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+              //     display: true,
+              //     position: 'right',
+              //     id: 'y-memoria',
+
+              //     // grid line settings
+
+              // }
+            ],
           }
       };
-      console.log("executei configurarGrafico")
-      return configuracoes;
+      console.log("executei configurarGraficoCPU")
+      return configuracoesCPU;
+      
+  }
+
+  function configurarGraficoMemoria() {
+      console.log('chegaste no configurar')
+      var configuracoesMemoria = {
+          responsive: true,
+          animation: { duration: 500 },
+          hoverMode: 'index',
+          stacked: false,
+          title: {
+              display: true,
+              text: 'Percentual de uso da Memória'
+          },
+          scales: {
+              yAxes: [{
+                  type: 'linear', 
+                  display: true,
+                  position: 'left',
+                  id: 'y-memoria',
+              } 
+              
+            ],
+          }
+      };
+      console.log("executei configurarGraficoMemoria")
+      return configuracoesMemoria;
       
   }
 
   // altere aqui como os dados serão exibidos
   // e como são recuperados do BackEnd
-  function obterDadosGraficoPrimeiraVez(idcaminhao) {
+  function obterDadosGraficoPrimeiraVez(idCaixaEletronico) {
       console.log("executei obterDadosGraficoPrimeiraVez")
-      // alterarCoresBotoes(idcaminhao);
+      // alterarCoresBotoes(idCaixaEletronico);
 
       if (proximaAtualizacao != undefined) {
           clearTimeout(proximaAtualizacao);
       }
 
 
-      fetch(`/tblDadosHardwares/ultimas/${idcaminhao}`, { cache: 'no-store' }).then(function (response) {
+
+    var id_usuario = sessionStorage.id_usuario_meuapp;
+    var cargo = sessionStorage.cargo_usuario_meuapp;
+    var fkEmpresa = sessionStorage.fkEmpresa_usuario_meuapp;
+    if(cargo == "Gerente" || cargo == "Analista"){
+      id_usuario = fkEmpresa;
+    }
+
+      fetch(`/tblDadosHardwares/ultimasCPU/${idCaixaEletronico}/${id_usuario}`, { cache: 'no-store' }).then(function (response) {
           if (response.ok) {
               response.json().then(function (resposta) {
                   console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                   // alert(`Dados recebidos: ${JSON.stringify(resposta)}`);
                   resposta.reverse();
+
+                  var gradientFill = ctx.createLinearGradient(0, 0, 0, 200);
+                  gradientFill.addColorStop(1, "#1c84e900");
+                  gradientFill.addColorStop(0, "#1c84e9");
 
                   var dados = {
                       labels: [],
@@ -456,32 +522,79 @@ var myChart3 = new Chart(
                           {
                               yAxisID: 'y-cpu',
                               label: 'CPU',
+                              fill: true,
                               borderColor: '#1c84e9',
-                              backgroundColor: '#1c84e9',
-                              fill: false,
+                              backgroundColor: gradientFill,
                               data: []
                           },
-                          {
-                              yAxisID: 'y-memoria',
-                              label: 'Memória',
-                              borderColor: '#0876ee99',
-                              backgroundColor: '#0876ee99',
-                              fill: false,
-                              data: []
-                          }
+                          // {
+                          //     yAxisID: 'y-memoria',
+                          //     label: 'Memória',
+                          //     borderColor: '#0876ee99',
+                          //     backgroundColor: '#0876ee99',
+                          //     fill: false,
+                          //     data: []
+                          // }
                       ]
                   };
                   for (i = 0; i < resposta.length; i++) {
                       var registro = resposta[i];
                       dados.labels.push(registro.dataHora_grafico);
                       dados.datasets[0].data.push(registro.cpu);
-                      dados.datasets[1].data.push(registro.memoria);
+                      // dados.datasets[1].data.push(registro.memoria);
 
                   }
                   console.log(JSON.stringify(dados));
                   // div_aguarde.style.display = 'none';
-                  console.log(dados, idcaminhao)
-                  plotarGrafico(dados, idcaminhao);
+                  console.log(dados, idCaixaEletronico)
+                  plotarGraficoCPU(dados, idCaixaEletronico);
+              });
+          } else {
+              console.error('Nenhum dado encontrado ou erro na API');
+          }
+      })
+          .catch(function (error) {
+              console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+          });
+
+
+          /// MEMORIA ------ MEMORIA ------------- MEMORIA
+
+          fetch(`/tblDadosHardwares/ultimasMemoria/${idCaixaEletronico}/${id_usuario}`, { cache: 'no-store' }).then(function (response) {
+          if (response.ok) {
+              response.json().then(function (resposta) {
+                  console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                  // alert(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                  resposta.reverse();
+
+                  var gradientFill = ctx.createLinearGradient(0, 0, 0, 200);
+                  gradientFill.addColorStop(1, "#1c84e900");
+                  gradientFill.addColorStop(0, "#1c84e9");
+
+                  var dados = {
+                      labels: [],
+                      datasets: [
+                          {
+                              yAxisID: 'y-memoria',
+                              label: 'Memória',
+                              fill: true,
+                              borderColor: '#1c84e9',
+                              backgroundColor: gradientFill,
+                              data: []
+                          },
+                      ]
+                  };
+                  for (i = 0; i < resposta.length; i++) {
+                      var registro = resposta[i];
+                      dados.labels.push(registro.dataHora_grafico);
+                      dados.datasets[0].data.push(registro.memoria);
+                      // dados.datasets[1].data.push(registro.memoria);
+
+                  }
+                  console.log(JSON.stringify(dados));
+                  // div_aguarde.style.display = 'none';
+                  console.log(dados, idCaixaEletronico)
+                  plotarGraficoMemoria(dados, idCaixaEletronico);
               });
           } else {
               console.error('Nenhum dado encontrado ou erro na API');
@@ -497,9 +610,9 @@ var myChart3 = new Chart(
 
   // só mexer se quiser alterar o tempo de atualização
   // ou se souber o que está fazendo!
-  function atualizarGrafico(idcaminhao, dados) {
-      fetch(`/tblDadosHardwares/tempo-real/${idcaminhao}`, { cache: 'no-store' }).then(function (response) {
-          console.log("Estou tentando pegar idcaminhao = ", idcaminhao)
+  function atualizarGraficoCPU(idCaixaEletronico, dados) {
+      fetch(`/tblDadosHardwares/tempo-real-cpu/${idCaixaEletronico}`, { cache: 'no-store' }).then(function (response) {
+          console.log("Estou tentando pegar idCaixaEletronico = ", idCaixaEletronico)
           if (response.ok) {
               response.json().then(function (novoRegistro) {
                   console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
@@ -516,17 +629,54 @@ var myChart3 = new Chart(
                     // dados.datasets[0].data.shift();  // apagar o primeiro de cpu
                     // dados.datasets[1].data.shift();  // apagar o primeiro de memoria
                     dados.datasets[0].data.push(novoRegistro.cpu); // incluir uma nova tblDadosHardware de cpu
-                    dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
-                    console.log("meu sensor é o " + idcaminhao)
+                    // dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
+                    console.log("meu sensor é o " + idCaixaEletronico)
 
                     window.grafico_linha.update();
 
 
-                    proximaAtualizacao = setTimeout(() => atualizarGrafico(idcaminhao, dados), 5000);
+                    proximaAtualizacao = setTimeout(() => atualizarGraficoCPU(idCaixaEletronico, dados), 5000);
               });
           } else {
               console.error('Nenhum dado encontrado ou erro na API');
-              proximaAtualizacao = setTimeout(() => atualizarGrafico(idcaminhao, dados), 5000);
+              proximaAtualizacao = setTimeout(() => atualizarGraficoCPU(idCaixaEletronico, dados), 5000);
+          }
+      })
+          .catch(function (error) {
+              console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+          });
+  }
+
+  function atualizarGraficoMemoria(idCaixaEletronico, dados){
+    fetch(`/tblDadosHardwares/tempo-real-memoria/${idCaixaEletronico}`, { cache: 'no-store' }).then(function (response) {
+          console.log("Estou tentando pegar idCaixaEletronico = ", idCaixaEletronico)
+          if (response.ok) {
+              response.json().then(function (novoRegistro) {
+                  console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+                  console.log(`Dados atuais do gráfico: ${dados}`);
+
+                  if ( dados.datasets[0].data.length == 4){
+                        dados.labels.shift();
+                        dados.datasets[0].data.shift();
+                        dados.datasets[1].data.shift();
+                    }
+                    // tirando e colocando valores no gráfico
+                    // dados.labels.shift(); // apagar o primeiro
+                    dados.labels.push(novoRegistro.dataHora_grafico); // incluir um novo dataHora
+                    // dados.datasets[0].data.shift();  // apagar o primeiro de cpu
+                    // dados.datasets[1].data.shift();  // apagar o primeiro de memoria
+                    dados.datasets[0].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de cpu
+                    // dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
+                    console.log("meu sensor é o " + idCaixaEletronico)
+
+                    window.grafico_linha.update();
+
+
+                    proximaAtualizacao = setTimeout(() => atualizarGraficoMemoria(idCaixaEletronico, dados), 5000);
+              });
+          } else {
+              console.error('Nenhum dado encontrado ou erro na API');
+              proximaAtualizacao = setTimeout(() => atualizarGraficoMemoria(idCaixaEletronico, dados), 5000);
           }
       })
           .catch(function (error) {
@@ -536,27 +686,44 @@ var myChart3 = new Chart(
   }
 
   // só altere aqui se souber o que está fazendo!
-  function plotarGrafico(dados, idcaminhao) {
-      console.log("executei plotarGrafico")
+  function plotarGraficoCPU(dados, idCaixaEletronico) {
+      console.log("executei plotarGraficoCPU")
       console.log('iniciando plotagem do gráfico...');
 
-      var ctx = canvas_grafico.getContext('2d');
+      var ctx = canvas_grafico_cpu.getContext('2d');
       console.log('até aqui vai');
       console.log(dados.datasets);
-      console.log(configurarGrafico())
+      console.log(configurarGraficoCPU())
       window.grafico_linha = Chart.Line(ctx, {
           data: dados,
-          options: configurarGrafico()
+          options: configurarGraficoCPU()
       });
-      setTimeout(() => atualizarGrafico(idcaminhao, dados), 2000);
+      setTimeout(() => atualizarGraficoCPU(idCaixaEletronico, dados), 2000);
+
+  }
+
+  function plotarGraficoMemoria(dados, idCaixaEletronico) {
+      console.log("executei plotarGraficoMemoria")
+      console.log('iniciando plotagem do gráfico...');
+
+      var ctx = canvas_grafico_memoria.getContext('2d');
+      console.log('até aqui vai');
+      console.log(dados.datasets);
+      console.log(configurarGraficoMemoria())
+      window.grafico_linha = Chart.Line(ctx, {
+          data: dados,
+          options: configurarGraficoMemoria()
+      });
+      setTimeout(() => atualizarGraficoMemoria(idCaixaEletronico, dados), 2000);
+
   }
 
 
-  function sendData() {
-      var http = new XMLHttpRequest();
-      http.open('GET', 'http://localhost:9001/api/sendData', false);
-      http.send(null);
-  }
+  // function sendData() {
+  //     var http = new XMLHttpRequest();
+  //     http.open('GET', 'http://localhost:9001/api/sendData', false);
+  //     http.send(null);
+  // }
 
     
   // Descomente abaixo se quiser inserir dados a cada X segundos
