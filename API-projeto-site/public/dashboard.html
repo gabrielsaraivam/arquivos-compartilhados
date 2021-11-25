@@ -147,7 +147,7 @@
 
             function chamarMaquina(valor){
               mudarMaquina.innerHTML = `Máquina ${valor}`
-              obterDadosGraficoPrimeiraVez(valor)
+              obterDadosGraficoPrimeiraVez(sessionStorage[`maquina${valor}`])
             }
           </script>
 
@@ -279,7 +279,7 @@ labels: [
   'Abril'
 ],
 datasets: [{
-  label: 'Uso de Disco mensalmente',
+  label: 'Disco',
   data: [2.75, 2, 3.6, 2],
   fill: true,
   borderColor: '#1c84e9',
@@ -377,7 +377,8 @@ var myChart3 = new Chart(
 
 <script>
 
-  let proximaAtualizacao;
+  let proximaAtualizacaoCPU;
+  let proximaAtualizacaoMemoria;
 
   window.onload = inicializacao();
 
@@ -492,10 +493,14 @@ var myChart3 = new Chart(
       console.log("executei obterDadosGraficoPrimeiraVez")
       // alterarCoresBotoes(idCaixaEletronico);
 
-      if (proximaAtualizacao != undefined) {
-          clearTimeout(proximaAtualizacao);
+      if (proximaAtualizacaoCPU != undefined) {
+          clearTimeout(proximaAtualizacaoCPU);
       }
 
+
+      if (proximaAtualizacaoMemoria != undefined) {
+          clearTimeout(proximaAtualizacaoMemoria);
+      }
 
 
     var id_usuario = sessionStorage.id_usuario_meuapp;
@@ -618,10 +623,11 @@ var myChart3 = new Chart(
                   console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
                   console.log(`Dados atuais do gráfico: ${dados}`);
 
+
                   if ( dados.datasets[0].data.length == 4){
                         dados.labels.shift();
                         dados.datasets[0].data.shift();
-                        dados.datasets[1].data.shift();
+                        //dados.datasets[1].data.shift();
                     }
                     // tirando e colocando valores no gráfico
                     // dados.labels.shift(); // apagar o primeiro
@@ -632,14 +638,14 @@ var myChart3 = new Chart(
                     // dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
                     console.log("meu sensor é o " + idCaixaEletronico)
 
-                    window.grafico_linha.update();
+                    window.grafico_linhaCPU.update();
 
 
-                    proximaAtualizacao = setTimeout(() => atualizarGraficoCPU(idCaixaEletronico, dados), 5000);
+                    proximaAtualizacaoCPU = setTimeout(() => atualizarGraficoCPU(idCaixaEletronico, dados), 5000);
               });
           } else {
               console.error('Nenhum dado encontrado ou erro na API');
-              proximaAtualizacao = setTimeout(() => atualizarGraficoCPU(idCaixaEletronico, dados), 5000);
+              proximaAtualizacaoCPU = setTimeout(() => atualizarGraficoCPU(idCaixaEletronico, dados), 5000);
           }
       })
           .catch(function (error) {
@@ -658,7 +664,8 @@ var myChart3 = new Chart(
                   if ( dados.datasets[0].data.length == 4){
                         dados.labels.shift();
                         dados.datasets[0].data.shift();
-                        dados.datasets[1].data.shift();
+                        //dados.datasets[1].data.shift();
+                        
                     }
                     // tirando e colocando valores no gráfico
                     // dados.labels.shift(); // apagar o primeiro
@@ -669,14 +676,14 @@ var myChart3 = new Chart(
                     // dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
                     console.log("meu sensor é o " + idCaixaEletronico)
 
-                    window.grafico_linha.update();
+                    window.grafico_linhaMemoria.update();
 
 
-                    proximaAtualizacao = setTimeout(() => atualizarGraficoMemoria(idCaixaEletronico, dados), 5000);
+                    proximaAtualizacaoMemoria = setTimeout(() => atualizarGraficoMemoria(idCaixaEletronico, dados), 5000);
               });
           } else {
               console.error('Nenhum dado encontrado ou erro na API');
-              proximaAtualizacao = setTimeout(() => atualizarGraficoMemoria(idCaixaEletronico, dados), 5000);
+              proximaAtualizacaoMemoria = setTimeout(() => atualizarGraficoMemoria(idCaixaEletronico, dados), 5000);
           }
       })
           .catch(function (error) {
@@ -694,7 +701,7 @@ var myChart3 = new Chart(
       console.log('até aqui vai');
       console.log(dados.datasets);
       console.log(configurarGraficoCPU())
-      window.grafico_linha = Chart.Line(ctx, {
+      window.grafico_linhaCPU = Chart.Line(ctx, {
           data: dados,
           options: configurarGraficoCPU()
       });
@@ -710,7 +717,7 @@ var myChart3 = new Chart(
       console.log('até aqui vai');
       console.log(dados.datasets);
       console.log(configurarGraficoMemoria())
-      window.grafico_linha = Chart.Line(ctx, {
+      window.grafico_linhaMemoria = Chart.Line(ctx, {
           data: dados,
           options: configurarGraficoMemoria()
       });
