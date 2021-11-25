@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Retrieving an Address for a Place ID</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script src="./index.js"></script>
+  </head>
+  <body>
+    <!-- <div id="floating-panel"> -->
+      <!-- Supply a default place ID for a place in Brooklyn, New York. -->
+      <!-- <input id="place-id" type="text" value="ChIJd8BlQ2BZwokRAFUEcm_qrcA" />
+      <input id="submit" type="button" value="Get Address for Place ID" />
+    </div> -->
+    <div id="map"></div>
+
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly&channel=2"
+    async
+    ></script>
+  </body>
+</html>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+
+<script>
+var qtdLocalizacao = Cookies.get('qtdLocalizacao');
+var listaLocalizacao = []
+
+for(var i = 1; i<=qtdLocalizacao; i++){
+    listaLocalizacao.push(`${Cookies.get(`latitudeMaq${i}`)}, ${Cookies.get(`longitudeMaq${i}`)}`)
+}
+
+sessionStorage["localizacao"] = JSON.stringify(listaLocalizacao);
+</script>
+
