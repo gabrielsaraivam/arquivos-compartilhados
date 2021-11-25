@@ -17,7 +17,7 @@ router.get('/caixas/:id_usuario', function(req, res, next) {
 		instrucaoSql = `select COUNT(*) as qtdCaixas from tblCaixaEletronico where fkEmpresa = ${id_usuario}`;
 	} else if (env == 'production') {
 		// abaixo, escreva o select de dados para o SQL Server
-		instrucaoSql = `select COUNT(*) from tblCaixaEletronico where fkEmpresa = ${id_usuario}`;
+		instrucaoSql = `select COUNT(*) as qtdCaixas from tblCaixaEletronico where fkEmpresa = ${id_usuario}`;
 	} else {
 		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
 	}
@@ -72,7 +72,7 @@ router.get('/localizacao/:id_usuario', function(req, res, next) {
 		instrucaoSql = `select latitude, longitude, id from tblCaixaEletronico where fkEmpresa = ${id_usuario}`;
 	} else if (env == 'production') {
 		// abaixo, escreva o select de dados para o SQL Server
-		instrucaoSql = `select COUNT(*) from tblCaixaEletronico where fkEmpresa = ${id_usuario}`;
+		instrucaoSql = `select latitude, longitude, id from tblCaixaEletronico where fkEmpresa = ${id_usuario}`;
 	} else {
 		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
 	}

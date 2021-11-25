@@ -17,7 +17,7 @@ router.get('/usuarios/:id_usuario', function(req, res, next) {
 		instrucaoSql = `select COUNT(*) as qtdUsers from tblUsuario where fkEmpresa = ${id_usuario}`;
 	} else if (env == 'production') {
 		// abaixo, escreva o select de dados para o SQL Server
-		instrucaoSql = `select COUNT(*) from tblUsuario where fkEmpresa = ${id_usuario}`;
+		instrucaoSql = `select COUNT(*) as qtdUsers from tblUsuario where fkEmpresa = ${id_usuario}`;
 	} else {
 		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
 	}

@@ -33,7 +33,7 @@ router.get('/ultimasCPU/:idCaixaEletronico/:id_usuario', function(req, res, next
 		dataHora,
 		FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico
 		from tblDadosHardware
-		where fkEmpresa = ${idCaixaEletronico} and fkCaixaEletronico = ${idCaixaEletronico}
+		where fkEmpresa = ${id_usuario} and fkCaixaEletronico = ${idCaixaEletronico}
 		order by id desc`;
 	} else {
 		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
@@ -66,7 +66,7 @@ router.get('/tempo-real-cpu/:idCaixaEletronico', function(req, res, next) {
 		instrucaoSql = `select DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico, cpu, fkEmpresa from tblDadosHardware where fkCaixaEletronico = ${idCaixaEletronico} order by id desc limit 4`;
 	} else if (env == 'production') {
 		// abaixo, escreva o select de dados para o SQL Server
-		instrucaoSql = `select top 1 cpu, FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico, fkEmpresa from tblDadosHardware where fkCaixaEletronico = ${idCaixaEletronico} order by id desc`;
+		instrucaoSql = `select top 4 cpu, FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico, fkEmpresa from tblDadosHardware where fkCaixaEletronico = ${idCaixaEletronico} order by id desc`;
 	} else {
 		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
 	}
@@ -95,7 +95,7 @@ router.get('/tempo-real-memoria/:idCaixaEletronico', function(req, res, next) {
 		instrucaoSql = `select DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico, memoria, fkEmpresa from tblDadosHardware where fkCaixaEletronico = ${idCaixaEletronico} order by id desc limit 4`;
 	} else if (env == 'production') {
 		// abaixo, escreva o select de dados para o SQL Server
-		instrucaoSql = `select top 1 memoria, FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico, fkEmpresa from tblDadosHardware where fkCaixaEletronico = ${idCaixaEletronico} order by id desc`;
+		instrucaoSql = `select top 4 memoria, FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico, fkEmpresa from tblDadosHardware where fkCaixaEletronico = ${idCaixaEletronico} order by id desc`;
 	} else {
 		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
 	}
@@ -165,7 +165,7 @@ router.get('/ultimasMemoria/:idCaixaEletronico/:id_usuario', function(req, res, 
 		dataHora,
 		FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico
 		from tblDadosHardware
-		where fkEmpresa = ${idCaixaEletronico} and fkCaixaEletronico = ${idCaixaEletronico}
+		where fkEmpresa = ${id_usuario} and fkCaixaEletronico = ${idCaixaEletronico}
 		order by id desc`;
 	} else {
 		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
