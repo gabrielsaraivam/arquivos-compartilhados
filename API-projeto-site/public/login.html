@@ -36,7 +36,7 @@
 
                     <div class="col-12 mx-auto">
                         <h3 class="col-md-5 mr-auto">Senha:</h3>
-                        <input name="senha" class="col-12 input-padrao" type="password">
+                        <input id="senha" name="senha" class="col-12 input-padrao" type="password">
                     </div>
                     
                     <div style="font-weight: 500;" class="row container mb-4 mr-auto ml-1 col-6">
@@ -129,6 +129,23 @@
     
 </body>
 </html>
+
+
+<script>
+    function mostrarOcultarSenha(){
+      
+      var senha=document.getElementById("senha");
+  
+      if(senha.type=="password"){
+        senha.type="text";
+      }else{
+        senha.type="password";
+      }
+  
+    }
+  
+  
+  </script>
 
 <script>
 
