@@ -3,7 +3,7 @@ module.exports = {
   production: {
     // altere APENAS username, password, database e host.
     username: 'overall',
-    password: '#Gfgrupo1',
+    password: '',
     database: 'dbOverall',
     host: 'dboverall.database.windows.net',
     dialect: 'mssql',
@@ -27,7 +27,7 @@ module.exports = {
   dev: {
     // altere APENAS username, password e database.
     username: 'root',
-    password: 'tricolor10',
+    password: 'bandtec',
     database: 'dbOverall',
     host: 'localhost',
     dialect: 'mysql',
