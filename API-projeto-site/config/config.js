@@ -27,7 +27,11 @@ module.exports = {
   dev: {
     // altere APENAS username, password e database.
     username: 'root',
+<<<<<<< HEAD
     password: 'bandtec',
+=======
+    password: 'urubu100',
+>>>>>>> 59d321fa38393d4d93e76ea1d608c4ea7286c804
     database: 'dbOverall',
     host: 'localhost',
     dialect: 'mysql',
