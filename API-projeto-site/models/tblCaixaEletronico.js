@@ -43,7 +43,12 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.INTEGER,
 			primaryKey: true,
             foreignKey: true
-        }
+        },
+		alertaAtivo: {
+			field: 'alertaAtivo',
+			type: DataTypes.BOOLEAN,
+			allowNull: true
+		}
 	}, 
 	{
 		tableName: 'tblCaixaEletronico', 

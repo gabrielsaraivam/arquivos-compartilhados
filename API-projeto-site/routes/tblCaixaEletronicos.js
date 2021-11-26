@@ -47,7 +47,8 @@ router.post('/cadastrar/:id_usuario', function(req, res, next) {
 		numeroSerie: req.body.numeroSerie,
 		usuario : req.body.usuario,		
 		senha: req.body.senha,
-		fkEmpresa: req.params.id_usuario
+		fkEmpresa: req.params.id_usuario,
+		alertaAtivo: false
 		
 	}).then(resultado => {
 		console.log(`Registro criado: ${resultado}`)
@@ -69,10 +70,10 @@ router.get('/localizacao/:id_usuario', function(req, res, next) {
 
 	if (env == 'dev') {
 		// abaixo, escreva o select de dados para o Workbench
-		instrucaoSql = `select latitude, longitude, id from tblCaixaEletronico where fkEmpresa = ${id_usuario}`;
+		instrucaoSql = `select latitude, longitude, id, alertaAtivo from tblCaixaEletronico where fkEmpresa = ${id_usuario}`;
 	} else if (env == 'production') {
 		// abaixo, escreva o select de dados para o SQL Server
-		instrucaoSql = `select latitude, longitude, id from tblCaixaEletronico where fkEmpresa = ${id_usuario}`;
+		instrucaoSql = `select latitude, longitude, id, alertaAtivo from tblCaixaEletronico where fkEmpresa = ${id_usuario}`;
 	} else {
 		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
 	}

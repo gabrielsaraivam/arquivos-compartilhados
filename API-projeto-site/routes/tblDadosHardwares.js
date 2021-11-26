@@ -54,7 +54,7 @@ router.get('/ultimasCPU/:idCaixaEletronico/:id_usuario', function(req, res, next
 
 
 router.get('/tempo-real-cpu/:idCaixaEletronico', function(req, res, next) {
-	console.log('Recuperando caminhões');
+	console.log('Recuperando');
 	
 	//var idCaixaEletronico = req.body.idCaixaEletronico; // depois de .body, use o nome (name) do campo em seu formulário de login
 	var idCaixaEletronico = req.params.idCaixaEletronico;
@@ -83,7 +83,7 @@ router.get('/tempo-real-cpu/:idCaixaEletronico', function(req, res, next) {
 });
 
 router.get('/tempo-real-memoria/:idCaixaEletronico', function(req, res, next) {
-	console.log('Recuperando caminhões');
+	console.log('Recuperando');
 	
 	//var idCaixaEletronico = req.body.idCaixaEletronico; // depois de .body, use o nome (name) do campo em seu formulário de login
 	var idCaixaEletronico = req.params.idCaixaEletronico;

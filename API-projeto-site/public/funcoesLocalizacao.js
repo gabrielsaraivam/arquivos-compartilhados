@@ -15,6 +15,7 @@ function getLocalizacao(){
                     for(var i = 0; i<resposta.length; i++){
                         Cookies.set(`latitudeMaq${i+1}`, `${resposta[i].latitude}`);
                         Cookies.set(`longitudeMaq${i+1}`, `${resposta[i].longitude}`);
+                        Cookies.set(`alertaAtivo${i+1}`, resposta[i].alertaAtivo);
                         sessionStorage[`maquina${i+1}`] = resposta[i].id; 
                     }
                     // alert(resposta[0].latitude);
