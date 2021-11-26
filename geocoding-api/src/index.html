@@ -32,11 +32,14 @@
 <script>
 var qtdLocalizacao = Cookies.get('qtdLocalizacao');
 var listaLocalizacao = []
+var listaAlertaAtivo = []
 
 for(var i = 1; i<=qtdLocalizacao; i++){
     listaLocalizacao.push(`${Cookies.get(`latitudeMaq${i}`)}, ${Cookies.get(`longitudeMaq${i}`)}`)
+    listaAlertaAtivo.push(Cookies.get(`alertaAtivo${i}`))
 }
 
 sessionStorage["localizacao"] = JSON.stringify(listaLocalizacao);
+sessionStorage["alertaAtivo"] = JSON.stringify(listaAlertaAtivo);
 </script>
 

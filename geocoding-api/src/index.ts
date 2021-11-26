@@ -23,24 +23,24 @@ interface Maquina {
     centro: google.maps.LatLngLiteral;
     alertas: number;
   }
-  
-  const citymap: Record<string, Maquina> = {
-    maquina1: {
-        nome: "Máquina 1",
-        centro: { lat: -23.566567458514972, lng: -46.65283274365217 },
-        alertas: 150,
-    },
-    maquina2: {
-        nome: "Máquina 2",
-        centro: { lat: -23.576775975750455, lng: -46.692107208771565 },
-        alertas: 180,
-    },
-    maquina3: {
-        nome: "Máquina 3",
-        centro: { lat: -23.62910833636377, lng: -46.652584202624096 },
-        alertas: 600,
-    },
-  };
+
+  // const citymap: Record<string, Maquina> = {
+  //   maquina1: {
+  //       nome: "Máquina 1",
+  //       centro: { lat: -23.566567458514972, lng: -46.65283274365217 },
+  //       alertas: 150,
+  //   },
+  //   maquina2: {
+  //       nome: "Máquina 2",
+  //       centro: { lat: -23.576775975750455, lng: -46.692107208771565 },
+  //       alertas: 180,
+  //   },
+  //   maquina3: {
+  //       nome: "Máquina 3",
+  //       centro: { lat: -23.62910833636377, lng: -46.652584202624096 },
+  //       alertas: 600,
+  //   },
+  // };
 
 
 // Initialize the map.
@@ -65,20 +65,7 @@ function initMap(): void {
   //   }
   // );
 
-  for (const alerta in citymap) {
-    // Add the circle for this city to the map.
-    const alertCircle = new google.maps.Circle({
-      strokeColor: "#FF0000",
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: "#FF0000",
-      fillOpacity: 0.35,
-      map,
-      center: citymap[alerta].centro,
-      radius: Math.sqrt(citymap[alerta].alertas) * 100,
-    });
-  }
-}
+
 
 
 // This function is called when the user clicks the UI button requesting
@@ -90,6 +77,8 @@ function geocodeLatLng(
 ) {
   
   let listaLatLong = JSON.parse(sessionStorage["localizacao"]);
+  let listaAlertaAtivo = JSON.parse(sessionStorage["alertaAtivo"]);
+  let contador = 0
 
   for (let i of listaLatLong){
     const input =  i //(document.getElementById("latlng") as HTMLInputElement).value;
@@ -98,6 +87,24 @@ function geocodeLatLng(
       lat: parseFloat(latlngStr[0]),
       lng: parseFloat(latlngStr[1]),
     };
+
+    // alert(JSON.stringify(latlng))
+   
+    if(listaAlertaAtivo[contador] == "true"){
+      const alertCircle = new google.maps.Circle({
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#FF0000",
+        fillOpacity: 0.35,
+        map,
+        center: latlng,
+        radius: 1500,
+      });
+    }
+
+    contador++;
+
 
     geocoder
       .geocode({ location: latlng })
@@ -158,6 +165,7 @@ function geocodeLatLng(
       })
       .catch((e) => window.alert("Geocoder failed due to: " + e));
   }
+}
 }
 export { initMap };
 
