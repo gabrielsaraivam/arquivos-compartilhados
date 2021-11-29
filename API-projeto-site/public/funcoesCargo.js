@@ -12,5 +12,11 @@ function verificarCargo(){
 
     else if(cargo == "Gerente"){
         hCargo.innerHTML = "Gerente";
+        // window.location.href = "dashboardGerente.html";
+    }
+
+    else if(cargo == "Admin"){
+        hCargo.innerHTML == "Administração";
+        // window.location.href = "dashboardPython.html";
     }
 }

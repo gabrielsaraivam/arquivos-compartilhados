@@ -137,20 +137,6 @@
             </div>
           </div>
 
-          <script>
-            function consultarMaquina(){
-              
-              for(var i = 1;i<=Cookies.get('qtdLocalizacao');i++){
-                dropdownMaquina.innerHTML+=`<option class="dropdown-item" onclick="chamarMaquina(${i})">Máquina ${i}</option>`
-              }
-            }
-
-            function chamarMaquina(valor){
-              mudarMaquina.innerHTML = `Máquina ${valor}`
-              obterDadosGraficoPrimeiraVez(sessionStorage[`maquina${valor}`])
-            }
-          </script>
-
           <div class="row container col-12 p-0 mb-2">
             
             <div class=" mt-2 col-md-6 col-lg-6 col-sm-6 col-xl-6 mr-auto rounded">
@@ -377,14 +363,26 @@ var myChart3 = new Chart(
 
 <script>
 
+function consultarMaquina(){
+              
+  for(var i = 1;i<=Cookies.get('qtdLocalizacao');i++){
+    dropdownMaquina.innerHTML+=`<option class="dropdown-item" onclick="chamarMaquina(${i})">Máquina ${i}</option>`
+  }
+}
+
+function chamarMaquina(valor){
+  mudarMaquina.innerHTML = `Máquina ${valor}`
+  obterDadosGraficoPrimeiraVez(sessionStorage[`maquina${valor}`])
+}
+
   let proximaAtualizacaoCPU;
   let proximaAtualizacaoMemoria;
 
   window.onload = inicializacao();
 
   function inicializacao(){
-    consultarMaquina();
     verificarCargo();
+    consultarMaquina();
     getLocalizacao();
     obterDadosGraficoPrimeiraVez(1);
   }
@@ -486,6 +484,8 @@ var myChart3 = new Chart(
       return configuracoesMemoria;
       
   }
+
+  
 
   // altere aqui como os dados serão exibidos
   // e como são recuperados do BackEnd

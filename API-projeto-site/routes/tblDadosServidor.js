@@ -5,10 +5,11 @@ var tblDadosServidor = require('../models').tblDadosServidor;
 var env = process.env.NODE_ENV || 'development';
 
 /* Recuperar as últimas N tblDadosServidors */
-router.get('/ultimasCPU', function(req, res, next) {
+router.get('/ultimasCPU/:idServidor', function(req, res, next) {
 	
 	// quantas são as últimas tblDadosServidors que quer? 7 está bom?
 	const limite_linhas = 4;
+	var idServidor = req.params.idServidor;
 
 	console.log(`Recuperando as ultimas ${limite_linhas} tblDadosServidor CPU`);
 	
@@ -21,7 +22,7 @@ router.get('/ultimasCPU', function(req, res, next) {
 		cpu,  
 		DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico
 		from tblDadosServidor
-		where fkServidor = 1
+		where fkServidor = ${idCaixaEletronico}
 		order by id desc limit 4`;
 	} else if (env == 'production') {
 		// abaixo, escreva o select de dados para o SQL Server
@@ -30,7 +31,7 @@ router.get('/ultimasCPU', function(req, res, next) {
 		dataHora,
 		FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico
 		from tblDadosServidor
-		where fkServidor = 1
+		where fkServidor = ${idCaixaEletronico}
 		order by id desc`;
 	} else {
 		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
@@ -132,11 +133,11 @@ router.get('/tempo-real-memoria', function(req, res, next) {
 // });
 
 
-router.get('/ultimasMemoria', function(req, res, next) {
+router.get('/ultimasMemoria/:idServidor', function(req, res, next) {
 	
 	// quantas são as últimas tblDadosHardwares que quer? 7 está bom?
 	const limite_linhas = 4;
-
+	var idServidor = req.params.idServidor;
 
 	console.log(`Recuperando as ultimas ${limite_linhas} memorias tblDadosHardwares`);
 	
@@ -149,7 +150,7 @@ router.get('/ultimasMemoria', function(req, res, next) {
 		memoria,  
 		DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico
 		from tblDadosServidor
-		where fkServidor = 1
+		where fkServidor = ${idServidor}
 		order by id desc limit ${limite_linhas}`;
 	} else if (env == 'production') {
 		// abaixo, escreva o select de dados para o SQL Server
@@ -158,7 +159,7 @@ router.get('/ultimasMemoria', function(req, res, next) {
 		dataHora,
 		FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico
 		from tblDadosServidor
-		where fkServidor = 1
+		where fkServidor = ${idServidor}
 		order by id desc`;
 	} else {
 		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")

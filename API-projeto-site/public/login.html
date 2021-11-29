@@ -170,8 +170,22 @@
 
                     sessionStorage.cargo_usuario_meuapp = json.cargo;
                     sessionStorage.fkEmpresa_usuario_meuapp = json.fkEmpresa;
+                    
+                    var cargo = sessionStorage.cargo_usuario_meuapp;
 
-                    window.location.href = 'dashboard.html';
+                    if (cargo == "Gerente"){
+                        window.location.href = 'dashboardGerente.html';
+                    }
+                    else if (cargo == "Admin"){
+                        window.location.href = 'dashboardPython.html';
+                    }
+                    else if (cargo == "Analista"){
+                        window.location.href = 'dashboard.html';
+                    }
+                    else{
+                        window.location.href = 'dashboard.html';
+                    }
+                    
                 });
 
             } else {

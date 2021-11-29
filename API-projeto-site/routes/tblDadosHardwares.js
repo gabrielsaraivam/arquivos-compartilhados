@@ -184,4 +184,63 @@ router.get('/ultimasMemoria/:idCaixaEletronico/:id_usuario', function(req, res, 
 	});
 });
 
+
+router.get('/AlertasCpu/:idCaixaEletronico', function(req, res, next) {
+	console.log('Recuperando');
+	
+	//var idCaixaEletronico = req.body.idCaixaEletronico; // depois de .body, use o nome (name) do campo em seu formulário de login
+	var idCaixaEletronico = req.params.idCaixaEletronico;
+	
+	let instrucaoSql = "";
+	
+	if (env == 'dev') {
+		// abaixo, escreva o select de dados para o Workbench
+		instrucaoSql = `select count(*) as AlertasCpu from tblDadosHardware where cpu>20 and fkCaixaEletronico = ${idCaixaEletronico};`;
+	} else if (env == 'production') {
+		// abaixo, escreva o select de dados para o SQL Server
+		instrucaoSql = `select count(*) as AlertasCpu from tblDadosHardware where cpu>20 and fkCaixaEletronico = ${idCaixaEletronico};`;
+	} else {
+		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
+	}
+	
+	console.log(instrucaoSql);
+	
+	sequelize.query(instrucaoSql, { type: sequelize.QueryTypes.SELECT })
+	.then(resultado => {
+		res.json(resultado[0]);
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+	});
+});
+
+router.get('/AlertasMemoria/:idCaixaEletronico', function(req, res, next) {
+	console.log('Recuperando');
+	
+	//var idCaixaEletronico = req.body.idCaixaEletronico; // depois de .body, use o nome (name) do campo em seu formulário de login
+	var idCaixaEletronico = req.params.idCaixaEletronico;
+	
+	let instrucaoSql = "";
+	
+	if (env == 'dev') {
+		// abaixo, escreva o select de dados para o Workbench
+		instrucaoSql = `select count(*) as AlertasMemoria from tblDadosHardware where memoria>20 and fkCaixaEletronico = ${idCaixaEletronico};`;
+	} else if (env == 'production') {
+		// abaixo, escreva o select de dados para o SQL Server
+		instrucaoSql = `select count(*) as AlertasMemoria from tblDadosHardware where memoria>20 and fkCaixaEletronico = ${idCaixaEletronico};`;
+	} else {
+		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
+	}
+	
+	console.log(instrucaoSql);
+	
+	sequelize.query(instrucaoSql, { type: sequelize.QueryTypes.SELECT })
+	.then(resultado => {
+		res.json(resultado[0]);
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+	});
+});
+
 module.exports = router;
