@@ -79,16 +79,18 @@ router.get('/tempo-real-cpu', function(req, res, next) {
 	});
 });
 
-router.get('/tempo-real-memoria', function(req, res, next) {
+router.get('/tempo-real-memoria/:idServidor', function(req, res, next) {
 	console.log('Recuperando');
 	
 	//var idCaixaEletronico = req.body.idCaixaEletronico; // depois de .body, use o nome (name) do campo em seu formulário de login
 	
+	var idServidor = req.params.idServidor;
+
 	let instrucaoSql = "";
 	
 	if (env == 'dev') {
 		// abaixo, escreva o select de dados para o Workbench
-		instrucaoSql = `select DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico, memoria, fkServidor from tblDadosServidor where fkServidor = 1 order by id desc limit 4`;
+		instrucaoSql = `select DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico, memoria, fkServidor from tblDadosServidor where fkServidor = ${idServidor} order by id desc limit 4`;
 	} else if (env == 'production') {
 		// abaixo, escreva o select de dados para o SQL Server
 		instrucaoSql = `select top 4 memoria, FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico, fkServidor from tblDadosServidor where fkServidor = 1 order by id desc`;

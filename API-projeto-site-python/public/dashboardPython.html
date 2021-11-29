@@ -109,7 +109,7 @@
           </div>
 
           <div class="row mt-2 container col-12">
-            <h2 class="color-text">Monitoramento servidores</h2>
+            <h2 class="color-text">Analytics</h2>
             <div class="col-7  col-sm-4 col-md-4 col-lg-3 ml-auto p-0 pt-2" >
               <div class="col-12 p-0">
                 <label class="col-5 col-sm-7 col-lg-5 p-0 row ml-auto">
@@ -138,20 +138,6 @@
               </div>
             </div>
           </div>
-
-          <script>
-            // function consultarMaquina(){
-              
-            //   for(var i = 1;i<=Cookies.get('qtdLocalizacao');i++){
-            //     dropdownMaquina.innerHTML+=`<option class="dropdown-item" onclick="chamarMaquina(${i})">Máquina ${i}</option>`
-            //   }
-            // }
-
-             function chamarMaquina(valor){
-               mudarMaquina.innerHTML = `Máquina ${valor}`
-               obterDadosGraficoPrimeiraVez(valor)
-             }
-          </script>
 
           <div class="row container col-12 p-0 mb-2">
             
@@ -379,26 +365,62 @@ var myChart3 = new Chart(
 
 <script>
 
-//   let proximaAtualizacaoCPU;
-   let proximaAtualizacaoMemoria;
+// function consultarMaquina(){
+              
+//   for(var i = 1;i<=Cookies.get('qtdLocalizacao');i++){
+//     dropdownMaquina.innerHTML+=`<option class="dropdown-item" onclick="chamarMaquina(${i})">Máquina ${i}</option>`
+//   }
+// }
+
+function chamarMaquina(valor){
+  mudarMaquina.innerHTML = `Máquina ${valor}`
+  obterDadosGraficoPrimeiraVez(valor)
+}
+
+  // let proximaAtualizacaoCPU;
+  let proximaAtualizacaoMemoria;
 
   window.onload = inicializacao();
 
   function inicializacao(){
-    obterDadosGraficoPrimeiraVez(1);
+    verificarCargo();
+    getLocalizacao();
     // consultarMaquina();
-    // verificarCargo();
-    // getLocalizacao();
+    obterDadosGraficoPrimeiraVez(1);
+  }
+  // chamargraficos(1);
+
+  // function alterarCoresBotoes(idCaixaEletronico) {
+  //     console.log("executei alterarCoresBotoes")
+  //     botaoCaminhao1.className = "btn"
+  //     botaoCaminhao2.className = "btn"
+  //     botaoCaminhao3.className = "btn"
+  //     botaoCaminhao4.className = "btn"
+
+  //     if (idCaixaEletronico == "1") {
+  //         botaoCaminhao1.className += " btn-now"
+  //     } else if (idCaixaEletronico == "2") {
+  //         botaoCaminhao2.className += " btn-now"
+  //     } else if (idCaixaEletronico == "3") {
+  //         botaoCaminhao3.className += " btn-now"
+  //     } else if (idCaixaEletronico == "4") {
+  //         botaoCaminhao4.className += " btn-now"
+  //     }
+  // }
+
+
+  function chamargraficos(idServidor) {
+      console.log("executei chamargraficos")
+      obterDadosGraficoPrimeiraVez(idServidor)
+      // atualizarGraficoCPU(idCaixaEletronico)
+
+      // alterarCoresBotoes(idCaixaEletronico);
+
   }
 
-    // var id_usuario = sessionStorage.id_usuario_meuapp;
-    // var cargo = sessionStorage.cargo_usuario_meuapp;
-    // var fkEmpresa = sessionStorage.fkEmpresa_usuario_meuapp;
-    // if(cargo == "Gerente" || cargo == "Analista"){
-    //   id_usuario = fkEmpresa;
-    // }
+  // verificar_autenticacao();
 
-    function configurarGraficoMemoria() {
+  function configurarGraficoMemoria() {
       console.log('chegaste no configurar')
       var configuracoesMemoria = {
           responsive: true,
@@ -407,17 +429,16 @@ var myChart3 = new Chart(
           stacked: false,
           title: {
               display: true,
-              text: 'Percentual de uso de Memória'
+              text: 'Percentual de uso da Memória'
           },
           scales: {
               yAxes: [{
                   type: 'linear', 
                   display: true,
                   position: 'left',
-                  id: 'y-memória',
-
+                  id: 'y-memoria',
               } 
-          
+              
             ],
           }
       };
@@ -426,6 +447,10 @@ var myChart3 = new Chart(
       
   }
 
+  
+
+  // altere aqui como os dados serão exibidos
+  // e como são recuperados do BackEnd
   function obterDadosGraficoPrimeiraVez(idServidor) {
       console.log("executei obterDadosGraficoPrimeiraVez")
       // alterarCoresBotoes(idCaixaEletronico);
@@ -435,14 +460,14 @@ var myChart3 = new Chart(
       }
 
 
-    // var id_usuario = sessionStorage.id_usuario_meuapp;
-    // var cargo = sessionStorage.cargo_usuario_meuapp;
-    // var fkEmpresa = sessionStorage.fkEmpresa_usuario_meuapp;
-    // if(cargo == "Gerente" || cargo == "Analista"){
-    //   id_usuario = fkEmpresa;
-    // }
-
-      fetch(`/tblDadosServidor/ultimasMemoria/${idServidor}`, { cache: 'no-store' }).then(function (response) {
+    var id_usuario = sessionStorage.id_usuario_meuapp;
+    var cargo = sessionStorage.cargo_usuario_meuapp;
+    var fkEmpresa = sessionStorage.fkEmpresa_usuario_meuapp;
+    if(cargo == "Gerente" || cargo == "Analista"){
+      id_usuario = fkEmpresa;
+    }
+          /// MEMORIA ------ MEMORIA ------------- MEMORIA
+          fetch(`/tblDadosServidor/ultimasMemoria/${idServidor}`, { cache: 'no-store' }).then(function (response) {
           if (response.ok) {
               response.json().then(function (resposta) {
                   console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
@@ -469,14 +494,13 @@ var myChart3 = new Chart(
                   for (i = 0; i < resposta.length; i++) {
                       var registro = resposta[i];
                       dados.labels.push(registro.dataHora_grafico);
-                      dados.datasets[0].data.push(Number(registro.memoria));
+                      dados.datasets[0].data.push(registro.memoria);
                       // dados.datasets[1].data.push(registro.memoria);
 
                   }
                   console.log(JSON.stringify(dados));
                   // div_aguarde.style.display = 'none';
                   console.log(dados, idServidor)
-                
                   plotarGraficoMemoria(dados, idServidor);
               });
           } else {
@@ -486,22 +510,27 @@ var myChart3 = new Chart(
           .catch(function (error) {
               console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
           });
-        }
+
+  }
 
 
-    function atualizarGraficoMemoria(idServidor, dados) {
-      fetch(`/tblDadosServidor/tempo-real-memoria/${idServidor}`, { cache: 'no-store' }).then(function (response) {
-          console.log("Estou tentando pegar idServidor = ", idServidor)
+
+  // só mexer se quiser alterar o tempo de atualização
+  // ou se souber o que está fazendo!
+ 
+  function atualizarGraficoMemoria(idServidor, dados){
+    fetch(`/tblDadosServidor/tempo-real-memoria/${idServidor}`, { cache: 'no-store' }).then(function (response) {
+          console.log("Estou tentando pegar idCaixaEletronico = ", idServidor)
           if (response.ok) {
               response.json().then(function (novoRegistro) {
                   console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
                   console.log(`Dados atuais do gráfico: ${dados}`);
 
-
                   if ( dados.datasets[0].data.length == 4){
                         dados.labels.shift();
                         dados.datasets[0].data.shift();
                         //dados.datasets[1].data.shift();
+                        
                     }
                     // tirando e colocando valores no gráfico
                     // dados.labels.shift(); // apagar o primeiro
@@ -512,7 +541,7 @@ var myChart3 = new Chart(
                     // dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
                     console.log("meu sensor é o " + idServidor)
 
-                    window.grafico_linha.update();
+                    window.grafico_linhaMemoria.update();
 
 
                     proximaAtualizacaoMemoria = setTimeout(() => atualizarGraficoMemoria(idServidor, dados), 5000);
@@ -525,22 +554,41 @@ var myChart3 = new Chart(
           .catch(function (error) {
               console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
           });
+
   }
 
-  function plotarGraficoMemoria(dados, id) {
+  // só altere aqui se souber o que está fazendo!
+
+  function plotarGraficoMemoria(dados, idServidor) {
       console.log("executei plotarGraficoMemoria")
       console.log('iniciando plotagem do gráfico...');
 
       var ctx = canvas_grafico_memoria.getContext('2d');
       console.log('até aqui vai');
       console.log(dados.datasets);
-      console.log(configurarGraficoMemoria());
-      console.log(dados);
-      window.grafico_linha = Chart.Line(ctx, {
+      console.log(configurarGraficoMemoria())
+      window.grafico_linhaMemoria = Chart.Line(ctx, {
           data: dados,
           options: configurarGraficoMemoria()
       });
-      setTimeout(() => atualizarGraficoMemoria(id, dados), 2000);
+      setTimeout(() => atualizarGraficoMemoria(idServidor, dados), 2000);
 
   }
+
+
+  // function sendData() {
+  //     var http = new XMLHttpRequest();
+  //     http.open('GET', 'http://localhost:9001/api/sendData', false);
+  //     http.send(null);
+  // }
+
+    
+  // Descomente abaixo se quiser inserir dados a cada X segundos
+  // setInterval(() => {
+  //     sendData();
+  // }, 2000);
+
+  // import Cookies from 'js-cookie'
+
+
 </script>
