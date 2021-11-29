@@ -109,7 +109,7 @@
           </div>
 
           <div class="row mt-2 container col-12">
-            <h2 class="color-text">Analytics</h2>
+            <h2 class="color-text">Monitoramento servidores</h2>
             <div class="col-7  col-sm-4 col-md-4 col-lg-3 ml-auto p-0 pt-2" >
               <div class="col-12 p-0">
                 <label class="col-5 col-sm-7 col-lg-5 p-0 row ml-auto">
@@ -416,20 +416,8 @@ var myChart3 = new Chart(
                   position: 'left',
                   id: 'y-memória',
 
-                  // gridLines: {
-                  //     drawOnChartArea: false, // only want the grid lines for one axis to show up
-                  // },
-
               } 
-              // {
-              //     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-              //     display: true,
-              //     position: 'right',
-              //     id: 'y-memoria',
-
-              //     // grid line settings
-
-              // }
+          
             ],
           }
       };
@@ -476,26 +464,19 @@ var myChart3 = new Chart(
                               backgroundColor: gradientFill,
                               data: []
                           },
-                          // {
-                          //     yAxisID: 'y-memoria',
-                          //     label: 'Memória',
-                          //     borderColor: '#0876ee99',
-                          //     backgroundColor: '#0876ee99',
-                          //     fill: false,
-                          //     data: []
-                          // }
                       ]
                   };
                   for (i = 0; i < resposta.length; i++) {
                       var registro = resposta[i];
                       dados.labels.push(registro.dataHora_grafico);
-                      dados.datasets[0].data.push(registro.memoria);
+                      dados.datasets[0].data.push(Number(registro.memoria));
                       // dados.datasets[1].data.push(registro.memoria);
 
                   }
                   console.log(JSON.stringify(dados));
                   // div_aguarde.style.display = 'none';
                   console.log(dados, idServidor)
+                
                   plotarGraficoMemoria(dados, idServidor);
               });
           } else {
@@ -531,7 +512,7 @@ var myChart3 = new Chart(
                     // dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
                     console.log("meu sensor é o " + idServidor)
 
-                    window.grafico_linhaMemoriaP.update();
+                    window.grafico_linha.update();
 
 
                     proximaAtualizacaoMemoria = setTimeout(() => atualizarGraficoMemoria(idServidor, dados), 5000);
@@ -546,7 +527,7 @@ var myChart3 = new Chart(
           });
   }
 
-  function plotarGraficoMemoria(dados, idServidor) {
+  function plotarGraficoMemoria(dados, id) {
       console.log("executei plotarGraficoMemoria")
       console.log('iniciando plotagem do gráfico...');
 
@@ -554,12 +535,11 @@ var myChart3 = new Chart(
       console.log('até aqui vai');
       console.log(dados.datasets);
       console.log(configurarGraficoMemoria())
-      alert(configurarGraficoMemoria())
-      window.grafico_linhaMemoriaP = Chart.Line(ctx, {
+      window.grafico_linha = Chart.Line(ctx, {
           data: dados,
           options: configurarGraficoMemoria()
       });
-      setTimeout(() => atualizarGraficoMemoria(idServidor, dados), 2000);
+      setTimeout(() => atualizarGraficoMemoria(id, dados), 2000);
 
   }
 </script>

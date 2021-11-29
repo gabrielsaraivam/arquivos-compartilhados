@@ -382,9 +382,9 @@ function chamarMaquina(valor){
 
   function inicializacao(){
     verificarCargo();
-    consultarMaquina();
     getLocalizacao();
-    obterDadosGraficoPrimeiraVez(1);
+    consultarMaquina();
+    obterDadosGraficoPrimeiraVez(sessionStorage['maquina1']);
   }
   // chamargraficos(1);
 

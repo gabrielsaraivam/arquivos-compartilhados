@@ -195,10 +195,10 @@ router.get('/AlertasCpu/:idCaixaEletronico', function(req, res, next) {
 	
 	if (env == 'dev') {
 		// abaixo, escreva o select de dados para o Workbench
-		instrucaoSql = `select count(*) as AlertasCpu from tblDadosHardware where cpu>20 and fkCaixaEletronico = ${idCaixaEletronico};`;
+		instrucaoSql = `select count(*) as AlertasCpu from tblDadosHardware where cpu>60 and fkCaixaEletronico = ${idCaixaEletronico};`;
 	} else if (env == 'production') {
 		// abaixo, escreva o select de dados para o SQL Server
-		instrucaoSql = `select count(*) as AlertasCpu from tblDadosHardware where cpu>20 and fkCaixaEletronico = ${idCaixaEletronico};`;
+		instrucaoSql = `select count(*) as AlertasCpu from tblDadosHardware where cpu>60 and fkCaixaEletronico = ${idCaixaEletronico};`;
 	} else {
 		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
 	}
@@ -224,10 +224,10 @@ router.get('/AlertasMemoria/:idCaixaEletronico', function(req, res, next) {
 	
 	if (env == 'dev') {
 		// abaixo, escreva o select de dados para o Workbench
-		instrucaoSql = `select count(*) as AlertasMemoria from tblDadosHardware where memoria>20 and fkCaixaEletronico = ${idCaixaEletronico};`;
+		instrucaoSql = `select count(*) as AlertasMemoria from tblDadosHardware where memoria>60 and fkCaixaEletronico = ${idCaixaEletronico};`;
 	} else if (env == 'production') {
 		// abaixo, escreva o select de dados para o SQL Server
-		instrucaoSql = `select count(*) as AlertasMemoria from tblDadosHardware where memoria>20 and fkCaixaEletronico = ${idCaixaEletronico};`;
+		instrucaoSql = `select count(*) as AlertasMemoria from tblDadosHardware where memoria>60 and fkCaixaEletronico = ${idCaixaEletronico};`;
 	} else {
 		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
 	}

@@ -3,7 +3,7 @@ module.exports = {
   production: {
     // altere APENAS username, password, database e host.
     username: 'overall',
-    password: '',
+    password: '#Gfgrupo1',
     database: 'dbOverall',
     host: 'dboverall.database.windows.net',
     dialect: 'mssql',
@@ -30,7 +30,7 @@ module.exports = {
 
     password: 'urubu100',
     database: 'dbOverall',
-    host: 'ec2-54-167-204-232.compute-1.amazonaws.com',
+    host: 'ec2-54-165-245-206.compute-1.amazonaws.com',
     dialect: 'mysql',
     xuse_env_variable: 'DATABASE_URL',
     dialectOptions: {

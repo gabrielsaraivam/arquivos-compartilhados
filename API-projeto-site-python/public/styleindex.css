@@ -1,0 +1,28 @@
+body{
+    background-color: rgb(240, 228, 240);
+    user-select: none;
+}
+
+
+#inicio {
+    background-image: url(./img/fundo.png);
+    background-size: cover;
+}
+
+#sobre{
+    background-color: white;
+}
+
+.div-image img{
+    width: 100%;
+}
+
+
+
+.icon{
+    width: 60%;
+}
+
+.name-overall{
+    translate: no;
+}
