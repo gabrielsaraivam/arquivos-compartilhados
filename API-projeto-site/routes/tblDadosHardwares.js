@@ -243,4 +243,160 @@ router.get('/AlertasMemoria/:idCaixaEletronico', function(req, res, next) {
 	});
 });
 
+
+router.get('/ultimasDisco/:idCaixaEletronico/:id_usuario', function(req, res, next) {
+	
+	// quantas são as últimas tblDadosHardwares que quer? 7 está bom?
+	const limite_linhas = 4;
+
+	var idCaixaEletronico = req.params.idCaixaEletronico;
+	var id_usuario = req.params.id_usuario;
+
+	console.log(`Recuperando as ultimas ${limite_linhas} disco tblDadosHardwares`);
+	
+	let instrucaoSql = "";
+
+	if (env == 'dev') {
+		// abaixo, escreva o select de dados para o Workbench
+		instrucaoSql = `select 
+		dataHora,
+		disco,  
+		DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico
+		from tblDadosHardware
+		where fkEmpresa = ${id_usuario} and fkCaixaEletronico = ${idCaixaEletronico}
+		order by id desc limit ${limite_linhas}`;
+	} else if (env == 'production') {
+		// abaixo, escreva o select de dados para o SQL Server
+		instrucaoSql = `select top ${limite_linhas} 
+		disco, 
+		dataHora,
+		FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico
+		from tblDadosHardware
+		where fkEmpresa = ${id_usuario} and fkCaixaEletronico = ${idCaixaEletronico}
+		order by id desc`;
+	} else {
+		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
+	}
+	
+	sequelize.query(instrucaoSql, {
+		model: tblDadosHardware,
+		mapToModel: true 
+	})
+	.then(resultado => {
+		console.log(`Encontrados: ${resultado.length}`);
+		res.json(resultado);
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+	});
+});
+
+router.get('/tempo-real-disco/:idCaixaEletronico', function(req, res, next) {
+	console.log('Recuperando');
+	
+	//var idCaixaEletronico = req.body.idCaixaEletronico; // depois de .body, use o nome (name) do campo em seu formulário de login
+	var idCaixaEletronico = req.params.idCaixaEletronico;
+	
+	let instrucaoSql = "";
+	
+	if (env == 'dev') {
+		// abaixo, escreva o select de dados para o Workbench
+		instrucaoSql = `select DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico, disco, fkEmpresa from tblDadosHardware where fkCaixaEletronico = ${idCaixaEletronico} order by id desc limit 4`;
+	} else if (env == 'production') {
+		// abaixo, escreva o select de dados para o SQL Server
+		instrucaoSql = `select top 4 disco, FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico, fkEmpresa from tblDadosHardware where fkCaixaEletronico = ${idCaixaEletronico} order by id desc`;
+	} else {
+		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
+	}
+	
+	console.log(instrucaoSql);
+	
+	sequelize.query(instrucaoSql, { type: sequelize.QueryTypes.SELECT })
+	.then(resultado => {
+		res.json(resultado[0]);
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+	});
+});
+
+
+router.get('/ultimasProcessos/:idCaixaEletronico/:id_usuario', function(req, res, next) {
+	
+	// quantas são as últimas tblDadosHardwares que quer? 7 está bom?
+	const limite_linhas = 4;
+
+	var idCaixaEletronico = req.params.idCaixaEletronico;
+	var id_usuario = req.params.id_usuario;
+
+	console.log(`Recuperando as ultimas ${limite_linhas} processos tblDadosHardwares`);
+	
+	let instrucaoSql = "";
+
+	if (env == 'dev') {
+		// abaixo, escreva o select de dados para o Workbench
+		instrucaoSql = `select 
+		dataHora,
+		processosAtivos,  
+		DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico
+		from tblDadosHardware
+		where fkEmpresa = ${id_usuario} and fkCaixaEletronico = ${idCaixaEletronico}
+		order by id desc limit ${limite_linhas}`;
+	} else if (env == 'production') {
+		// abaixo, escreva o select de dados para o SQL Server
+		instrucaoSql = `select top ${limite_linhas} 
+		processosAtivos, 
+		dataHora,
+		FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico
+		from tblDadosHardware
+		where fkEmpresa = ${id_usuario} and fkCaixaEletronico = ${idCaixaEletronico}
+		order by id desc`;
+	} else {
+		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
+	}
+	
+	sequelize.query(instrucaoSql, {
+		model: tblDadosHardware,
+		mapToModel: true 
+	})
+	.then(resultado => {
+		console.log(`Encontrados: ${resultado.length}`);
+		res.json(resultado);
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+	});
+});
+
+
+router.get('/tempo-real-processos/:idCaixaEletronico', function(req, res, next) {
+	console.log('Recuperando');
+	
+	//var idCaixaEletronico = req.body.idCaixaEletronico; // depois de .body, use o nome (name) do campo em seu formulário de login
+	var idCaixaEletronico = req.params.idCaixaEletronico;
+	
+	let instrucaoSql = "";
+	
+	if (env == 'dev') {
+		// abaixo, escreva o select de dados para o Workbench
+		instrucaoSql = `select DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico, processosAtivos, fkEmpresa from tblDadosHardware where fkCaixaEletronico = ${idCaixaEletronico} order by id desc limit 4`;
+	} else if (env == 'production') {
+		// abaixo, escreva o select de dados para o SQL Server
+		instrucaoSql = `select top 4 processosAtivos, FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico, fkEmpresa from tblDadosHardware where fkCaixaEletronico = ${idCaixaEletronico} order by id desc`;
+	} else {
+		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
+	}
+	
+	console.log(instrucaoSql);
+	
+	sequelize.query(instrucaoSql, { type: sequelize.QueryTypes.SELECT })
+	.then(resultado => {
+		res.json(resultado[0]);
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+	});
+});
+
+
 module.exports = router;

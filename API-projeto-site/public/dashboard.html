@@ -135,7 +135,7 @@
             
             <div class=" mt-2 col-md-6 col-lg-6 col-sm-6 col-xl-6 mr-auto rounded">
               <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded  divs-graphcs-big">
-                  <canvas id="myChart"></canvas>
+                  <canvas id="canvas_grafico_disco"></canvas>
               </div>
             </div>
             <!-- <div class="col-md-1 col-lg-1" style="background-color: red; height: 1%;"></div> -->
@@ -155,7 +155,7 @@
             <!-- <div class="col-md-1 col-lg-1" style="background-color: red; height: 1%;"></div> -->
             <div class="mt-3 col-md-6 col-lg-6 col-sm-6 col-xl-6" >
               <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded divs-graphcs-small" style="position: relative; height: 100%;">
-                <canvas id="myChart3"></canvas>
+                <canvas id="canvas_grafico_processos"></canvas>
               </div>
             </div>   
           </div>
@@ -244,48 +244,48 @@ const $html = document.querySelector('html')
 
 <script>
 
-var ctx = document.getElementById('myChart').getContext("2d");
+var ctx = document.getElementById('canvas_grafico_cpu').getContext("2d");
 
 var gradientFill = ctx.createLinearGradient(0, 0, 0, 200);
 gradientFill.addColorStop(1, "#1c84e900");
 gradientFill.addColorStop(0, "#1c84e9");
 
 
-  const data = {
-labels: [
-  'Janeiro',
-  'Fevereiro',
-  'Março',
-  'Abril'
-],
-datasets: [{
-  label: 'Disco',
-  data: [2.75, 2, 3.6, 2],
-  fill: true,
-  borderColor: '#1c84e9',
-  backgroundColor: gradientFill,
-  tension: 0.3
-}]
-};
+//   const data = {
+// labels: [
+//   'Janeiro',
+//   'Fevereiro',
+//   'Março',
+//   'Abril'
+// ],
+// datasets: [{
+//   label: 'Disco',
+//   data: [2.75, 2, 3.6, 2],
+//   fill: true,
+//   borderColor: '#1c84e9',
+//   backgroundColor: gradientFill,
+//   tension: 0.3
+// }]
+// };
 
-const config = {
-type: 'line',
-data: data,
-options: {
-  indexAxis: 'x',
-  scales: {
-    y: {
-      beginAtZero: true
-    }
-  }
-}
-};
+// const config = {
+// type: 'line',
+// data: data,
+// options: {
+//   indexAxis: 'x',
+//   scales: {
+//     y: {
+//       beginAtZero: true
+//     }
+//   }
+// }
+// };
 
 
-var myChart = new Chart(
-  document.getElementById('myChart'),
-  config
-);
+// var myChart = new Chart(
+//   document.getElementById('myChart'),
+//   config
+// );
 
 // ----------------
 
@@ -321,35 +321,35 @@ var myChart = new Chart(
 
 // ----
 
-const data3 = {
-  labels: [
-    'Alerta Máquina 1',
-    'Alerta Máquina 2',
-    'Alerta Máquina 3'
-  ],
-  datasets: [{
-    label: 'My First Dataset',
-    data: [6, 4, 3],
-    backgroundColor: [
-      '#1c84e9',
-      '#0876ee99',
-      '#1c84e950'
-    ],
+// const data3 = {
+//   labels: [
+//     'Alerta Máquina 1',
+//     'Alerta Máquina 2',
+//     'Alerta Máquina 3'
+//   ],
+//   datasets: [{
+//     label: 'My First Dataset',
+//     data: [6, 4, 3],
+//     backgroundColor: [
+//       '#1c84e9',
+//       '#0876ee99',
+//       '#1c84e950'
+//     ],
 
-    borderColor: '#ffffff00'
-  }]
-};
+//     borderColor: '#ffffff00'
+//   }]
+// };
 
-const config3 = {
-  type: 'polarArea',
-  data: data3,
-};
+// const config3 = {
+//   type: 'polarArea',
+//   data: data3,
+// };
 
 
-var myChart3 = new Chart(
-    document.getElementById('myChart3'),
-    config3
-);
+// var myChart3 = new Chart(
+//     document.getElementById('myChart3'),
+//     config3
+// );
 </script>
 
 
@@ -371,6 +371,8 @@ function chamarMaquina(valor){
 
   let proximaAtualizacaoCPU;
   let proximaAtualizacaoMemoria;
+  let proximaAtualizacaoDisco;
+  let proximaAtualizacaoProcessos;
 
   window.onload = inicializacao();
 
@@ -479,7 +481,59 @@ function chamarMaquina(valor){
       
   }
 
-  
+  function configurarGraficoDisco() {
+      console.log('chegaste no configurar')
+      var configuracoesDisco = {
+          responsive: true,
+          animation: { duration: 500 },
+          hoverMode: 'index',
+          stacked: false,
+          title: {
+              display: true,
+              text: 'Percentual de uso do Disco'
+          },
+          scales: {
+              yAxes: [{
+                  type: 'linear', 
+                  display: true,
+                  position: 'left',
+                  id: 'y-disco',
+              } 
+              
+            ],
+          }
+      };
+      console.log("executei configurarGraficoDisco")
+      return configuracoesDisco;
+      
+  }
+
+  function configurarGraficoProcessos() {
+      console.log('chegaste no configurar')
+      var configuracoesProcessos = {
+          responsive: true,
+          animation: { duration: 500 },
+          hoverMode: 'index',
+          stacked: false,
+          title: {
+              display: true,
+              text: 'Processos Ativos'
+          },
+          scales: {
+              yAxes: [{
+                  type: 'linear', 
+                  display: true,
+                  position: 'left',
+                  id: 'y-processos',
+              } 
+              
+            ],
+          }
+      };
+      console.log("executei configurarGraficoProcessos")
+      return configuracoesProcessos;
+      
+  }
 
   // altere aqui como os dados serão exibidos
   // e como são recuperados do BackEnd
@@ -494,6 +548,14 @@ function chamarMaquina(valor){
 
       if (proximaAtualizacaoMemoria != undefined) {
           clearTimeout(proximaAtualizacaoMemoria);
+      }
+
+      if (proximaAtualizacaoDisco != undefined) {
+          clearTimeout(proximaAtualizacaoDisco);
+      }
+
+      if (proximaAtualizacaoProcessos != undefined) {
+          clearTimeout(proximaAtualizacaoProcessos);
       }
 
 
@@ -603,6 +665,96 @@ function chamarMaquina(valor){
               console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
           });
 
+
+          fetch(`/tblDadosHardwares/ultimasDisco/${idCaixaEletronico}/${id_usuario}`, { cache: 'no-store' }).then(function (response) {
+          if (response.ok) {
+              response.json().then(function (resposta) {
+                  console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                  // alert(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                  resposta.reverse();
+
+                  var gradientFill = ctx.createLinearGradient(0, 0, 0, 200);
+                  gradientFill.addColorStop(1, "#1c84e900");
+                  gradientFill.addColorStop(0, "#1c84e9");
+
+                  var dados = {
+                      labels: [],
+                      datasets: [
+                          {
+                              yAxisID: 'y-disco',
+                              label: 'Disco',
+                              fill: true,
+                              borderColor: '#1c84e9',
+                              backgroundColor: gradientFill,
+                              data: []
+                          },
+                      ]
+                  };
+                  for (i = 0; i < resposta.length; i++) {
+                      var registro = resposta[i];
+                      dados.labels.push(registro.dataHora_grafico);
+                      dados.datasets[0].data.push(registro.disco);
+                      // dados.datasets[1].data.push(registro.memoria);
+
+                  }
+                  console.log(JSON.stringify(dados));
+                  // div_aguarde.style.display = 'none';
+                  console.log(dados, idCaixaEletronico)
+                  plotarGraficoDisco(dados, idCaixaEletronico);
+              });
+          } else {
+              console.error('Nenhum dado encontrado ou erro na API');
+          }
+      })
+          .catch(function (error) {
+              console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+          });
+
+
+          fetch(`/tblDadosHardwares/ultimasProcessos/${idCaixaEletronico}/${id_usuario}`, { cache: 'no-store' }).then(function (response) {
+          if (response.ok) {
+              response.json().then(function (resposta) {
+                  console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                  // alert(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                  resposta.reverse();
+
+                  var gradientFill = ctx.createLinearGradient(0, 0, 0, 200);
+                  gradientFill.addColorStop(1, "#1c84e900");
+                  gradientFill.addColorStop(0, "#1c84e9");
+
+                  var dados = {
+                      labels: [],
+                      datasets: [
+                          {
+                              yAxisID: 'y-processos',
+                              label: 'Processos',
+                              fill: true,
+                              borderColor: '#1c84e9',
+                              backgroundColor: gradientFill,
+                              data: []
+                          },
+                      ]
+                  };
+                  for (i = 0; i < resposta.length; i++) {
+                      var registro = resposta[i];
+                      dados.labels.push(registro.dataHora_grafico);
+                      dados.datasets[0].data.push(registro.processosAtivos);
+                      // dados.datasets[1].data.push(registro.memoria);
+
+                  }
+                  console.log(JSON.stringify(dados));
+                  // div_aguarde.style.display = 'none';
+                  console.log(dados, idCaixaEletronico)
+                  plotarGraficoProcessos(dados, idCaixaEletronico);
+              });
+          } else {
+              console.error('Nenhum dado encontrado ou erro na API');
+          }
+      })
+          .catch(function (error) {
+              console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+          });
+
   }
 
 
@@ -686,6 +838,86 @@ function chamarMaquina(valor){
 
   }
 
+
+  function atualizarGraficoDisco(idCaixaEletronico, dados){
+    fetch(`/tblDadosHardwares/tempo-real-disco/${idCaixaEletronico}`, { cache: 'no-store' }).then(function (response) {
+          console.log("Estou tentando pegar idCaixaEletronico = ", idCaixaEletronico)
+          if (response.ok) {
+              response.json().then(function (novoRegistro) {
+                  console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+                  console.log(`Dados atuais do gráfico: ${dados}`);
+
+                  if ( dados.datasets[0].data.length == 4){
+                        dados.labels.shift();
+                        dados.datasets[0].data.shift();
+                        //dados.datasets[1].data.shift();
+                        
+                    }
+                    // tirando e colocando valores no gráfico
+                    // dados.labels.shift(); // apagar o primeiro
+                    dados.labels.push(novoRegistro.dataHora_grafico); // incluir um novo dataHora
+                    // dados.datasets[0].data.shift();  // apagar o primeiro de cpu
+                    // dados.datasets[1].data.shift();  // apagar o primeiro de memoria
+                    dados.datasets[0].data.push(novoRegistro.disco); // incluir uma nova tblDadosHardware de cpu
+                    // dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
+                    console.log("meu sensor é o " + idCaixaEletronico)
+
+                    window.grafico_linhaDisco.update();
+
+
+                    proximaAtualizacaoDisco = setTimeout(() => atualizarGraficoDisco(idCaixaEletronico, dados), 5000);
+              });
+          } else {
+              console.error('Nenhum dado encontrado ou erro na API');
+              proximaAtualizacaoDisco = setTimeout(() => atualizarGraficoDisco(idCaixaEletronico, dados), 5000);
+          }
+      })
+          .catch(function (error) {
+              console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+          });
+
+  }
+
+
+  function atualizarGraficoProcessos(idCaixaEletronico, dados){
+    fetch(`/tblDadosHardwares/tempo-real-processos/${idCaixaEletronico}`, { cache: 'no-store' }).then(function (response) {
+          console.log("Estou tentando pegar idCaixaEletronico = ", idCaixaEletronico)
+          if (response.ok) {
+              response.json().then(function (novoRegistro) {
+                  console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+                  console.log(`Dados atuais do gráfico: ${dados}`);
+
+                  if ( dados.datasets[0].data.length == 4){
+                        dados.labels.shift();
+                        dados.datasets[0].data.shift();
+                        //dados.datasets[1].data.shift();
+                        
+                    }
+                    // tirando e colocando valores no gráfico
+                    // dados.labels.shift(); // apagar o primeiro
+                    dados.labels.push(novoRegistro.dataHora_grafico); // incluir um novo dataHora
+                    // dados.datasets[0].data.shift();  // apagar o primeiro de cpu
+                    // dados.datasets[1].data.shift();  // apagar o primeiro de memoria
+                    dados.datasets[0].data.push(novoRegistro.processosAtivos); // incluir uma nova tblDadosHardware de cpu
+                    // dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
+                    console.log("meu sensor é o " + idCaixaEletronico)
+
+                    window.grafico_linhaProcessos.update();
+
+
+                    proximaAtualizacaoProcessos = setTimeout(() => atualizarGraficoProcessos(idCaixaEletronico, dados), 5000);
+              });
+          } else {
+              console.error('Nenhum dado encontrado ou erro na API');
+              proximaAtualizacaoProcessos = setTimeout(() => atualizarGraficoProcessos(idCaixaEletronico, dados), 5000);
+          }
+      })
+          .catch(function (error) {
+              console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+          });
+
+  }
+
   // só altere aqui se souber o que está fazendo!
   function plotarGraficoCPU(dados, idCaixaEletronico) {
       console.log("executei plotarGraficoCPU")
@@ -716,6 +948,39 @@ function chamarMaquina(valor){
           options: configurarGraficoMemoria()
       });
       setTimeout(() => atualizarGraficoMemoria(idCaixaEletronico, dados), 2000);
+
+  }
+
+  function plotarGraficoDisco(dados, idCaixaEletronico) {
+      console.log("executei plotarGraficoDisco")
+      console.log('iniciando plotagem do gráfico...');
+
+      var ctx = canvas_grafico_disco.getContext('2d');
+      console.log('até aqui vai');
+      console.log(dados.datasets);
+      console.log(configurarGraficoDisco())
+      window.grafico_linhaDisco = Chart.Line(ctx, {
+          data: dados,
+          options: configurarGraficoDisco()
+      });
+      setTimeout(() => atualizarGraficoDisco(idCaixaEletronico, dados), 2000);
+
+  }
+
+
+  function plotarGraficoProcessos(dados, idCaixaEletronico) {
+      console.log("executei plotarGraficoProcessos")
+      console.log('iniciando plotagem do gráfico...');
+
+      var ctx = canvas_grafico_processos.getContext('2d');
+      console.log('até aqui vai');
+      console.log(dados.datasets);
+      console.log(configurarGraficoProcessos())
+      window.grafico_linhaProcessos = Chart.Line(ctx, {
+          data: dados,
+          options: configurarGraficoProcessos()
+      });
+      setTimeout(() => atualizarGraficoProcessos(idCaixaEletronico, dados), 2000);
 
   }
 
