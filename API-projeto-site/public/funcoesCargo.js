@@ -19,4 +19,7 @@ function verificarCargo(){
         hCargo.innerHTML == "Administração";
         // window.location.href = "dashboardPython.html";
     }
+    else{
+        aDashboard.style.display = "none";
+    }
 }

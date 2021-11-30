@@ -22,7 +22,7 @@ router.get('/ultimasCPU/:idServidor', function(req, res, next) {
 		cpu,  
 		DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico
 		from tblDadosServidor
-		where fkServidor = ${idCaixaEletronico}
+		where fkServidor = ${idServidor}
 		order by id desc limit 4`;
 	} else if (env == 'production') {
 		// abaixo, escreva o select de dados para o SQL Server
@@ -31,7 +31,7 @@ router.get('/ultimasCPU/:idServidor', function(req, res, next) {
 		dataHora,
 		FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico
 		from tblDadosServidor
-		where fkServidor = ${idCaixaEletronico}
+		where fkServidor = ${idServidor}
 		order by id desc`;
 	} else {
 		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
@@ -51,19 +51,20 @@ router.get('/ultimasCPU/:idServidor', function(req, res, next) {
 });
 
 
-router.get('/tempo-real-cpu', function(req, res, next) {
+router.get('/tempo-real-cpu/:idServidor', function(req, res, next) {
 	console.log('Recuperando');
 	
 	//var idCaixaEletronico = req.body.idCaixaEletronico; // depois de .body, use o nome (name) do campo em seu formulário de login
-	
+	var idServidor = req.params.idServidor;
+
 	let instrucaoSql = "";
 	
 	if (env == 'dev') {
 		// abaixo, escreva o select de dados para o Workbench
-		instrucaoSql = `select DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico, cpu, fkServidor from tblDadosServidor where fkServidor = 1 order by id desc limit 4`;
+		instrucaoSql = `select DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico, cpu, fkServidor from tblDadosServidor where fkServidor = ${idServidor} order by id desc`;
 	} else if (env == 'production') {
 		// abaixo, escreva o select de dados para o SQL Server
-		instrucaoSql = `select top 4 cpu, FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico, fkServidor from tblDadosServidor where fkServidor = 1 order by id desc`;
+		instrucaoSql = `select cpu, FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico, fkServidor from tblDadosServidor where fkServidor = ${idServidor} order by id desc`;
 	} else {
 		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
 	}
@@ -90,10 +91,10 @@ router.get('/tempo-real-memoria/:idServidor', function(req, res, next) {
 	
 	if (env == 'dev') {
 		// abaixo, escreva o select de dados para o Workbench
-		instrucaoSql = `select DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico, memoria, fkServidor from tblDadosServidor where fkServidor = ${idServidor} order by id desc limit 4`;
+		instrucaoSql = `select DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico, memoria, fkServidor from tblDadosServidor where fkServidor = ${idServidor} order by id desc`;
 	} else if (env == 'production') {
 		// abaixo, escreva o select de dados para o SQL Server
-		instrucaoSql = `select top 4 memoria, FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico, fkServidor from tblDadosServidor where fkServidor = 1 order by id desc`;
+		instrucaoSql = `select memoria, FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico, fkServidor from tblDadosServidor where fkServidor = ${idServidor} order by id desc`;
 	} else {
 		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
 	}
@@ -174,6 +175,162 @@ router.get('/ultimasMemoria/:idServidor', function(req, res, next) {
 	.then(resultado => {
 		console.log(`Encontrados: ${resultado.length}`);
 		res.json(resultado);
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+	});
+});
+
+
+//cpu
+
+router.get('/ultimasDisco/:idServidor', function(req, res, next) {
+	
+	// quantas são as últimas tblDadosHardwares que quer? 7 está bom?
+	const limite_linhas = 4;
+	var idServidor = req.params.idServidor;
+
+	console.log(`Recuperando as ultimas ${limite_linhas} disco tblDadosServidor`);
+	
+	let instrucaoSql = "";
+
+	if (env == 'dev') {
+		// abaixo, escreva o select de dados para o Workbench
+		instrucaoSql = `select 
+		dataHora,
+		disco,  
+		DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico
+		from tblDadosServidor
+		where fkServidor = ${idServidor}
+		order by id desc limit ${limite_linhas}`;
+	} else if (env == 'production') {
+		// abaixo, escreva o select de dados para o SQL Server
+		instrucaoSql = `select top ${limite_linhas} 
+		disco, 
+		dataHora,
+		FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico
+		from tblDadosServidor
+		where fkServidor = ${idServidor}
+		order by id desc`;
+	} else {
+		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
+	}
+	
+	sequelize.query(instrucaoSql, {
+		model: tblDadosServidor,
+		mapToModel: true 
+	})
+	.then(resultado => {
+		console.log(`Encontrados: ${resultado.length}`);
+		res.json(resultado);
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+	});
+});
+
+
+router.get('/tempo-real-disco/:idServidor', function(req, res, next) {
+	console.log('Recuperando');
+	
+	//var idCaixaEletronico = req.body.idCaixaEletronico; // depois de .body, use o nome (name) do campo em seu formulário de login
+	
+	var idServidor = req.params.idServidor;
+
+	let instrucaoSql = "";
+	
+	if (env == 'dev') {
+		// abaixo, escreva o select de dados para o Workbench
+		instrucaoSql = `select DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico, disco, fkServidor from tblDadosServidor where fkServidor = ${idServidor} order by id desc`;
+	} else if (env == 'production') {
+		// abaixo, escreva o select de dados para o SQL Server
+		instrucaoSql = `select disco, FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico, fkServidor from tblDadosServidor where fkServidor = ${idServidor} order by id desc`;
+	} else {
+		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
+	}
+	
+	console.log(instrucaoSql);
+	
+	sequelize.query(instrucaoSql, { type: sequelize.QueryTypes.SELECT })
+	.then(resultado => {
+		res.json(resultado[0]);
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+	});
+});
+
+
+router.get('/ultimasProcessos/:idServidor', function(req, res, next) {
+	
+	// quantas são as últimas tblDadosHardwares que quer? 7 está bom?
+	const limite_linhas = 4;
+	var idServidor = req.params.idServidor;
+
+	console.log(`Recuperando as ultimas ${limite_linhas} disco tblDadosServidor`);
+	
+	let instrucaoSql = "";
+
+	if (env == 'dev') {
+		// abaixo, escreva o select de dados para o Workbench
+		instrucaoSql = `select 
+		dataHora,
+		processosAtivos,  
+		DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico
+		from tblDadosServidor
+		where fkServidor = ${idServidor}
+		order by id desc limit ${limite_linhas}`;
+	} else if (env == 'production') {
+		// abaixo, escreva o select de dados para o SQL Server
+		instrucaoSql = `select top ${limite_linhas} 
+		processosAtivos, 
+		dataHora,
+		FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico
+		from tblDadosServidor
+		where fkServidor = ${idServidor}
+		order by id desc`;
+	} else {
+		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
+	}
+	
+	sequelize.query(instrucaoSql, {
+		model: tblDadosServidor,
+		mapToModel: true 
+	})
+	.then(resultado => {
+		console.log(`Encontrados: ${resultado.length}`);
+		res.json(resultado);
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+	});
+});
+
+
+router.get('/tempo-real-processos/:idServidor', function(req, res, next) {
+	console.log('Recuperando');
+	
+	//var idCaixaEletronico = req.body.idCaixaEletronico; // depois de .body, use o nome (name) do campo em seu formulário de login
+	
+	var idServidor = req.params.idServidor;
+
+	let instrucaoSql = "";
+	
+	if (env == 'dev') {
+		// abaixo, escreva o select de dados para o Workbench
+		instrucaoSql = `select DATE_FORMAT(dataHora,'%H:%i:%s') as dataHora_grafico, processosAtivos, fkServidor from tblDadosServidor where fkServidor = ${idServidor} order by id desc`;
+	} else if (env == 'production') {
+		// abaixo, escreva o select de dados para o SQL Server
+		instrucaoSql = `select processosAtivos, FORMAT(dataHora,'HH:mm:ss') as dataHora_grafico, fkServidor from tblDadosServidor where fkServidor = ${idServidor} order by id desc`;
+	} else {
+		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
+	}
+	
+	console.log(instrucaoSql);
+	
+	sequelize.query(instrucaoSql, { type: sequelize.QueryTypes.SELECT })
+	.then(resultado => {
+		res.json(resultado[0]);
 	}).catch(erro => {
 		console.error(erro);
 		res.status(500).send(erro.message);

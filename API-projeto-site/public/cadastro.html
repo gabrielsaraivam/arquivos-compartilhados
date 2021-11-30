@@ -97,11 +97,11 @@
 
                         <div class="col-12 mb-4 mx-auto">
                             <h3 class="col-md-5 mr-auto">CNPJ:</h3>
-                            <input name="cnpj" id="cnpj" class="col-12 input-padrao" type="text" required minlength="12">
+                            <input name="cnpj" id="cnpj" class="col-12 input-padrao" type="text" required minlength="14" maxlength="14" >
                         </div>
 
                         <script type="text/javascript">
-                            $("#cnpj").mask("000.000.000/0000-00");
+                            $("#cnpj").mask("00.000.000/0000-00");
                             </script>
 
                         <div class="col-12 mb-4 mx-auto">
@@ -159,7 +159,9 @@
 <script>
 
     function cadastrar() {
-        aguardar();
+        // aguardar();
+        $("#cnpj").mask("00000000000000");
+
         var formulario = new URLSearchParams(new FormData(form_cadastro));
         fetch("/usuarios/cadastrar", {
             method: "POST",
@@ -176,21 +178,21 @@
                 response.text().then(function (resposta) {
                     div_erro.innerHTML = resposta;
                 });
-                finalizar_aguardar();
+                // finalizar_aguardar();
             }
         });
 
         return false;
     }
 
-    function aguardar() {
-        btn_cadastrar.disabled = true;
-        div_erro.style.display='none';
-    }
+    // function aguardar() {
+    //     btn_cadastrar.disabled = true;
+    //     div_erro.style.display='none';
+    // }
 
-    function finalizar_aguardar() {
-        btn_cadastrar.disabled = false;
-        div_erro.style.display='block';
-    }
+    // function finalizar_aguardar() {
+    //     btn_cadastrar.disabled = false;
+    //     div_erro.style.display='block';
+    // }
 
 </script>

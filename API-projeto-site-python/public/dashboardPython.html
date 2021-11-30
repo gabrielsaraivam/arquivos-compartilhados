@@ -23,7 +23,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 		
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="https://kit.fontawesome.com/fee5906543.js" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="./cssSB/style.css">
 
 
@@ -42,31 +42,23 @@
           <h1 class="p-4"><a href="index.html" id="imgLogo"><img src="./img/logo-black.png" alt=""></a></h1>
           <ul class="list-unstyled components mb-5">
             <li class="li-active pl-4 pr-4">
-              <a href="dashboard.html"><span class="fa fa-home mr-3"></span> Home</a>
+              <a href="dashboardPython.html"><span class="fa fa-server mr-3"></span>Servidores</a>
+            </li>
+
+            <li class="pl-4 pr-4">
+              <a href="#" target="_blank"><span class="fa fa-chart-line mr-3"></span>Forecast</a>
             </li>
             <li class="pl-4 pr-4">
-                <a href="cadastroUsuario.html" id="aUser"><span class="fa fa-user mr-3"></span> Cadastrar Usuário</a>
+              <a href="#"><span class="fab fa-aws mr-3"></span>Billing</a>
             </li>
             <li class="pl-4 pr-4">
-              <a href="cadastroCaixa.html" id="aCaixa"><span class="fa fa-money mr-3"></span> Caixas Eletrônicos</a>
-            </li>
-            <li class="pl-4 pr-4">
-              <a href="http://localhost:8080/"><span class="fa fa-sticky-note mr-3"></span> Blog</a>
-            </li>
-            <li class="pl-4 pr-4">
-              <a href="https://google.com" target="_blank"><span class="fa fa-suitcase mr-3"></span> Gallery</a>
-            </li>
-            <li class="pl-4 pr-4">
-              <a href="#"><span class="fa fa-cogs mr-3"></span> Services</a>
-            </li>
-            <li class="pl-4 pr-4">
-              <a href="#" onclick="logoff()"><span class="fa fa-paper-plane mr-3"></span>Logoff</a>
+              <a href="#" onclick="logoff()"><span class="fa fas fa-sign-out-alt mr-3"></span>Logoff</a>
             </li>
           </ul>
 
           <div class="footer">
             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-              Copyright &copy;2021</a>
+              <!-- Copyright &copy;2021</a> -->
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
           </div>
 
@@ -104,12 +96,12 @@
 
         <div id="content" class="p-4 p-md-5 pt-5">
           <div class="row container col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xl-12 border-bottom">
-            <h6 class="mr-auto" id="hCargo">Empresa</h6>
-            <h6 id="usuario" class="ml-auto"></h6>
+            <h6 class="mr-auto" id="hCargo">Administração</h6>
+            <h6 id="usuario" class="ml-auto">Overall</h6>
           </div>
 
           <div class="row mt-2 container col-12">
-            <h2 class="color-text">Analytics</h2>
+            <h2 class="color-text">Servidores - Monitoramento</h2>
             <div class="col-7  col-sm-4 col-md-4 col-lg-3 ml-auto p-0 pt-2" >
               <div class="col-12 p-0">
                 <label class="col-5 col-sm-7 col-lg-5 p-0 row ml-auto">
@@ -143,7 +135,7 @@
             
             <div class=" mt-2 col-md-6 col-lg-6 col-sm-6 col-xl-6 mr-auto rounded">
               <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded  divs-graphcs-big">
-                  <canvas id="myChart"></canvas>
+                  <canvas id="canvas_grafico_disco"></canvas>
               </div>
             </div>
             <!-- <div class="col-md-1 col-lg-1" style="background-color: red; height: 1%;"></div> -->
@@ -163,7 +155,7 @@
             <!-- <div class="col-md-1 col-lg-1" style="background-color: red; height: 1%;"></div> -->
             <div class="mt-3 col-md-6 col-lg-6 col-sm-6 col-xl-6" >
               <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded divs-graphcs-small" style="position: relative; height: 100%;">
-                <canvas id="myChart3"></canvas>
+                <canvas id="canvas_grafico_processos"></canvas>
               </div>
             </div>   
           </div>
@@ -252,48 +244,48 @@ const $html = document.querySelector('html')
 
 <script>
 
-var ctx = document.getElementById('myChart').getContext("2d");
+var ctx = document.getElementById('canvas_grafico_disco').getContext("2d");
 
 var gradientFill = ctx.createLinearGradient(0, 0, 0, 200);
 gradientFill.addColorStop(1, "#1c84e900");
 gradientFill.addColorStop(0, "#1c84e9");
 
 
-  const data = {
-labels: [
-  'Janeiro',
-  'Fevereiro',
-  'Março',
-  'Abril'
-],
-datasets: [{
-  label: 'Disco',
-  data: [2.75, 2, 3.6, 2],
-  fill: true,
-  borderColor: '#1c84e9',
-  backgroundColor: gradientFill,
-  tension: 0.3
-}]
-};
+//   const data = {
+// labels: [
+//   'Janeiro',
+//   'Fevereiro',
+//   'Março',
+//   'Abril'
+// ],
+// datasets: [{
+//   label: 'Disco',
+//   data: [2.75, 2, 3.6, 2],
+//   fill: true,
+//   borderColor: '#1c84e9',
+//   backgroundColor: gradientFill,
+//   tension: 0.3
+// }]
+// };
 
-const config = {
-type: 'line',
-data: data,
-options: {
-  indexAxis: 'x',
-  scales: {
-    y: {
-      beginAtZero: true
-    }
-  }
-}
-};
+// const config = {
+// type: 'line',
+// data: data,
+// options: {
+//   indexAxis: 'x',
+//   scales: {
+//     y: {
+//       beginAtZero: true
+//     }
+//   }
+// }
+// };
 
 
-var myChart = new Chart(
-  document.getElementById('myChart'),
-  config
-);
+// var myChart = new Chart(
+//   document.getElementById('myChart'),
+//   config
+// );
 
 // ----------------
 
@@ -329,35 +321,35 @@ var myChart = new Chart(
 
 // ----
 
-const data3 = {
-  labels: [
-    'Alerta Máquina 1',
-    'Alerta Máquina 2',
-    'Alerta Máquina 3'
-  ],
-  datasets: [{
-    label: 'My First Dataset',
-    data: [6, 4, 3],
-    backgroundColor: [
-      '#1c84e9',
-      '#0876ee99',
-      '#1c84e950'
-    ],
+// const data3 = {
+//   labels: [
+//     'Alerta Máquina 1',
+//     'Alerta Máquina 2',
+//     'Alerta Máquina 3'
+//   ],
+//   datasets: [{
+//     label: 'My First Dataset',
+//     data: [6, 4, 3],
+//     backgroundColor: [
+//       '#1c84e9',
+//       '#0876ee99',
+//       '#1c84e950'
+//     ],
 
-    borderColor: '#ffffff00'
-  }]
-};
+//     borderColor: '#ffffff00'
+//   }]
+// };
 
-const config3 = {
-  type: 'polarArea',
-  data: data3,
-};
+// const config3 = {
+//   type: 'polarArea',
+//   data: data3,
+// };
 
 
-var myChart3 = new Chart(
-    document.getElementById('myChart3'),
-    config3
-);
+// var myChart3 = new Chart(
+//     document.getElementById('myChart3'),
+//     config3
+// );
 </script>
 
 
@@ -379,12 +371,15 @@ function chamarMaquina(valor){
 
   // let proximaAtualizacaoCPU;
   let proximaAtualizacaoMemoria;
+  let proximaAtualizacaoCPU;
+  let proximaAtualizacaoDisco;
+  let proximaAtualizacaoProcessos;
 
   window.onload = inicializacao();
 
   function inicializacao(){
     verificarCargo();
-    getLocalizacao();
+    // getLocalizacao();
     // consultarMaquina();
     obterDadosGraficoPrimeiraVez(1);
   }
@@ -447,7 +442,90 @@ function chamarMaquina(valor){
       
   }
 
-  
+  // CPU
+
+  function configurarGraficoCPU() {
+      console.log('chegaste no configurar')
+      var configuracoesCPU = {
+          responsive: true,
+          animation: { duration: 500 },
+          hoverMode: 'index',
+          stacked: false,
+          title: {
+              display: true,
+              text: 'Percentual de uso da CPU'
+          },
+          scales: {
+              yAxes: [{
+                  type: 'linear', 
+                  display: true,
+                  position: 'left',
+                  id: 'y-cpu',
+              } 
+              
+            ],
+          }
+      };
+      console.log("executei configurarGraficoCPU")
+      return configuracoesCPU;
+      
+  }
+
+  function configurarGraficoDisco() {
+      console.log('chegaste no configurar')
+      var configuracoesDisco = {
+          responsive: true,
+          animation: { duration: 500 },
+          hoverMode: 'index',
+          stacked: false,
+          title: {
+              display: true,
+              text: 'Percentual de uso do Disco'
+          },
+          scales: {
+              yAxes: [{
+                  type: 'linear', 
+                  display: true,
+                  position: 'left',
+                  id: 'y-disco',
+              } 
+              
+            ],
+          }
+      };
+      console.log("executei configurarGraficoDisco")
+      return configuracoesDisco;
+      
+  }
+
+
+  function configurarGraficoProcessos() {
+      console.log('chegaste no configurar')
+      var configuracoesProcessos = {
+          responsive: true,
+          animation: { duration: 500 },
+          hoverMode: 'index',
+          stacked: false,
+          title: {
+              display: true,
+              text: 'Quantidade de processos ativos'
+          },
+          scales: {
+              yAxes: [{
+                  type: 'linear', 
+                  display: true,
+                  position: 'left',
+                  id: 'y-processos',
+              } 
+              
+            ],
+          }
+      };
+      console.log("executei configurarGraficoProcessos")
+      return configuracoesProcessos;
+      
+  }
+
 
   // altere aqui como os dados serão exibidos
   // e como são recuperados do BackEnd
@@ -459,6 +537,17 @@ function chamarMaquina(valor){
           clearTimeout(proximaAtualizacaoMemoria);
       }
 
+      if (proximaAtualizacaoCPU != undefined) {
+          clearTimeout(proximaAtualizacaoCPU);
+      }
+
+      if (proximaAtualizacaoDisco != undefined) {
+          clearTimeout(proximaAtualizacaoDisco);
+      }
+
+      if (proximaAtualizacaoProcessos != undefined) {
+          clearTimeout(proximaAtualizacaoDisco);
+      }
 
     var id_usuario = sessionStorage.id_usuario_meuapp;
     var cargo = sessionStorage.cargo_usuario_meuapp;
@@ -511,6 +600,142 @@ function chamarMaquina(valor){
               console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
           });
 
+          // CPU
+
+          fetch(`/tblDadosServidor/ultimasCPU/${idServidor}`, { cache: 'no-store' }).then(function (response) {
+          if (response.ok) {
+              response.json().then(function (resposta) {
+                  console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                  // alert(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                  resposta.reverse();
+
+                  var gradientFill = ctx.createLinearGradient(0, 0, 0, 200);
+                  gradientFill.addColorStop(1, "#1c84e900");
+                  gradientFill.addColorStop(0, "#1c84e9");
+
+                  var dados = {
+                      labels: [],
+                      datasets: [
+                          {
+                              yAxisID: 'y-cpu',
+                              label: 'CPU',
+                              fill: true,
+                              borderColor: '#1c84e9',
+                              backgroundColor: gradientFill,
+                              data: []
+                          },
+                      ]
+                  };
+                  for (i = 0; i < resposta.length; i++) {
+                      var registro = resposta[i];
+                      dados.labels.push(registro.dataHora_grafico);
+                      dados.datasets[0].data.push(registro.cpu);
+                      // dados.datasets[1].data.push(registro.memoria);
+
+                  }
+                  console.log(JSON.stringify(dados));
+                  // div_aguarde.style.display = 'none';
+                  console.log(dados, idServidor)
+                  plotarGraficoCPU(dados, idServidor);
+              });
+          } else {
+              console.error('Nenhum dado encontrado ou erro na API');
+          }
+      })
+          .catch(function (error) {
+              console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+          });
+
+
+  fetch(`/tblDadosServidor/ultimasDisco/${idServidor}`, { cache: 'no-store' }).then(function (response) {
+          if (response.ok) {
+              response.json().then(function (resposta) {
+                  console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                  // alert(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                  resposta.reverse();
+
+                  var gradientFill = ctx.createLinearGradient(0, 0, 0, 200);
+                  gradientFill.addColorStop(1, "#1c84e900");
+                  gradientFill.addColorStop(0, "#1c84e9");
+
+                  var dados = {
+                      labels: [],
+                      datasets: [
+                          {
+                              yAxisID: 'y-disco',
+                              label: 'Disco',
+                              fill: true,
+                              borderColor: '#1c84e9',
+                              backgroundColor: gradientFill,
+                              data: []
+                          },
+                      ]
+                  };
+                  for (i = 0; i < resposta.length; i++) {
+                      var registro = resposta[i];
+                      dados.labels.push(registro.dataHora_grafico);
+                      dados.datasets[0].data.push(registro.disco);
+                      // dados.datasets[1].data.push(registro.memoria);
+
+                  }
+                  console.log(JSON.stringify(dados));
+                  // div_aguarde.style.display = 'none';
+                  console.log(dados, idServidor)
+                  plotarGraficoDisco(dados, idServidor);
+              });
+          } else {
+              console.error('Nenhum dado encontrado ou erro na API');
+          }
+      })
+          .catch(function (error) {
+              console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+          });
+
+
+          fetch(`/tblDadosServidor/ultimasProcessos/${idServidor}`, { cache: 'no-store' }).then(function (response) {
+          if (response.ok) {
+              response.json().then(function (resposta) {
+                  console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                  // alert(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                  resposta.reverse();
+
+                  var gradientFill = ctx.createLinearGradient(0, 0, 0, 200);
+                  gradientFill.addColorStop(1, "#1c84e900");
+                  gradientFill.addColorStop(0, "#1c84e9");
+
+                  var dados = {
+                      labels: [],
+                      datasets: [
+                          {
+                              yAxisID: 'y-processos',
+                              label: 'Processos',
+                              fill: true,
+                              borderColor: '#1c84e9',
+                              backgroundColor: gradientFill,
+                              data: []
+                          },
+                      ]
+                  };
+                  for (i = 0; i < resposta.length; i++) {
+                      var registro = resposta[i];
+                      dados.labels.push(registro.dataHora_grafico);
+                      dados.datasets[0].data.push(registro.processosAtivos);
+                      // dados.datasets[1].data.push(registro.memoria);
+
+                  }
+                  console.log(JSON.stringify(dados));
+                  // div_aguarde.style.display = 'none';
+                  console.log(dados, idServidor)
+                  plotarGraficoProcessos(dados, idServidor);
+              });
+          } else {
+              console.error('Nenhum dado encontrado ou erro na API');
+          }
+      })
+          .catch(function (error) {
+              console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+          });
+
   }
 
 
@@ -520,7 +745,7 @@ function chamarMaquina(valor){
  
   function atualizarGraficoMemoria(idServidor, dados){
     fetch(`/tblDadosServidor/tempo-real-memoria/${idServidor}`, { cache: 'no-store' }).then(function (response) {
-          console.log("Estou tentando pegar idCaixaEletronico = ", idServidor)
+          console.log("Estou tentando pegar idServidor = ", idServidor)
           if (response.ok) {
               response.json().then(function (novoRegistro) {
                   console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
@@ -544,11 +769,11 @@ function chamarMaquina(valor){
                     window.grafico_linhaMemoria.update();
 
 
-                    proximaAtualizacaoMemoria = setTimeout(() => atualizarGraficoMemoria(idServidor, dados), 5000);
+                    proximaAtualizacaoMemoria = setTimeout(() => atualizarGraficoMemoria(idServidor, dados), 20000);
               });
           } else {
               console.error('Nenhum dado encontrado ou erro na API');
-              proximaAtualizacaoMemoria = setTimeout(() => atualizarGraficoMemoria(idServidor, dados), 5000);
+              proximaAtualizacaoMemoria = setTimeout(() => atualizarGraficoMemoria(idServidor, dados), 20000);
           }
       })
           .catch(function (error) {
@@ -557,6 +782,126 @@ function chamarMaquina(valor){
 
   }
 
+  // cpu
+
+  function atualizarGraficoCPU(idServidor, dados){
+    fetch(`/tblDadosServidor/tempo-real-cpu/${idServidor}`, { cache: 'no-store' }).then(function (response) {
+          console.log("Estou tentando pegar idServidor = ", idServidor)
+          if (response.ok) {
+              response.json().then(function (novoRegistro) {
+                  console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+                  console.log(`Dados atuais do gráfico: ${dados}`);
+
+                  if ( dados.datasets[0].data.length == 4){
+                        dados.labels.shift();
+                        dados.datasets[0].data.shift();
+                        //dados.datasets[1].data.shift();
+                        
+                    }
+                    // tirando e colocando valores no gráfico
+                    // dados.labels.shift(); // apagar o primeiro
+                    dados.labels.push(novoRegistro.dataHora_grafico); // incluir um novo dataHora
+                    // dados.datasets[0].data.shift();  // apagar o primeiro de cpu
+                    // dados.datasets[1].data.shift();  // apagar o primeiro de memoria
+                    dados.datasets[0].data.push(novoRegistro.cpu); // incluir uma nova tblDadosHardware de cpu
+                    // dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
+                    console.log("meu sensor é o " + idServidor)
+
+                    window.grafico_linhaCPU.update();
+
+
+                    proximaAtualizacaoCPU = setTimeout(() => atualizarGraficoCPU(idServidor, dados), 20000);
+              });
+          } else {
+              console.error('Nenhum dado encontrado ou erro na API');
+              proximaAtualizacaoCPU = setTimeout(() => atualizarGraficoCPU(idServidor, dados), 20000);
+          }
+      })
+          .catch(function (error) {
+              console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+          });
+
+  }
+
+
+  function atualizarGraficoDisco(idServidor, dados){
+    fetch(`/tblDadosServidor/tempo-real-disco/${idServidor}`, { cache: 'no-store' }).then(function (response) {
+          console.log("Estou tentando pegar idServidor = ", idServidor)
+          if (response.ok) {
+              response.json().then(function (novoRegistro) {
+                  console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+                  console.log(`Dados atuais do gráfico: ${dados}`);
+
+                  if ( dados.datasets[0].data.length == 4){
+                        dados.labels.shift();
+                        dados.datasets[0].data.shift();
+                        //dados.datasets[1].data.shift();
+                        
+                    }
+                    // tirando e colocando valores no gráfico
+                    // dados.labels.shift(); // apagar o primeiro
+                    dados.labels.push(novoRegistro.dataHora_grafico); // incluir um novo dataHora
+                    // dados.datasets[0].data.shift();  // apagar o primeiro de cpu
+                    // dados.datasets[1].data.shift();  // apagar o primeiro de memoria
+                    dados.datasets[0].data.push(novoRegistro.disco); // incluir uma nova tblDadosHardware de cpu
+                    // dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
+                    console.log("meu sensor é o " + idServidor)
+
+                    window.grafico_linhaDisco.update();
+
+
+                    proximaAtualizacaoDisco = setTimeout(() => atualizarGraficoDisco(idServidor, dados), 20000);
+              });
+          } else {
+              console.error('Nenhum dado encontrado ou erro na API');
+              proximaAtualizacaoDisco = setTimeout(() => atualizarGraficoDisco(idServidor, dados), 20000);
+          }
+      })
+          .catch(function (error) {
+              console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+          });
+
+  }
+
+
+  function atualizarGraficoProcessos(idServidor, dados){
+    fetch(`/tblDadosServidor/tempo-real-processos/${idServidor}`, { cache: 'no-store' }).then(function (response) {
+          console.log("Estou tentando pegar idServidor = ", idServidor)
+          if (response.ok) {
+              response.json().then(function (novoRegistro) {
+                  console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+                  console.log(`Dados atuais do gráfico: ${dados}`);
+
+                  if ( dados.datasets[0].data.length == 4){
+                        dados.labels.shift();
+                        dados.datasets[0].data.shift();
+                        //dados.datasets[1].data.shift();
+                        
+                    }
+                    // tirando e colocando valores no gráfico
+                    // dados.labels.shift(); // apagar o primeiro
+                    dados.labels.push(novoRegistro.dataHora_grafico); // incluir um novo dataHora
+                    // dados.datasets[0].data.shift();  // apagar o primeiro de cpu
+                    // dados.datasets[1].data.shift();  // apagar o primeiro de memoria
+                    dados.datasets[0].data.push(novoRegistro.processosAtivos); // incluir uma nova tblDadosHardware de cpu
+                    // dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
+                    console.log("meu sensor é o " + idServidor)
+
+                    window.grafico_linhaProcessos.update();
+
+
+                    proximaAtualizacaoProcessos = setTimeout(() => atualizarGraficoProcessos(idServidor, dados), 20000);
+              });
+          } else {
+              console.error('Nenhum dado encontrado ou erro na API');
+              proximaAtualizacaoProcessos = setTimeout(() => atualizarGraficoProcessos(idServidor, dados), 20000);
+          }
+      })
+          .catch(function (error) {
+              console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+          });
+
+  }
   // só altere aqui se souber o que está fazendo!
 
   function plotarGraficoMemoria(dados, idServidor) {
@@ -571,7 +916,55 @@ function chamarMaquina(valor){
           data: dados,
           options: configurarGraficoMemoria()
       });
-      setTimeout(() => atualizarGraficoMemoria(idServidor, dados), 2000);
+      setTimeout(() => atualizarGraficoMemoria(idServidor, dados), 20000);
+
+  }
+
+  function plotarGraficoCPU(dados, idServidor) {
+      console.log("executei plotarGraficoCPU")
+      console.log('iniciando plotagem do gráfico...');
+
+      var ctx = canvas_grafico_cpu.getContext('2d');
+      console.log('até aqui vai');
+      console.log(dados.datasets);
+      console.log(configurarGraficoCPU())
+      window.grafico_linhaCPU = Chart.Line(ctx, {
+          data: dados,
+          options: configurarGraficoCPU()
+      });
+      setTimeout(() => atualizarGraficoCPU(idServidor, dados), 20000);
+
+  }
+
+  function plotarGraficoDisco(dados, idServidor) {
+      console.log("executei plotarGraficoDisco")
+      console.log('iniciando plotagem do gráfico...');
+
+      var ctx = canvas_grafico_disco.getContext('2d');
+      console.log('até aqui vai');
+      console.log(dados.datasets);
+      console.log(configurarGraficoDisco())
+      window.grafico_linhaDisco = Chart.Line(ctx, {
+          data: dados,
+          options: configurarGraficoDisco()
+      });
+      setTimeout(() => atualizarGraficoDisco(idServidor, dados), 20000);
+
+  }
+
+  function plotarGraficoProcessos(dados, idServidor) {
+      console.log("executei plotarGraficoProcessos")
+      console.log('iniciando plotagem do gráfico...');
+
+      var ctx = canvas_grafico_processos.getContext('2d');
+      console.log('até aqui vai');
+      console.log(dados.datasets);
+      console.log(configurarGraficoProcessos())
+      window.grafico_linhaProcessos = Chart.Line(ctx, {
+          data: dados,
+          options: configurarGraficoProcessos()
+      });
+      setTimeout(() => atualizarGraficoProcessos(idServidor, dados), 20000);
 
   }
 
