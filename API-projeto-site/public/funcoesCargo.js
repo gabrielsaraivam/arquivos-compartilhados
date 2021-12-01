@@ -21,5 +21,6 @@ function verificarCargo(){
     }
     else{
         aDashboard.style.display = "none";
+        aBilling.style.display = "none";
     }
 }

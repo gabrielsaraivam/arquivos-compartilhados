@@ -22,10 +22,10 @@ function verificar_autenticacao() {
 
 function logoff() {
     finalizar_sessao();
-    Cookies.remove('latitude');
-    Cookies.remove('longitude');
     sessionStorage.clear();
     redirecionar_login();
+    Cookies.remove('latitude');
+    Cookies.remove('longitude');
 }
 
 function validar_sessao() {
