@@ -39,7 +39,7 @@ function getAlertas(idCaixaEletronico, valor){
         if (response.ok) {
             response.json().then(function (resposta) {
                 console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                alert(resposta.alertas);
+                // alert(resposta.alertas);
                 if(resposta.alertas>=1){
                     Cookies.set(`alertaAtivo${valor}`, "true");
                 }
