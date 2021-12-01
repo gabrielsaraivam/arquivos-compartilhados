@@ -15,8 +15,10 @@ function getLocalizacao(){
                     for(var i = 0; i<resposta.length; i++){
                         Cookies.set(`latitudeMaq${i+1}`, `${resposta[i].latitude}`);
                         Cookies.set(`longitudeMaq${i+1}`, `${resposta[i].longitude}`);
-                        Cookies.set(`alertaAtivo${i+1}`, resposta[i].alertaAtivo);
+                        // Cookies.set(`alertaAtivo${i+1}`, resposta[i].alertaAtivo);
                         sessionStorage[`maquina${i+1}`] = resposta[i].id; 
+
+                        getAlertas(sessionStorage[`maquina${i+1}`], i+1);
                     }
                     // alert(resposta[0].latitude);
                     // alert(resposta[0].longitude);
@@ -28,4 +30,28 @@ function getLocalizacao(){
             .catch(function (error) {
                 console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
             });
-  }
+          
+}
+
+function getAlertas(idCaixaEletronico, valor){
+    
+    fetch(`/tblDadosHardwares/alertas/${idCaixaEletronico}`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                alert(resposta.alertas);
+                if(resposta.alertas>=1){
+                    Cookies.set(`alertaAtivo${valor}`, "true");
+                }
+                else{
+                    Cookies.set(`alertaAtivo${valor}`, "false");
+                }
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });  
+}
