@@ -86,7 +86,7 @@
           </div>
 
           <div class="row mt-2 container col-12">
-            <h2 class="color-text">Billing</h2>
+            <h2 class="color-text">AWS Billing and Cost Management</h2>
             <div class="col-7  col-sm-4 col-md-4 col-lg-3 ml-auto p-0 pt-2" >
               <div class="col-12 p-0">
                 <label class="col-5 col-sm-7 col-lg-5 p-0 row ml-auto">
@@ -118,13 +118,24 @@
             
             <div class=" mt-2 col-md-6 col-lg-6 col-sm-6 col-xl-6 mr-auto rounded">
               <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded  divs-graphcs-big">
-                  <canvas id="canvas_grafico_disco"></canvas>
+                  <canvas id="canvas_grafico_billing"></canvas>
               </div>
             </div>
             <!-- <div class="col-md-1 col-lg-1" style="background-color: red; height: 1%;"></div> -->
             <div class=" mt-2 col-md-6 col-lg-6 col-sm-6 col-xl-6" >
-              <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded divs-graphcs-big" >
-                <canvas id="canvas_grafico_memoria"></canvas>
+              <div class="card border-dark mb-3" style="max-width: 18rem;">
+                <div class="card-header">Novembro</div>
+                <div class="card-body text-dark">
+                  <h5 class="card-title">$ 14.14</h5>
+                  <p class="card-text">*Custo estimado</p>
+                </div>
+              </div>
+              <div class="card border-dark mb-3" style="max-width: 18rem;">
+                <div class="card-header">Dezembro</div>
+                <div class="card-body text-dark">
+                  <h5 class="card-title">$ 14.21</h5>
+                  <p class="card-text">*Custo estimado</p>
+                </div>
               </div>
             </div>   
           </div>
@@ -227,48 +238,54 @@ const $html = document.querySelector('html')
 
 <script>
 
-var ctx = document.getElementById('canvas_grafico_cpu').getContext("2d");
+var ctx = document.getElementById('canvas_grafico_billing').getContext("2d");
 
 var gradientFill = ctx.createLinearGradient(0, 0, 0, 200);
 gradientFill.addColorStop(1, "#1c84e900");
 gradientFill.addColorStop(0, "#1c84e9");
 
 
-//   const data = {
-// labels: [
-//   'Janeiro',
-//   'Fevereiro',
-//   'Março',
-//   'Abril'
-// ],
-// datasets: [{
-//   label: 'Disco',
-//   data: [2.75, 2, 3.6, 2],
-//   fill: true,
-//   borderColor: '#1c84e9',
-//   backgroundColor: gradientFill,
-//   tension: 0.3
-// }]
-// };
+const data = {
+labels: [
+  'Janeiro',
+  'Fevereiro',
+  'Março',
+  'Abril',
+  'Maio',
+  'Junho',
+  'Julho',
+  'Agosto',
+  'Setembro',
+  'Outubro'
+],
+datasets: [{
+  label: 'Valor (em dólares)',
+  data: [13.51, 13.55, 13.43, 13.68, 13.88, 13.91, 13.93, 13.70, 14.04, 14.12],
+  fill: true,
+  borderColor: '#3180C7',
+  backgroundColor: '#3487D1',
+  tension: 0.3
+}]
+};
 
-// const config = {
-// type: 'line',
-// data: data,
-// options: {
-//   indexAxis: 'x',
-//   scales: {
-//     y: {
-//       beginAtZero: true
-//     }
-//   }
-// }
-// };
+const config = {
+type: 'bar',
+data: data,
+options: {
+  indexAxis: 'x',
+  scales: {
+    y: {
+      beginAtZero: true
+    }
+  }
+}
+};
 
 
-// var myChart = new Chart(
-//   document.getElementById('myChart'),
-//   config
-// );
+var billingChart = new Chart(
+  document.getElementById('canvas_grafico_billing'),
+  config
+);
 
 // ----------------
 
