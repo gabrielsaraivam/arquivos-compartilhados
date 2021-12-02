@@ -32,6 +32,18 @@ input{
     --border-input:#232635;
 }
 
+.cores-cards-body{
+    background-color: var(--body-fundo);
+}
+
+.cores-cards-body h5, .cores-cards-body p, #cores-cards-header{
+    color: var(--color-text);
+}
+
+#cores-cards-header{
+    background-color: var(--general-divs);
+}
+
 body{
     background-color: var(--body-fundo);
     color: var(--color-text);
