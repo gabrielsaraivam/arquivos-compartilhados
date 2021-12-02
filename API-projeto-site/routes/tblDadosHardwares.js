@@ -544,4 +544,35 @@ router.get('/MediaCpu/:idCaixaEletronico', function(req, res, next) {
 		res.status(500).send(erro.message);
 	});
 });
+
+
+router.get('/MediaProcessos/:idCaixaEletronico', function(req, res, next) {
+	console.log('Recuperando');
+	
+	//var idCaixaEletronico = req.body.idCaixaEletronico; // depois de .body, use o nome (name) do campo em seu formulário de login
+	var idCaixaEletronico = req.params.idCaixaEletronico;
+	
+	let instrucaoSql = "";
+	
+	if (env == 'dev') {
+		// abaixo, escreva o select de dados para o Workbench
+		instrucaoSql = `select avg(processosAtivos) as MediaProcessos from tblDadosHardware where fkCaixaEletronico = ${idCaixaEletronico};`;
+	} else if (env == 'production') {
+		// abaixo, escreva o select de dados para o SQL Server
+		instrucaoSql = `select avg(processosAtivos) as MediaProcessos from tblDadosHardware where fkCaixaEletronico = ${idCaixaEletronico};`;
+	} else {
+		console.log("\n\n\n\nVERIFIQUE O VALOR DE LINHA 1 EM APP.JS!\n\n\n\n")
+	}
+	
+	console.log(instrucaoSql);
+	
+	sequelize.query(instrucaoSql, { type: sequelize.QueryTypes.SELECT })
+	.then(resultado => {
+		res.json(resultado[0]);
+	}).catch(erro => {
+		console.error(erro);
+		res.status(500).send(erro.message);
+	});
+});
+
 module.exports = router;
