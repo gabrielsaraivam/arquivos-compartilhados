@@ -51,7 +51,7 @@
               <a href="cadastroCaixa.html" id="aCaixa"><span class="fas fa-credit-card mr-3"></span> Caixas Eletrônicos</a>
             </li>
             <li class="pl-4 pr-4">
-              <a href="http://localhost:8080/"><span class="fas fa-map-marked-alt mr-3"></span>Geolocalização</a>
+              <a href="#" onclick="apiGeo()"><span class="fas fa-map-marked-alt mr-3"></span>Geolocalização</a>
             </li>
             <li class="pl-4 pr-4">
               <a href="#" onclick="logoff()"><span class="fa fas fa-sign-out-alt mr-3"></span>Logoff</a>
@@ -985,19 +985,13 @@ function chamarMaquina(valor){
   }
 
 
-  // function sendData() {
-  //     var http = new XMLHttpRequest();
-  //     http.open('GET', 'http://localhost:9001/api/sendData', false);
-  //     http.send(null);
-  // }
+  function apiGeo(){
+    for(var i = 1; i<=Cookies.get('qtdLocalizacao'); i++){
+      Cookies.remove(`alertaAtivo${i}`);
+    }
 
-    
-  // Descomente abaixo se quiser inserir dados a cada X segundos
-  // setInterval(() => {
-  //     sendData();
-  // }, 2000);
-
-  // import Cookies from 'js-cookie'
-
+    getLocalizacao();
+    window.open("http://localhost:8080/");
+  }
 
 </script>

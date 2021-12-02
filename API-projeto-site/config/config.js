@@ -2,8 +2,8 @@ module.exports = {
   // Insira aqui seus dados do banco NA NUVEM AZURE
   production: {
     // altere APENAS username, password, database e host.
-    username: '',
-    password: '',
+    username: 'overall',
+    password: '#Gfgrupo1',
     database: 'dbOverall',
     host: 'dboverall.database.windows.net',
     dialect: 'mssql',

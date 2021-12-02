@@ -39,8 +39,8 @@ function getAlertas(idCaixaEletronico, valor){
         if (response.ok) {
             response.json().then(function (resposta) {
                 console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                // alert(resposta.alertas);
-                if(resposta.alertas>=1){
+                //  alert(resposta.memoria);
+                if(resposta.memoria>=80 || resposta.cpu>=70 || resposta.disco>=90){
                     Cookies.set(`alertaAtivo${valor}`, "true");
                 }
                 else{
@@ -49,6 +49,7 @@ function getAlertas(idCaixaEletronico, valor){
             });
         } else {
             console.error('Nenhum dado encontrado ou erro na API');
+            Cookies.set(`alertaAtivo${valor}`, "false");
         }
     })
         .catch(function (error) {

@@ -51,11 +51,11 @@
               <a href="cadastroCaixa.html" id="aCaixa"><span class="fas fa-credit-card mr-3"></span>Caixas Eletrônicos</a>
             </li>
             <li class="pl-4 pr-4">
-              <a href="http://localhost:8080/"><span class="fas fa-map-marked-alt mr-3"></span>Geolocalização</a>
+              <a href="#" onclick="apiGeo()"><span class="fas fa-map-marked-alt mr-3"></span>Geolocalização</a>
             </li>
 
             <li class="pl-4 pr-4">
-              <a href="#"><span class="fab fa-aws mr-3"></span>Billing</a>
+              <a href="billing.html"><span class="fab fa-aws mr-3"></span>Billing</a>
             </li>
 
             <li class="pl-4 pr-4">
@@ -65,7 +65,8 @@
 
           <div class="footer">
             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-              Copyright &copy;2021</a>
+
+              <!-- Copyright &copy;2021</a> -->
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
           </div>
 
@@ -145,8 +146,9 @@
             </div>
             <!-- <div class="col-md-1 col-lg-1" style="background-color: red; height: 1%;"></div> -->
             <div class=" mt-2 col-md-6 col-lg-6 col-sm-6 col-xl-6" >
-              <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded divs-graphcs-big" >
-                <canvas id="myChart1"></canvas>
+              <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded divs-graphcs-big">
+                <h4 class="col-8 mx-auto p-0 pt-2">Número total de alertas</h4>
+                <h1 class="col-2 mx-auto p-0 pt-1" id="numeroTotalAlertas" style="font-size: 70px;">00</h1>
               </div>
             </div>   
           </div>
@@ -154,7 +156,7 @@
           <div class="row container col-12 p-0">
             <div class="mt-3 mb-0 col-md-6 col-lg-6 col-sm-6 col-xl-6 mr-auto rounded">
               <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded divs-graphcs-small" >
-                <canvas id="myChart2"></canvas>
+                <canvas id="canvas_grafico2"></canvas>
               </div>
             </div>
             <!-- <div class="col-md-1 col-lg-1" style="background-color: red; height: 1%;"></div> -->
@@ -278,45 +280,45 @@ function chamarMaquina(valor){
 
   verificar_autenticacao();
 
-  function configurarGrafico() {
-      console.log('chegaste no configurar')
-      var configuracoes = {
-          responsive: true,
-          animation: { duration: 500 },
-          hoverMode: 'index',
-          stacked: false,
-          title: {
-              display: true,
-              text: 'Número de alertas'
-          },
-          scales: {
-              yAxes: [{
-                  type: 'linear', 
-                  display: true,
-                //   position: 'left',
-                  id: 'y-cpu',
+  // function configurarGrafico() {
+  //     console.log('chegaste no configurar')
+  //     var configuracoes = {
+  //         responsive: true,
+  //         animation: { duration: 500 },
+  //         hoverMode: 'index',
+  //         stacked: false,
+  //         title: {
+  //             display: true,
+  //             text: 'Número de alertas'
+  //         },
+  //         scales: {
+  //             yAxes: [{
+  //                 type: 'linear', 
+  //                 display: true,
+  //               //   position: 'left',
+  //                 id: 'y-cpu',
 
-                  // gridLines: {
-                  //     drawOnChartArea: false, // only want the grid lines for one axis to show up
-                  // },
+  //                 // gridLines: {
+  //                 //     drawOnChartArea: false, // only want the grid lines for one axis to show up
+  //                 // },
 
-              },
-              {
-                  type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                  display: true,
-                  position: 'right',
-                  id: 'y-memoria',
+  //             },
+  //             {
+  //                 type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+  //                 display: true,
+  //                 position: 'right',
+  //                 id: 'y-memoria',
 
-                  // grid line settings
+  //                 // grid line settings
 
-              }
-            ],
-          }
-      };
-      console.log("executei configurarGraficoCPU")
-      return configuracoes;
+  //             }
+  //           ],
+  //         }
+  //     };
+  //     console.log("executei configurarGraficoCPU")
+  //     return configuracoes;
       
-  }
+  // }
 
     // var id_usuario = sessionStorage.id_usuario_meuapp;
     // var cargo = sessionStorage.cargo_usuario_meuapp;
@@ -327,94 +329,103 @@ function chamarMaquina(valor){
 
 
 
-let proximaAtualizacao;
+ let proximaAtualizacao;
 
 var cpuAlert = 0;
 var memoriaAlert = 0;
+var discoAlert = 0;
+
+var cpuMedia = 0;
+var memoriaMedia = 0;
+var discoMedia = 0;
+
 
 function obterDadosGraficoPrimeiraVez(idCaixaEletronico) {
-    if (proximaAtualizacao != undefined) {
-        clearTimeout(proximaAtualizacao);
-    }
+    // if (proximaAtualizacao != undefined) {
+    //     clearTimeout(proximaAtualizacao);
+    // }
 
    
 
-    fetch(`/tblDadosHardwares/AlertasCpu/${idCaixaEletronico}`, { cache: 'no-store' }).then(function (response) {
-        if (response.ok) {
-            response.json().then(function (resposta) {
-                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                // plotarGrafico(resposta);
-            });
-        } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-        }
-    })
-    .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-    });
+    // fetch(`/tblDadosHardwares/AlertasCpu/${idCaixaEletronico}`, { cache: 'no-store' }).then(function (response) {
+    //     if (response.ok) {
+    //         response.json().then(function (resposta) {
+    //             console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+    //             // plotarGrafico(resposta);
+    //         });
+    //     } else {
+    //         console.error('Nenhum dado encontrado ou erro na API');
+    //     }
+    // })
+    // .catch(function (error) {
+    //     console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    // });
 
-    fetch(`/tblDadosHardwares/AlertasMemoria/${idCaixaEletronico}`, { cache: 'no-store' }).then(function (response) {
-        if (response.ok) {
-            response.json().then(function (resposta) {
-                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                // plotarGrafico(resposta);
+    // fetch(`/tblDadosHardwares/AlertasMemoria/${idCaixaEletronico}`, { cache: 'no-store' }).then(function (response) {
+    //     if (response.ok) {
+    //         response.json().then(function (resposta) {
+    //             console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+    //             // plotarGrafico(resposta);
               
-            });
-        } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-        }
-    })
-    .catch(function (error) {
-        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-    });
+    //         });
+    //     } else {
+    //         console.error('Nenhum dado encontrado ou erro na API');
+    //     }
+    // })
+    // .catch(function (error) {
+    //     console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    // });
 
+    atualizarGrafico(idCaixaEletronico)
                 //  var gradientFill = ctx.createLinearGradient(0, 0, 0, 200);
                 //   gradientFill.addColorStop(1, "#1c84e900");
                 //   gradientFill.addColorStop(0, "#1c84e9");
 
-                  var dados = {
-                      labels: [],
-                      datasets: [
-                          {
-                              yAxisID: 'y-cpu',
-                              label: 'CPU',
-                              fill: false,
-                              borderColor: '#1c84e9',
-                              backgroundColor: 'blue',
-                              data: []
-                          },
-                          {
-                              yAxisID: 'y-memoria',
-                              label: 'Memoria',
-                              borderColor: '#0876ee99',
-                              backgroundColor: '#0876ee99',
-                              fill: false,
-                              data: []
-                          }
-                      ]
-                  };
+    //               var dados = {
+    //                   labels: [],
+    //                   datasets: [
+    //                       {
+    //                           yAxisID: 'y-cpu',
+    //                           label: 'CPU',
+    //                           fill: false,
+    //                           borderColor: '#1c84e9',
+    //                           backgroundColor: 'blue',
+    //                           data: []
+    //                       },
+    //                       {
+    //                           yAxisID: 'y-memoria',
+    //                           label: 'Memoria',
+    //                           borderColor: '#0876ee99',
+    //                           backgroundColor: '#0876ee99',
+    //                           fill: false,
+    //                           data: []
+    //                       }
+    //                   ]
+    //               };
 
-    plotarGrafico(dados, idCaixaEletronico);
+    // plotarGrafico(dados, idCaixaEletronico);
     
 }
 
 // só altere aqui se souber o que está fazendo!
-function plotarGrafico(dados, idCaixaEletronico) {
-    console.log("executei plotarGrafico")
-      console.log('iniciando plotagem do gráfico...');
+// function plotarGrafico(dados, idCaixaEletronico) {
+//     console.log("executei plotarGrafico")
+//       console.log('iniciando plotagem do gráfico...');
 
-      var ctx = canvas_grafico.getContext('2d');
-      console.log('até aqui vai');
-      console.log(dados.datasets);
-      console.log(configurarGrafico())
-      window.grafico_linha = Chart.Line(ctx, {
-          data: dados,
-          options: configurarGrafico()
-      });
-      setTimeout(() => atualizarGrafico(idCaixaEletronico, dados), 2000);
-}
+//       var ctx = canvas_grafico.getContext('2d');
+//       console.log('até aqui vai');
+//       console.log(dados.datasets);
+//       console.log(configurarGrafico())
+//       window.grafico_linha = Chart.Line(ctx, {
+//           data: dados,
+//           options: configurarGrafico()
+//       });
+//       setTimeout(() => atualizarGrafico(idCaixaEletronico, dados), 2000);
+// }
 
-function atualizarGrafico(idCaixaEletronico, dados) {
+function atualizarGrafico(idCaixaEletronico) {
+
+
     if (proximaAtualizacao != undefined) {
         clearTimeout(proximaAtualizacao);
     }
@@ -432,7 +443,7 @@ function atualizarGrafico(idCaixaEletronico, dados) {
                     // dados.labels.push(novoRegistro.dataHora_grafico); // incluir um novo dataHora
                     // dados.datasets[0].data.shift();  // apagar o primeiro de cpu
                     // dados.datasets[1].data.shift();  // apagar o primeiro de memoria
-                    dados.datasets[0].data.push(resposta.AlertasCpu); // incluir uma nova tblDadosHardware de cpu
+                    // dados.datasets[0].data.push(resposta.AlertasCpu); // incluir uma nova tblDadosHardware de cpu
                     cpuAlert = resposta.AlertasCpu
                     // dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
                     console.log("meu sensor é o " + idCaixaEletronico)
@@ -463,7 +474,7 @@ function atualizarGrafico(idCaixaEletronico, dados) {
                     // dados.labels.push(novoRegistro.dataHora_grafico); // incluir um novo dataHora
                     // dados.datasets[0].data.shift();  // apagar o primeiro de cpu
                     // dados.datasets[1].data.shift();  // apagar o primeiro de memoria
-                    dados.datasets[1].data.push(resposta.AlertasMemoria); // incluir uma nova tblDadosHardware de cpu
+                    // dados.datasets[1].data.push(resposta.AlertasMemoria); // incluir uma nova tblDadosHardware de cpu
                     memoriaAlert = resposta.AlertasMemoria;
                     // dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
                     console.log("meu sensor é o " + idCaixaEletronico)
@@ -478,16 +489,172 @@ function atualizarGrafico(idCaixaEletronico, dados) {
     .catch(function (error) {
         console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
     });
-    window.grafico_linha.update();
 
-const data3 = {
+    fetch(`/tblDadosHardwares/AlertasDisco/${idCaixaEletronico}`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                // if ( dados.datasets[0].data.length == 1){
+                //         // dados.labels.shift();
+                //         dados.datasets[0].data.shift();
+                //         //dados.datasets[1].data.shift();
+                // }
+                    // dados.labels.push(novoRegistro.dataHora_grafico); // incluir um novo dataHora
+                    // dados.datasets[0].data.shift();  // apagar o primeiro de cpu
+                    // dados.datasets[1].data.shift();  // apagar o primeiro de memoria
+                    // dados.datasets[1].data.push(resposta.AlertasMemoria); // incluir uma nova tblDadosHardware de cpu
+                    discoAlert = resposta.AlertasDisco;
+                    // dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
+                    console.log("meu sensor é o " + idCaixaEletronico)
+
+                    // window.grafico_linha.update();
+
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+    .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    });
+
+
+    fetch(`/tblDadosHardwares/MediaCpu/${idCaixaEletronico}`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                // plotarGrafico(resposta);
+                // if ( dados.datasets[0].data.length == 1){
+                //         // dados.labels.shift();
+                //         dados.datasets[0].data.shift();
+                //         //dados.datasets[1].data.shift();
+                // }
+                    // dados.labels.push(novoRegistro.dataHora_grafico); // incluir um novo dataHora
+                    // dados.datasets[0].data.shift();  // apagar o primeiro de cpu
+                    // dados.datasets[1].data.shift();  // apagar o primeiro de memoria
+                    // dados.datasets[0].data.push(resposta.AlertasCpu); // incluir uma nova tblDadosHardware de cpu
+                    cpuMedia = resposta.MediaCpu
+                    // dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
+                    console.log("meu sensor é o " + idCaixaEletronico)
+
+                    // window.grafico_linha.update();
+
+
+                    // proximaAtualizacao = setTimeout(() => atualizarGrafico(idCaixaEletronico, dados), 5000);
+                
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+    .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    });
+
+    fetch(`/tblDadosHardwares/MediaMemoria/${idCaixaEletronico}`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                // plotarGrafico(resposta);
+                // if ( dados.datasets[0].data.length == 1){
+                //         // dados.labels.shift();
+                //         dados.datasets[0].data.shift();
+                //         //dados.datasets[1].data.shift();
+                // }
+                    // dados.labels.push(novoRegistro.dataHora_grafico); // incluir um novo dataHora
+                    // dados.datasets[0].data.shift();  // apagar o primeiro de cpu
+                    // dados.datasets[1].data.shift();  // apagar o primeiro de memoria
+                    // dados.datasets[0].data.push(resposta.AlertasCpu); // incluir uma nova tblDadosHardware de cpu
+                    memoriaMedia = resposta.MediaMemoria
+                    // dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
+                    console.log("meu sensor é o " + idCaixaEletronico)
+
+                    // window.grafico_linha.update();
+
+
+                    // proximaAtualizacao = setTimeout(() => atualizarGrafico(idCaixaEletronico, dados), 5000);
+                
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+    .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    });
+
+    fetch(`/tblDadosHardwares/MediaDisco/${idCaixaEletronico}`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                // plotarGrafico(resposta);
+                // if ( dados.datasets[0].data.length == 1){
+                //         // dados.labels.shift();
+                //         dados.datasets[0].data.shift();
+                //         //dados.datasets[1].data.shift();
+                // }
+                    // dados.labels.push(novoRegistro.dataHora_grafico); // incluir um novo dataHora
+                    // dados.datasets[0].data.shift();  // apagar o primeiro de cpu
+                    // dados.datasets[1].data.shift();  // apagar o primeiro de memoria
+                    // dados.datasets[0].data.push(resposta.AlertasCpu); // incluir uma nova tblDadosHardware de cpu
+                    discoMedia = resposta.MediaDisco
+                    // dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
+                    console.log("meu sensor é o " + idCaixaEletronico)
+
+                    // window.grafico_linha.update();
+
+
+                    // proximaAtualizacao = setTimeout(() => atualizarGrafico(idCaixaEletronico, dados), 5000);
+                
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+    .catch(function (error) {
+        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+    });
+    // window.grafico_linha.update();
+
+// const data3 = {
+//   labels: [
+//     'CPU',
+//     'Memória',
+//   ],
+//   datasets: [{
+//     label: 'My First Dataset',
+//     data: [cpuAlert, memoriaAlert],
+//     backgroundColor: [
+//       '#1c84e9',
+//       '#0876ee99',
+//       '#1c84e950'
+//     ],
+
+//     borderColor: '#ffffff00'
+//   }],
+//   animation: { duration: 500 }
+// };
+
+// const config3 = {
+//   type: 'polarArea',
+//   data: data3,
+// };
+
+
+// var myChart3 = new Chart(
+//     document.getElementById('myChart3'),
+//     config3
+// );
+
+const data = {
   labels: [
     'CPU',
-    'Memória'
+    'Memória',
+    'Disco'
   ],
   datasets: [{
-    label: 'My First Dataset',
-    data: [cpuAlert, memoriaAlert],
+    label: 'Histórico de alertas',
+    data: [cpuAlert, memoriaAlert, discoAlert],
     backgroundColor: [
       '#1c84e9',
       '#0876ee99',
@@ -495,29 +662,29 @@ const data3 = {
     ],
 
     borderColor: '#ffffff00'
-  }],
-  animation: { duration: 500 }
+  }]
 };
 
-const config3 = {
-  type: 'polarArea',
-  data: data3,
+const config = {
+  type: 'bar',
+  data: data,
 };
 
 
-var myChart3 = new Chart(
-    document.getElementById('myChart3'),
-    config3
+var myChart = new Chart(
+    document.getElementById('canvas_grafico'),
+    config
 );
 
 const data2 = {
   labels: [
     'CPU',
-    'Memória'
+    'Memória',
+    'Disco'
   ],
   datasets: [{
-    label: 'My First Dataset',
-    data: [cpuAlert, memoriaAlert],
+    label: 'Média de valores',
+    data: [cpuMedia, memoriaMedia, discoMedia],
     backgroundColor: [
       '#1c84e9',
       '#0876ee99',
@@ -535,11 +702,12 @@ const config2 = {
 
 
 var myChart2 = new Chart(
-    document.getElementById('myChart2'),
+    document.getElementById('canvas_grafico2'),
     config2
 );
     
-    proximaAtualizacao = setTimeout(() => atualizarGrafico(idCaixaEletronico, dados), 5000);
+    numeroTotalAlertas.innerHTML = cpuAlert+memoriaAlert+discoAlert
+    proximaAtualizacao = setTimeout(() => atualizarGrafico(idCaixaEletronico), 5000);
 }
 
 // só mexer se quiser alterar o tempo de atualização
@@ -574,4 +742,13 @@ var myChart2 = new Chart(
 //         });
 
 // }
+
+function apiGeo(){
+    for(var i = 1; i<=Cookies.get('qtdLocalizacao'); i++){
+      Cookies.remove(`alertaAtivo${i}`);
+    }
+
+    getLocalizacao();
+    window.location.href = "http://localhost:8080/";
+  }
 </script>
