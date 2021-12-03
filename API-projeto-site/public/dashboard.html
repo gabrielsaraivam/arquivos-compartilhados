@@ -123,7 +123,7 @@
           <div class="row container col-6">
             <div class="dropdown mr-auto col-5">
               <button class="btn btn-secondary dropdown-toggle col-12" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span id="mudarMaquina">Máquina</span>
+                <span id="mudarMaquina">Máquina 1</span>
               </button>
               <div class="dropdown-menu" id="dropdownMaquina" aria-labelledby="dropdownMenuButton">
 
@@ -378,9 +378,10 @@ function chamarMaquina(valor){
 
   function inicializacao(){
     verificarCargo();
-    getLocalizacao();
+    getIdCaixa();
     consultarMaquina();
-    obterDadosGraficoPrimeiraVez(sessionStorage['maquina1']);
+    obterDadosGraficoPrimeiraVez(sessionStorage[`maquina1`]);
+    obterDadosGraficoPrimeiraVez(sessionStorage[`maquina1`]);
   }
   // chamargraficos(1);
 
@@ -406,6 +407,7 @@ function chamarMaquina(valor){
   function chamargraficos(idCaixaEletronico) {
       console.log("executei chamargraficos")
       obterDadosGraficoPrimeiraVez(idCaixaEletronico)
+
       // atualizarGraficoCPU(idCaixaEletronico)
 
       // alterarCoresBotoes(idCaixaEletronico);
@@ -541,6 +543,7 @@ function chamarMaquina(valor){
       console.log("executei obterDadosGraficoPrimeiraVez")
       // alterarCoresBotoes(idCaixaEletronico);
 
+      
       if (proximaAtualizacaoCPU != undefined) {
           clearTimeout(proximaAtualizacaoCPU);
       }
@@ -757,6 +760,8 @@ function chamarMaquina(valor){
 
   }
 
+
+    
 
 
   // só mexer se quiser alterar o tempo de atualização
@@ -993,5 +998,7 @@ function chamarMaquina(valor){
     getLocalizacao();
     window.open("http://localhost:8080/");
   }
+    
+  
 
 </script>

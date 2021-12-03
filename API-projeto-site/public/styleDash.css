@@ -36,7 +36,7 @@ input{
     background-color: var(--body-fundo);
 }
 
-.cores-cards-body h5, .cores-cards-body p, #cores-cards-header{
+.cores-cards-body h5, .cores-cards-body p, #cores-cards-header, .cores-cards-body h1{
     color: var(--color-text);
 }
 

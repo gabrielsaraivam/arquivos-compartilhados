@@ -109,7 +109,7 @@
           </div>
 
           <div class="row mt-2 container col-12">
-            <h2 class="color-text">Analytics</h2>
+            <h2 class="color-text">Dados históricos</h2>
             <div class="col-7  col-sm-4 col-md-4 col-lg-3 ml-auto p-0 pt-2" >
               <div class="col-12 p-0">
                 <label class="col-5 col-sm-7 col-lg-5 p-0 row ml-auto">
@@ -127,30 +127,34 @@
           </div>
 
           <div class="row container col-6">
-            <div class="dropdown mr-auto col-5">
+            <div style="position: relative; z-index: 9999;" class="dropdown mr-auto col-5">
               <button class="btn btn-secondary dropdown-toggle col-12" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span id="mudarMaquina">Máquina</span>
+                <span id="mudarMaquina">Máquina 1</span>
               </button>
               <div class="dropdown-menu" id="dropdownMaquina" aria-labelledby="dropdownMenuButton">
 
               </div>
             </div>
           </div>
+<div style="position: absolute; height: 92%; width: 75%; z-index: 1;">
 
+    </div> 
           <div class="row container col-12 p-0 mb-2">
             <div class="row container col-12 p-0 mb-2">
               <div class="mt-3 col-md-8 col-lg-8 col-sm-8 col-xl-8 rounded">
                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xl-12 rounded divs-graphcs-big" >
                   <canvas id="canvas_grafico"></canvas>
                 </div>
-              </div>
+              </div> 
+            
               <!-- <div class="col-md-1 col-lg-1" style="background-color: red; height: 1%;"></div> -->
               <div class="my-auto mt-3 col-md-4 col-lg-4 col-sm-4 col-xl-4 p-0 m-0">
                 <div>
                   <div class="card border-dark mx-auto">
-                    <div class="card-header">Número total de Alertas</div>
-                    <div class="card-body text-dark row">
-                      <h1 class="col-6 col-lg-4 mx-auto p-0 pt-1 m-0" id="numeroTotalAlertas" style="font-size: 70px;">00</h1>
+                    <div id="cores-cards-header" class="card-header">Número total de Alertas</div>
+                    <div class="card-body text-dark cores-cards-body row m-0">
+
+                      <h1 class="col-6 col-lg-4 mx-auto p-0 pt-1 m-0" id="numeroTotalAlertas" style="font-size: 50px;">000</h1>
                     </div>
                   </div>
                 
@@ -168,9 +172,9 @@
             <div class="my-auto mt-3 col-md-4 col-lg-4 col-sm-4 col-xl-4 p-0 m-0">
               <div>
                 <div class="card border-dark mx-auto">
-                  <div class="card-header">Média de Processos</div>
-                  <div class="col-12card-body text-dark row">
-                    <h1 class="col-6 col-lg-4 mx-auto p-0 pt-1 m-0" id="numeroMediaProcesso" style="font-size: 70px;">00</h1>
+                  <div id="cores-cards-header" class="card-header">Média de Processos</div>
+                  <div class="col-12 card-body text-dark cores-cards-body row m-0">
+                    <h1 class="col-6 col-md-8 col-lg-4 mx-auto p-0 pt-1 m-0" id="numeroMediaProcesso" style="font-size: 50px;">000</h1>
                   </div>
                 </div>
               
@@ -178,6 +182,7 @@
           </div>
         </div>
       </div>
+      
     </div>
   
 </body>
@@ -277,69 +282,24 @@ function chamarMaquina(valor){
   obterDadosGraficoPrimeiraVez(sessionStorage[`maquina${valor}`])
 //   setTimeout(() => obterDadosGraficoPrimeiraVez(valor), 5000);
 }
+ let proximaAtualizacao;
 
   window.onload = inicializacao();
 
   function inicializacao(){
     verificarCargo();
     consultarMaquina();
-    getLocalizacao();
-    // obterDadosGraficoPrimeiraVez(1);
+    getIdCaixa();
+    obterDadosGraficoPrimeiraVez(sessionStorage[`maquina1`]);
   }
 
 
   verificar_autenticacao();
 
-  // function configurarGrafico() {
-  //     console.log('chegaste no configurar')
-  //     var configuracoes = {
-  //         responsive: true,
-  //         animation: { duration: 500 },
-  //         hoverMode: 'index',
-  //         stacked: false,
-  //         title: {
-  //             display: true,
-  //             text: 'Número de alertas'
-  //         },
-  //         scales: {
-  //             yAxes: [{
-  //                 type: 'linear', 
-  //                 display: true,
-  //               //   position: 'left',
-  //                 id: 'y-cpu',
-
-  //                 // gridLines: {
-  //                 //     drawOnChartArea: false, // only want the grid lines for one axis to show up
-  //                 // },
-
-  //             },
-  //             {
-  //                 type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-  //                 display: true,
-  //                 position: 'right',
-  //                 id: 'y-memoria',
-
-  //                 // grid line settings
-
-  //             }
-  //           ],
-  //         }
-  //     };
-  //     console.log("executei configurarGraficoCPU")
-  //     return configuracoes;
-      
-  // }
-
-    // var id_usuario = sessionStorage.id_usuario_meuapp;
-    // var cargo = sessionStorage.cargo_usuario_meuapp;
-    // var fkEmpresa = sessionStorage.fkEmpresa_usuario_meuapp;
-    // if(cargo == "Gerente" || cargo == "Analista"){
-    //   id_usuario = fkEmpresa;
-    // 
 
 
 
- let proximaAtualizacao;
+
 
 var cpuAlert = 0;
 var memoriaAlert = 0;
@@ -353,87 +313,14 @@ var processosMedia = 0;
 var count = 0;
 
 function obterDadosGraficoPrimeiraVez(idCaixaEletronico) {
-    // if (proximaAtualizacao != undefined) {
-    //     clearTimeout(proximaAtualizacao);
-    // }
+
 
    count=0;
 
-    // fetch(`/tblDadosHardwares/AlertasCpu/${idCaixaEletronico}`, { cache: 'no-store' }).then(function (response) {
-    //     if (response.ok) {
-    //         response.json().then(function (resposta) {
-    //             console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-    //             // plotarGrafico(resposta);
-    //         });
-    //     } else {
-    //         console.error('Nenhum dado encontrado ou erro na API');
-    //     }
-    // })
-    // .catch(function (error) {
-    //     console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-    // });
-
-    // fetch(`/tblDadosHardwares/AlertasMemoria/${idCaixaEletronico}`, { cache: 'no-store' }).then(function (response) {
-    //     if (response.ok) {
-    //         response.json().then(function (resposta) {
-    //             console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-    //             // plotarGrafico(resposta);
-              
-    //         });
-    //     } else {
-    //         console.error('Nenhum dado encontrado ou erro na API');
-    //     }
-    // })
-    // .catch(function (error) {
-    //     console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-    // });
-
     atualizarGrafico(idCaixaEletronico)
-                //  var gradientFill = ctx.createLinearGradient(0, 0, 0, 200);
-                //   gradientFill.addColorStop(1, "#1c84e900");
-                //   gradientFill.addColorStop(0, "#1c84e9");
 
-    //               var dados = {
-    //                   labels: [],
-    //                   datasets: [
-    //                       {
-    //                           yAxisID: 'y-cpu',
-    //                           label: 'CPU',
-    //                           fill: false,
-    //                           borderColor: '#1c84e9',
-    //                           backgroundColor: 'blue',
-    //                           data: []
-    //                       },
-    //                       {
-    //                           yAxisID: 'y-memoria',
-    //                           label: 'Memoria',
-    //                           borderColor: '#0876ee99',
-    //                           backgroundColor: '#0876ee99',
-    //                           fill: false,
-    //                           data: []
-    //                       }
-    //                   ]
-    //               };
-
-    // plotarGrafico(dados, idCaixaEletronico);
     
 }
-
-// só altere aqui se souber o que está fazendo!
-// function plotarGrafico(dados, idCaixaEletronico) {
-//     console.log("executei plotarGrafico")
-//       console.log('iniciando plotagem do gráfico...');
-
-//       var ctx = canvas_grafico.getContext('2d');
-//       console.log('até aqui vai');
-//       console.log(dados.datasets);
-//       console.log(configurarGrafico())
-//       window.grafico_linha = Chart.Line(ctx, {
-//           data: dados,
-//           options: configurarGrafico()
-//       });
-//       setTimeout(() => atualizarGrafico(idCaixaEletronico, dados), 2000);
-// }
 
 function atualizarGrafico(idCaixaEletronico) {
 
@@ -446,24 +333,13 @@ function atualizarGrafico(idCaixaEletronico) {
         if (response.ok) {
             response.json().then(function (resposta) {
                 console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                // plotarGrafico(resposta);
-                // if ( dados.datasets[0].data.length == 1){
-                //         // dados.labels.shift();
-                //         dados.datasets[0].data.shift();
-                //         //dados.datasets[1].data.shift();
-                // }
-                    // dados.labels.push(novoRegistro.dataHora_grafico); // incluir um novo dataHora
-                    // dados.datasets[0].data.shift();  // apagar o primeiro de cpu
-                    // dados.datasets[1].data.shift();  // apagar o primeiro de memoria
-                    // dados.datasets[0].data.push(resposta.AlertasCpu); // incluir uma nova tblDadosHardware de cpu
+              
                     cpuAlert = resposta.AlertasCpu
-                    // dados.datasets[1].data.push(novoRegistro.memoria); // incluir uma nova tblDadosHardware de memoria
+              
                     console.log("meu sensor é o " + idCaixaEletronico)
 
-                    // window.grafico_linha.update();
 
-
-                    // proximaAtualizacao = setTimeout(() => atualizarGrafico(idCaixaEletronico, dados), 5000);
+             
                 
             });
         } else {
@@ -754,7 +630,7 @@ var myChart2 = new Chart(
     numeroMediaProcesso.innerHTML = processosMedia;
     
     if(count==0){
-      proximaAtualizacao = setTimeout(() => atualizarGrafico(idCaixaEletronico), 1000);
+      proximaAtualizacao = setTimeout(() => atualizarGrafico(idCaixaEletronico), 500);
     }
 count++
 }
@@ -798,6 +674,6 @@ function apiGeo(){
     }
 
     getLocalizacao();
-    window.location.href = "http://localhost:8080/";
+    window.open("http://localhost:8080/");
   }
 </script>
