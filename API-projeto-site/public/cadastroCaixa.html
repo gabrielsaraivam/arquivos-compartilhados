@@ -25,7 +25,9 @@
     <script src="https://kit.fontawesome.com/fee5906543.js" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="./cssSB/style.css">
 
-
+    <script src="./funcoesLocalizacao.js">
+      
+    </script>
 </head>
 <body>
   
@@ -50,7 +52,7 @@
               <a href="cadastroCaixa.html" id="aCaixa"><span class="fas fa-credit-card mr-3"></span>Caixas Eletrônicos</a>
             </li>
             <li class="pl-4 pr-4">
-              <a href="http://localhost:8080/"><span class="fas fa-map-marked-alt mr-3"></span>Geolocalização</a>
+              <a href="#" onclick="apiGeo()"><span class="fas fa-map-marked-alt mr-3"></span>Geolocalização</a>
             </li>
             <li class="pl-4 pr-4">
               <a href="billing.html" id="aBilling"><span class="fab fa-aws mr-3"></span>Billing</a>
@@ -204,6 +206,8 @@ function cadastrar() {
 <script src="./jsSb/bootstrap.min.js"></script>
 <script src="./jsSb/main.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+
 <!-- max-width: 991.98px -->
 
 <script>
@@ -276,5 +280,14 @@ function quantidadeCaixas(){
               console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
           });
 }
+
+function apiGeo(){
+    for(var i = 1; i<=Cookies.get('qtdLocalizacao'); i++){
+      Cookies.remove(`alertaAtivo${i}`);
+    }
+
+    getLocalizacao();
+    window.open("http://localhost:8080/");
+  }
 
 </script>
