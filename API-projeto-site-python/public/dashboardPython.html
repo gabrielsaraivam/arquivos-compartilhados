@@ -121,12 +121,12 @@
           <div class="row container col-6">
             <div class="dropdown mr-auto col-5">
               <button class="btn btn-secondary dropdown-toggle col-12" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span id="mudarMaquina">Máquina</span>
+                <span id="mudarMaquina">Servidor 1</span>
               </button>
               <div class="dropdown-menu" id="dropdownMaquina" aria-labelledby="dropdownMenuButton">
-                <option class="dropdown-item" onclick="chamarMaquina(1)">Máquina 1</option>
-                <option class="dropdown-item" onclick="chamarMaquina(2)">Máquina 2</option>
-                <option class="dropdown-item" onclick="chamarMaquina(3)">Máquina 3</option>
+                <option class="dropdown-item" onclick="chamarMaquina(1)">Servidor 1</option>
+                <option class="dropdown-item" onclick="chamarMaquina(2)">Servidor 2</option>
+                <option class="dropdown-item" onclick="chamarMaquina(3)">Servidor 3</option>
               </div>
             </div>
           </div>
@@ -365,7 +365,7 @@ gradientFill.addColorStop(0, "#1c84e9");
 // }
 
 function chamarMaquina(valor){
-  mudarMaquina.innerHTML = `Máquina ${valor}`
+  mudarMaquina.innerHTML = `Servidor ${valor}`
   obterDadosGraficoPrimeiraVez(valor)
 }
 

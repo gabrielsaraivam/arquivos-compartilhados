@@ -30,7 +30,7 @@ module.exports = {
 
     password: 'urubu100',
     database: 'dbOverall',
-    host: 'ec2-3-84-61-5.compute-1.amazonaws.com',
+    host: 'ec2-3-86-153-64.compute-1.amazonaws.com',
     dialect: 'mysql',
     xuse_env_variable: 'DATABASE_URL',
     dialectOptions: {
